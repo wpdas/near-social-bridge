@@ -1,7 +1,7 @@
-import { REQUEST_KEYS } from '@lib/constants'
-import request from '@lib/request'
-import { onConnectObservable } from '@lib/services/bridge-service'
-import Observable from '@lib/utils/observable'
+import { REQUEST_KEYS } from '../constants'
+import request from '../request'
+import { onConnectObservable } from '../services/bridge-service'
+import Observable from '../utils/observable'
 
 /**
  * Notify with the current storage data every time the storage is updated

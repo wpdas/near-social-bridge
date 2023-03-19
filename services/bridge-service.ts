@@ -1,5 +1,5 @@
-import isLocalDev from '@lib/utils/isLocalDev'
-import Observable from '@lib/utils/observable'
+import isLocalDev from '../utils/isLocalDev'
+import Observable from '../utils/observable'
 
 export type ConnectionPayload = {
   /**

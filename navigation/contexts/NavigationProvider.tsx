@@ -1,4 +1,4 @@
-import getPathParams from '@lib/utils/getPathParams'
+import getPathParams from '../../utils/getPathParams'
 import React, { createContext, useCallback, useEffect, useState } from 'react'
 import { HistoryProps, NavigationProps, ParamListBase } from '../types'
 

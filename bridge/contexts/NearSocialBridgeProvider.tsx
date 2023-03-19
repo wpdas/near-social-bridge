@@ -4,7 +4,7 @@ import {
   bridgeServiceObservable,
   initBridgeService,
   postMessage as postMessageService,
-} from '@lib/services/bridge-service'
+} from '../../services/bridge-service'
 import { GetMessageCallBack, NearSocialBridgeProps } from '../types'
 
 const defaultValue: NearSocialBridgeProps = {

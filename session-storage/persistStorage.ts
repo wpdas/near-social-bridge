@@ -1,5 +1,5 @@
-import { getConnectionStatus } from '@lib/services/bridge-service'
-import isLocalDev from '@lib/utils/isLocalDev'
+import { getConnectionStatus } from '../services/bridge-service'
+import isLocalDev from '../utils/isLocalDev'
 import sessionStorage, { sessionStorageUpdateObservable } from './sessionStorage'
 
 const setItem = (key: string, value: any) => {

@@ -3,9 +3,9 @@ import {
   ConnectionPayload,
   getConnectionPayload,
   getConnectionStatus,
-} from '@lib/services/bridge-service'
-import getHostname from '@lib/utils/getHostname'
-import getPathParams from '@lib/utils/getPathParams'
+} from '../services/bridge-service'
+import getHostname from '../utils/getHostname'
+import getPathParams from '../utils/getPathParams'
 import React, { useCallback, useEffect, useState } from 'react'
 import NavigationProvider, { initialRoute } from './contexts/NavigationProvider'
 import useNavigation from './hooks/useNavigation'
