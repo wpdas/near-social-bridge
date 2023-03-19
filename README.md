@@ -8,7 +8,7 @@ This provides the connection between the View and External App. [See the "connec
 
 1.1 - useNearSocialBridge hook: provides a way to send / receive messages between the View and the External App.
 
-1.1 - Request: Make resquest to the View using the Bridge Service with some control. The Widget should handle each request properly.
+1.1 - Request: Make request to the View using the Bridge Service with some control. The Widget should handle each request properly.
 
 1.2 - Custom Requests: We can create custom request similar to usual API call
 
