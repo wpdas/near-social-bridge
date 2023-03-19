@@ -1,13 +1,6 @@
 - Criar Link para o navigation: ver arquivo TaskToolbar linha 17 e 88 (menuItems)
-- Encontrar um jeito de pegar o tamanho da altura da janela do dispositivo e colocar no iframe
 - Colocar no README.md sobre o "Initial Path r=/profile"
 - Melhorar o README.me
 - Colocar exemplo de todos os hooks no README.md
 - Colocar no README sobre o Navigator setar o cumprimento do conteúdo da tela no iframe automaticamente
-
-2 - Guardar o estado do navigator para quando ouver um refresh, o estado continue igual
-
-3 - Criar um script do Viewer num arquivo js e injetar ele dentro do iframe com outro iframe por dentro, esse iframe
-de dentro faria todo o trabalho de conexão e mandaria a mensagem para o iframe do Viewer passando os parametros necessarios
-
-4 - Fazer o simulador de iframe
+- Criar testes
