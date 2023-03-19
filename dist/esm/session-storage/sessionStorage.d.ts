@@ -1,4 +1,4 @@
-import Observable from '@lib/utils/observable';
+import Observable from '../utils/observable';
 /**
  * Notify with the current storage data every time the storage is updated
  */

@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.buildRequestBody = void 0;
-var bridge_service_1 = require("@lib/services/bridge-service");
+var bridge_service_1 = require("../services/bridge-service");
 /**
  * Build a request body
  * @param type Request type to be handled inside the View

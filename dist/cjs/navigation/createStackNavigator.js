@@ -1,9 +1,9 @@
 "use strict";
 exports.__esModule = true;
 var tslib_1 = require("tslib");
-var bridge_service_1 = require("@lib/services/bridge-service");
-var getHostname_1 = tslib_1.__importDefault(require("@lib/utils/getHostname"));
-var getPathParams_1 = tslib_1.__importDefault(require("@lib/utils/getPathParams"));
+var bridge_service_1 = require("../services/bridge-service");
+var getHostname_1 = tslib_1.__importDefault(require("../utils/getHostname"));
+var getPathParams_1 = tslib_1.__importDefault(require("../utils/getPathParams"));
 var react_1 = tslib_1.__importStar(require("react"));
 var NavigationProvider_1 = tslib_1.__importStar(require("./contexts/NavigationProvider"));
 var useNavigation_1 = tslib_1.__importDefault(require("./hooks/useNavigation"));

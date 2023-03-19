@@ -1,8 +1,8 @@
 import { __assign, __awaiter, __generator } from "tslib";
-import { REQUEST_KEYS } from '@lib/constants';
-import request from '@lib/request';
-import { onConnectObservable } from '@lib/services/bridge-service';
-import Observable from '@lib/utils/observable';
+import { REQUEST_KEYS } from '../constants';
+import request from '../request';
+import { onConnectObservable } from '../services/bridge-service';
+import Observable from '../utils/observable';
 /**
  * Notify with the current storage data every time the storage is updated
  */
@@ -48,7 +48,7 @@ var hydrateViewer = function () { return __awaiter(void 0, void 0, void 0, funct
     });
 }); };
 /**
- * This method is automatically called every time the bridge connection is estabilished
+ * This method is automatically called every time the bridge connection is established
  */
 var hydrate = function () { return __awaiter(void 0, void 0, void 0, function () {
     var view_sessionStorageClone;
@@ -66,7 +66,7 @@ var hydrate = function () { return __awaiter(void 0, void 0, void 0, function ()
         }
     });
 }); };
-// Every time the bridge connection is estabilished, hydrate the storage
+// Every time the bridge connection is established, hydrate the storage
 onConnectObservable.subscribe(hydrate);
 /**
  * Stores data for one session. Data is lost when the browser tab is reloaded or closed

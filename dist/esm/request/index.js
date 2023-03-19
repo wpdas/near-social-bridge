@@ -1,4 +1,4 @@
-import { initBridgeService, bridgeServiceObservable, postMessage } from '@lib/services/bridge-service';
+import { initBridgeService, bridgeServiceObservable, postMessage } from '../services/bridge-service';
 /**
  * Build a request body
  * @param type Request type to be handled inside the View

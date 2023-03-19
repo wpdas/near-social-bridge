@@ -1,6 +1,6 @@
 import React from 'react';
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { bridgeServiceObservable, initBridgeService, postMessage as postMessageService, } from '@lib/services/bridge-service';
+import { bridgeServiceObservable, initBridgeService, postMessage as postMessageService, } from '../../services/bridge-service';
 var defaultValue = {
     postMessage: function () {
         throw new Error('postMessage must be defined!');

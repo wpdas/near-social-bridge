@@ -4,7 +4,7 @@ exports.NearSocialBridgeContext = void 0;
 var tslib_1 = require("tslib");
 var react_1 = tslib_1.__importDefault(require("react"));
 var react_2 = require("react");
-var bridge_service_1 = require("@lib/services/bridge-service");
+var bridge_service_1 = require("../../services/bridge-service");
 var defaultValue = {
     postMessage: function () {
         throw new Error('postMessage must be defined!');

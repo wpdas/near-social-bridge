@@ -2,7 +2,7 @@
 exports.__esModule = true;
 exports.initialRoute = exports.NavigationContext = void 0;
 var tslib_1 = require("tslib");
-var getPathParams_1 = tslib_1.__importDefault(require("@lib/utils/getPathParams"));
+var getPathParams_1 = tslib_1.__importDefault(require("../../utils/getPathParams"));
 var react_1 = tslib_1.__importStar(require("react"));
 var defaultValue = {
     push: function () {

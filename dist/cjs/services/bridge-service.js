@@ -2,8 +2,8 @@
 exports.__esModule = true;
 exports.initBridgeService = exports.getConnectionStatus = exports.getConnectionPayload = exports.postMessage = exports.onConnectObservable = exports.bridgeServiceObservable = void 0;
 var tslib_1 = require("tslib");
-var isLocalDev_1 = tslib_1.__importDefault(require("@lib/utils/isLocalDev"));
-var observable_1 = tslib_1.__importDefault(require("@lib/utils/observable"));
+var isLocalDev_1 = tslib_1.__importDefault(require("../utils/isLocalDev"));
+var observable_1 = tslib_1.__importDefault(require("../utils/observable"));
 var viewSource;
 var status = 'pending';
 var connectionPayload = {};

@@ -1,4 +1,4 @@
-import Observable from '@lib/utils/observable';
+import Observable from '../utils/observable';
 export type ConnectionPayload = {
     /**
      * Initial path to be rendered. This is optionally provided by the Near Social View

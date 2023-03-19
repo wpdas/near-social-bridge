@@ -1,8 +1,8 @@
 "use strict";
 exports.__esModule = true;
 var tslib_1 = require("tslib");
-var bridge_service_1 = require("@lib/services/bridge-service");
-var isLocalDev_1 = tslib_1.__importDefault(require("@lib/utils/isLocalDev"));
+var bridge_service_1 = require("../services/bridge-service");
+var isLocalDev_1 = tslib_1.__importDefault(require("../utils/isLocalDev"));
 var sessionStorage_1 = tslib_1.__importStar(require("./sessionStorage"));
 var setItem = function (key, value) {
     return new Promise(function (resolve) {
