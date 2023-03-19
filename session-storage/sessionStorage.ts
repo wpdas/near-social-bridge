@@ -48,7 +48,7 @@ const hydrateViewer = async () => {
 }
 
 /**
- * This method is automatically called every time the bridge connection is estabilished
+ * This method is automatically called every time the bridge connection is established
  */
 const hydrate = async () => {
   // Request to hydrate the external app
@@ -59,7 +59,7 @@ const hydrate = async () => {
   sessionStorageUpdateObservable.notify(_storage)
 }
 
-// Every time the bridge connection is estabilished, hydrate the storage
+// Every time the bridge connection is established, hydrate the storage
 onConnectObservable.subscribe(hydrate)
 
 /**
