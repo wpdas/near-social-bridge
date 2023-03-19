@@ -138,27 +138,19 @@ function NearSocialBridgeCore(props) {
     }
 
     // Envia mensagem welcome
-    // Wait a bit to send the "connect" payload only after all the scripts are loaded and the component
-    // is ready
-    // setTimeout(() => {
-    // if (!connectMessageSent) {
-    // setConnectMessageSent(true);
     const welcomePayload = createConnectionPayload()
     sendMessage(welcomePayload)
-    // }
-    // }, 1000)
   }
 
   return React.createElement('iframe', {
     sandbox: 'allow-scripts',
     id: 'myIframe',
     src: externalAppUrl,
-    title: 'foo',
     style: { border: 'none', width: '100%', height: iframeHeight + 'px' },
     onLoad: onLoadHandler,
   })
 }
 
-const domContainer = document.querySelector('#react-root')
+const domContainer = document.querySelector('#bridge-root')
 const root = ReactDOM.createRoot(domContainer)
 root.render(React.createElement(NearSocialBridgeCore, {}))
