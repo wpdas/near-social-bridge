@@ -1,0 +1,1 @@
+{"version":3,"file":"getHostname.js","sourceRoot":"","sources":["../../../utils/getHostname.ts"],"names":[],"mappings":";;AAAA,IAAM,WAAW,GAAG;IAClB,IAAM,GAAG,GAAG,IAAI,GAAG,CAAC,MAAM,CAAC,QAAQ,CAAC,IAAI,CAAC,CAAA;IACzC,OAAO,GAAG,CAAC,QAAQ,CAAA;AACrB,CAAC,CAAA;AAED,qBAAe,WAAW,CAAA"}

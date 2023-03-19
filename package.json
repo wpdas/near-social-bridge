@@ -1,0 +1,50 @@
+{
+  "name": "near-social-bridge",
+  "version": "1.0.0-alpha",
+  "description": "Near Social Bridge Lib. This allows you to create React app and connect it to the Near Social View as well as sending and getting data from it.",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist; yarn build:esm && yarn build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
+    "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\""
+  },
+  "keywords": [],
+  "author": "Wenderson Pires (Wpdas)",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "files": [
+    "index.ts",
+    "constants.ts",
+    "dist",
+    "bridge",
+    "navigation",
+    "request",
+    "services",
+    "session-storage",
+    "utils",
+    "bridge.min.js",
+    "README.md"
+  ],
+  "devDependencies": {
+    "@types/react": "^18.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "install": "^0.13.0",
+    "prettier": "^2.8.4",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "tslib": "^2.5.0",
+    "typescript": "^4.7.3"
+  }
+}
