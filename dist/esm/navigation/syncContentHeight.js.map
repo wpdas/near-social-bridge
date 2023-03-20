@@ -1,1 +1,0 @@
-{"version":3,"file":"syncContentHeight.js","sourceRoot":"","sources":["../../../navigation/syncContentHeight.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,cAAc,CAAA;AAC3C,OAAO,OAAO,MAAM,YAAY,CAAA;AAEhC,MAAM,CAAC,IAAM,iBAAiB,GAAG,UAAC,MAAc;IAC9C,OAAA,OAAO,CAAC,YAAY,CAAC,oCAAoC,EAAE,EAAE,MAAM,QAAA,EAAE,CAAC;AAAtE,CAAsE,CAAA"}

@@ -1,1 +1,0 @@
-{"version":3,"file":"useNearSocialBridge.js","sourceRoot":"","sources":["../../../../bridge/hooks/useNearSocialBridge.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,UAAU,EAAE,MAAM,OAAO,CAAA;AAClC,OAAO,EAAE,uBAAuB,EAAE,MAAM,sCAAsC,CAAA;AAE9E,IAAM,mBAAmB,GAAG,cAAM,OAAA,UAAU,CAAC,uBAAuB,CAAC,EAAnC,CAAmC,CAAA;AACrE,eAAe,mBAAmB,CAAA"}
