@@ -2,6 +2,16 @@
 
 This library allows you to use a React App in a Widget created within Near Social as well as send and receive data from it.
 
+## Install
+
+```sh
+yarn add near-social-bridge
+
+#or
+
+npm install near-social-bridge
+```
+
 ## Resources
 
 **Bridge**
