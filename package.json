@@ -11,7 +11,7 @@
     "build:dev": "npm run clean; npm run build:esm; npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
-    "prepack": "npm run build:prod",
+    "prepack": "npm install; npm run build:prod",
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\""
   },
