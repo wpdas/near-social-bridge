@@ -1,5 +1,0 @@
-export declare const REQUEST_KEYS: {
-    SESSION_STORAGE_HYDRATE_VIEWER: string;
-    SESSION_STORAGE_HYDRATE_APP: string;
-    NAVIGATION_SYNC_CONTENT_HIGHT_VIEWER: string;
-};
