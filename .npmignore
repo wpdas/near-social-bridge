@@ -1,4 +1,6 @@
 src
+IN_PROGRESS_README.md
 .github
 bridge.js
 NOTES.txt
+yarn.lock
