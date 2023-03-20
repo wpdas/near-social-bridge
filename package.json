@@ -15,7 +15,7 @@
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\""
   },
-  "keywords": ["near social", "react", "app", "bridge", "near"],
+  "keywords": ["near social", "react", "app", "bridge", "near", "widget"],
   "author": "Wenderson Pires (Wpdas)",
   "license": "MIT",
   "peerDependencies": {
