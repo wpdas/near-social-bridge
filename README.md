@@ -35,6 +35,12 @@ This resource was created in order to facilitate the passage of properties betwe
 - `NavigationProvider` provider: Handles screens, routes, history and others things
 - `useNavigation` hook: expose features like `push` new route, `goBack` to the previous route, `location` with the current route location and props, `history` with the history of all routes visited and their props
 
+While using the Widget, the url should be like `https://near.social/#/wendersonpires.near/widget/MyWidget?path=/profile`
+where the `?path=` is the param with the route value. E.g: `?path=/timeline`.
+
+While developing locally, you can just use the URL rendered by this lib. E.g: `http://localhost:1234/#/profile` where
+`#/profile` is the current route.
+
 **Request**
 
 - `request`: Allow to make requests to the View using the Bridge Service. The Widget should handle each request properly.
@@ -167,4 +173,6 @@ const sendUserInfo = (requestType, payload) => {
 }
 ```
 
-99 - It is recommended to use a service like [ngrok](https://ngrok.com/) to help you during development. Since it will expose your application globally to be accessed within the Widget.
+## Testing the Application Inside the Widget
+
+You can develop using `localhost` without any problems, it's just that the app won't have access to the data the widget can provide. If you want to test your app while developing, use a service like [ngrok](https://ngrok.com/) to help you, since it will expose your application globally to be accessed within the Widget.

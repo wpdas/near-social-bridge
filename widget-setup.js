@@ -7,7 +7,7 @@ const code = `
 `;
 
 // External App Url
-const externalAppUrl = "https://6fa4294326de.ngrok.app/";
+const externalAppUrl = "https://<your-external-app-url>.ngrok.app/";
 
 // Initial Path
 const initialPath = props.path;
@@ -78,6 +78,5 @@ return (
       message={state.currentMessage}
       onMessage={onMessageHandler}
     />
-    <Markdown text={state.m} />
   </div>
 );
