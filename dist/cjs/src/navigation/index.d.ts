@@ -1,4 +1,5 @@
 import NavigationProvider from './contexts/NavigationProvider';
 import useNavigation from './hooks/useNavigation';
 import createStackNavigator from './createStackNavigator';
-export { NavigationProvider, useNavigation, createStackNavigator };
+import { IFrameStackScreenProps } from './types';
+export { NavigationProvider, useNavigation, createStackNavigator, IFrameStackScreenProps };
