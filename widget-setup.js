@@ -2,8 +2,9 @@
 const code = `
 <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<style>body {margin: 0; padding: 0;}</style>
 <div id="bridge-root"></div>
-<script src="https://unpkg.com/near-social-bridge@1.0.0-beta/bridge.min.js" crossorigin></script>
+<script src="https://unpkg.com/near-social-bridge@1.0.0-beta2/bridge.min.js" crossorigin></script>
 `;
 
 // External App Url
@@ -14,7 +15,7 @@ const initialPath = props.path;
 
 // Initial State
 State.init({
-  iframeHeight: 800,
+  iframeHeight: 785,
   currentMessage: { type: "connect-view", externalAppUrl, initialPath },
 });
 

@@ -1,4 +1,4 @@
-# Near Social Bridge Lib - alpha
+# Near Social Bridge - beta
 
 This library allows you to use a React App in a Widget created within Near Social as well as send and receive data from it.
 
@@ -16,7 +16,7 @@ npm install near-social-bridge
 
 Open up this initial file [widget-setup.js](./widget-setup.js), copy its content and paste inside your new Widget. [You can create a new Widget inside Near Social here.](https://near.social/#/edit)
 
-**Example widget running with an external react app:**
+Demo Widget running with an external React App: [**NearSocialBridge_Demo**](https://near.social/#/wendersonpires.near/widget/NearSocialBridge_Demo)
 
 ## Resources
 
@@ -57,11 +57,11 @@ While developing locally, you can just use the URL rendered by this lib. E.g: `h
 
 **Core JS file**
 
-- `bridge.min.js` file: you should import this file inside your widget using CDN. A tutorial of how to use it will be posted soon.
+- `bridge.min.js` file: should be imported inside your Widget using CDN. You can see more here [widget-setup.js](./widget-setup.js).
 
 ## Shortcut - How to use
 
-You can explore a sample app in the `example-app` folder which is available in this repository. But below are some shortcuts for you to configure your project.
+You can explore a sample app here [Example Near Widget App](https://github.com/Wpdas/example-near-widget-app). But below are some shortcuts for you to configure your project.
 
 1 - Wrap your App with NearSocialBridgeProvider:
 
@@ -79,7 +79,10 @@ root.render(
 import { createStackNavigator } from 'near-social-bridge/navigation'
 import { NavigationProps } from './NavigationProps'
 
-const { Navigator, Screen } = createStackNavigator<NavigationProps>()
+// Optional Fallback Loading component to show while the connection is being established
+const FallbackLoadingComponent = () => <p>Loading...</p>
+
+const { Navigator, Screen } = createStackNavigator<NavigationProps>(<FallbackLoadingComponent />)
 ```
 
 3 - You can optionally create properties for each route. It will be useful for you to have a typed `navigation` and `route` object.
