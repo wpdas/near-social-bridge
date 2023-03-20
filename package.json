@@ -1,6 +1,6 @@
 {
   "name": "near-social-bridge",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.8",
   "description": "Near Social Bridge Lib. This allows you to create React app and connect it to the Near Social View as well as sending and getting data from it.",
   "main": "./dist/cjs/src/index.js",
   "module": "./index.js",
