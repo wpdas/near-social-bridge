@@ -1,6 +1,6 @@
 {
   "name": "near-social-bridge",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.7",
   "description": "Near Social Bridge Lib. This allows you to create React app and connect it to the Near Social View as well as sending and getting data from it.",
   "main": "./dist/cjs/src/index.js",
   "module": "./index.js",
@@ -8,7 +8,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build:prod": "npm run clean; tsc -p tsconfig.prod.json; npm run build:cjs",
-    "build": "npm run clean; npm run build:esm; npm run build:cjs",
+    "build:dev": "npm run clean; npm run build:esm; npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "prepack": "npm run build:prod",
@@ -21,12 +21,6 @@
   "peerDependencies": {
     "react": ">=16"
   },
-  "files": [
-    "dist",
-    "bridge.min.js",
-    "README.md",
-    "LICENSE"
-  ],
   "devDependencies": {
     "@types/react": "^18.0.12",
     "@typescript-eslint/eslint-plugin": "^5.55.0",

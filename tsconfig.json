@@ -1,5 +1,5 @@
 {
-  "include": ["./src"],
+  "include": ["."],
   "exclude": ["dist", "node_modules", "bridge.js", "bridge.min.js"],
   "compilerOptions": {
     "module": "esnext",
@@ -7,7 +7,7 @@
     "importHelpers": false,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./",
+    "rootDir": "./src",
     "outDir": "./dist/esm",
     "strict": true,
     "noImplicitReturns": true,
