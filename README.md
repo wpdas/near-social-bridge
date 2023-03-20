@@ -1,99 +1,48 @@
-# Near Social Bridge Lib (In progress)
+# Near Social Bridge Lib - alpha
 
-You must create a Widget for "development" and another one for "production". The widget setup code can be found
-here in the `widget-setup.js` file
+This library allows you to use a React App in a Widget created within Near Social as well as send and receive data from it.
 
-1 - Bridge Service: Is using MessageSource (a kind of Websocket Port to send and receive message)
-This provides the connection between the View and External App. [See the "connect" message in the Widget]
+## Resources
 
-1.1 - useNearSocialBridge hook: provides a way to send / receive messages between the View and the External App.
+**Bridge**
 
-1.1 - Request: Make request to the View using the Bridge Service with some control. The Widget should handle each request properly.
+- `NearSocialBridgeProvider` provider: start the connection between the External App and Near Social View;
+- `useNearSocialBridge` hook: allow get and send messages to Near Social View;
 
-1.2 - Custom Requests: We can create custom request similar to usual API call
+**Navigation**
 
-1.2.1 - Every request will be a Promise, resolved when the View gives the answer
+- `createStackNavigator`: Provides the sources to navigate over the app
+- - `Navigation`: Renders only the page we want inside the iframe. Allow us to send props between the screens.
+- - `Screen`: Each screen component is provided with `navigation` (provided by `useNavigation` hook as well) and `route` props
+- `NavigationProvider` provider: Handles screens, routes, history and others things
+- `useNavigation` hook: expose features like `push` new route, `goBack` to the previous route, `location` with the current route location and props, `history` with the history of all routes visited and their props
 
-2 - Navigation: Renders only the page we want inside the iframe. Allow us to send props between the screens.
+**Request**
 
-2.1 - Screen: Each screen component is provided with navigation and route
+- `request`: Allow to make requests to the View using the Bridge Service. The Widget should handle each request properly.
 
-2.1.1 - Screen provides a way to optionally set the iframe height. E.g:
+**Session Storage**
 
-```js
-<Navigator>
-  <Screen name="Landing" component={Landing} iframeHeight={780} />
-  <Screen name="Dummy" component={Dummy} />
-  <Screen name="Profile" component={Profile} iframeHeight={1010} />
-</Navigator>
-```
+- `sessionStorage`: Stores data for one session. While testing inside a Widget, data is lost when the browser tab is reloaded or closed
+- `persistStorage`: Provides automatic Redux state persistence for session (this feature relies on `sessionStorage`)
+- `useSessionStorage` hook: Returns storage with the most updated items
 
-2.2 - navigation prop: used to navigate between the screen. ex:
+**Service**
 
-```js
-// Push new Screen and its props
-navigation.push('Task-Edit', {
-  taskId: 'fakeID_1234',
-  previousDescription: 'bla bla bla',
-})
+- `bridgeService`: This is the core service that makes the connection and notifies observers when there is a new message or a connection is established.
 
-// Go to the previous screen
-navigation.goBack()
+**Core JS file**
 
-// Current location props [screen name, props]
-navigation.location
+- `bridge.min.js` file: you should import this file inside your widget using CDN. A tutorial of how to use it will be posted soon.
 
-// An array containing the history of locations visited [[screen name, props], [screen name, props], ...]
-navigation.history
-```
+## Widget Setup
 
-2.2.1 - useNavigation hook: does the same as the provided navigation prop but in any level in the three
+Open up this initial file [widget-setup.js](./widget-setup.js), copy its content and paste inside your new Widget. [You can create a new Widget inside Near Social here.](https://near.social/#/edit)
 
-2.3 - route prop: basic route props like
+## How to use
 
-2.4 - The user is able to go straight to a specific route:
+This session is going to be ready very soon...
 
-- When using the Widget, the url should be like `https://near.social/#/wendersonpires.near/widget/MyWidget?path=/profile`
-  where the `?path=` is the param with the route value. E.g: `?path=/timeline`.
+1 - Setup the React App: ...
 
-- When developing locally, you can just use the URL rendered by this lib. E.g: `http://localhost:1234/#/profile` where
-  `#/profile` is the current route.
-
-```js
-route: {
-  key?: string | undefined;
-  name: "Task-Edit";
-  params: {
-      tastId: string;
-      previousDescription: string;
-  };
-  path: string;
-  pathParams?: string | undefined;
-}
-```
-
-3 - Session Storage: Stores data for one session. Data is lost when the browser tab is reloaded or closed.
-The data is shared between the External App and the Viewer
-
-3.1 - The External App storage data will hydrate the Viewer storage state every time there's a change;
-
-3.2 - The Viewer will hydrate the External App every time there's a reconnection;
-
-3.3 - useSessionStorage hook: can be used to access the most updated storage data, e.g:
-
-```js
-sessionStorage.setItem('age', 32)
-
-// then
-
-const storage = useSessionStorage()
-console.log(storage?.age) // 32
-```
-
-3.4 - Persist Storage: Provides automatic Redux state persistence for session (this is the only way to persist data using Near Social View). [testing still]
-
-# Good to know
-
-**Redux:**
-
-- `NearSocialBridgeProvider` must wrap up the redux `Provider` component
+99 - It is recommended to use a service like [ngrok](https://ngrok.com/) to help you during development. Since it will expose your application globally to be accessed within the Widget.
