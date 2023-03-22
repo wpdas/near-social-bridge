@@ -3,7 +3,7 @@ import Observable from '../utils/observable'
 
 export type UserInfo = {
   accountId: string
-  profileInfo: {
+  profileInfo?: {
     backgroundImage?: {
       url?: string
     }
@@ -27,6 +27,7 @@ export type ConnectionPayload = {
    * Initial path to be rendered. This is optionally provided by the Near Social View
    */
   initialPath?: string
+
   /**
    * User info
    */
@@ -44,7 +45,14 @@ let viewSource: any
 let status: BridgeServiceStatus = 'pending'
 let connectionPayload: ConnectionPayload = {}
 
+/**
+ * When any message comes
+ */
 export const bridgeServiceObservable: Observable<MessageEvent<any>> = new Observable()
+
+/**
+ * When the connection is established
+ */
 export const onConnectObservable: Observable<ConnectionPayload> = new Observable()
 
 /**
@@ -70,11 +78,11 @@ const onGetMessage = (event: MessageEvent<any>) => {
 
     // Save the welcome payload (connect)
     if (event.data.type === 'connect') {
-      connectionPayload = event.data.payload
-      onConnectObservable.notify(connectionPayload)
-
       // Successful connection message
       console.log('%c --- Near Social Bridge initialized ---', 'background: #282C34; color:#fff')
+
+      connectionPayload = event.data.payload
+      onConnectObservable.notify(connectionPayload)
     }
   }
 

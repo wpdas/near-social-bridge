@@ -3,15 +3,22 @@
 esta sendo utilizado;
 
 1 - Criar recurso para saber a altura da tela (subtraindo o espaço usado pelo Near View)
+Atualmente o tamanho usado é 96px
 1 - Usar Storage para sessionStorage/persistStorage?
 1 - Implantar um jeito de acessar a Discovery API localmente
+1 - Voltar com "env" por causa das redes testnet e mainnet
+1 - Criar prop "userInfo" dentro de [import { getConnectionPayload } from "near-social-bridge/services/bridge-service";]
+para que possa ser facilmente acessado como "{userInfo} from "near-social-bridge/services/bridge-service""
 
+- Adicionar informaçoes sobre o `promisify` no README
 - Criar Link para o navigation: ver arquivo TaskToolbar linha 17 e 88 (menuItems)
 - Colocar no README.md sobre o "Initial Path r=/profile"
 - Melhorar o README.me
 - Colocar exemplo de todos os hooks no README.md
 - Colocar no README sobre o Navigator setar o cumprimento do conteúdo da tela no iframe automaticamente
 - Criar testes
+- Usar esses dois recursos para melhor desenvolvimento e deploy: 
+https://github.com/FroVolod/near-social%20https://github.com/near/near-vscode
 
 News:
 - Added support to pass Screens like:
@@ -23,3 +30,6 @@ News:
 - Sending initial user info along with connect call
 - Added `useAuth` hook. Provides the authenticated user info
 - Added refresh service (only during the development). If you press "R" key 3 times, the app is going to refresh
+
+- Criado recurso `promisify` para corrigir erro onde as vezes os dados não
+estavam disponíveis (quando usando recursos do Discovery API)

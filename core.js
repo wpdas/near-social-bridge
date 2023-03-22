@@ -17,6 +17,7 @@ function NearSocialBridgeCore(props) {
   const [connectMessageSent, setConnectMessageSent] = React.useState(state.connectMessageSent)
   const [iframeHeight, setIframeHeight] = React.useState(state.iframeHeight)
   const [sessionStorageClone, setSessionStorageClone] = React.useState(state.sessionStorageClone)
+  const [userInfo, setUserInfo] = React.useState(state.userInfo)
 
   React.useEffect(() => {
     const handler = (e) => {
@@ -28,6 +29,7 @@ function NearSocialBridgeCore(props) {
         state.externalAppUrl = e.data.externalAppUrl
         state.initialPath = e.data.initialPath
         state.userInfo = e.data.userInfo
+        setUserInfo(e.data.userInfo)
         state.iframeHeight = e.data.initialIframeHeight || 480
       }
 
@@ -96,7 +98,11 @@ function NearSocialBridgeCore(props) {
     }
   }
 
-  // Internal Request handlers
+  /**
+   * Core - Internal Request handlers
+   * All core data "nsb" will pass here first
+   * @param {*} message
+   */
   const internalRequestHandler = (message) => {
     switch (message.type) {
       case 'nsb:session-storage:hydrate-viewer':
@@ -107,6 +113,9 @@ function NearSocialBridgeCore(props) {
         break
       case 'nsb:navigation:sync-content-height':
         syncContentHeight(message.type, message.payload)
+        sendMessageToView(message)
+        break
+      case 'nsb:auth:get-user-info':
         sendMessageToView(message)
         break
     }
@@ -152,7 +161,7 @@ function NearSocialBridgeCore(props) {
 
     // Wait a bit and send the message again to ensure the app and scripts are loaded and ready
     setTimeout(() => {
-      sendMessage(welcomePayload)
+      sendMessage(createConnectionPayload())
     }, 2000)
   }
 

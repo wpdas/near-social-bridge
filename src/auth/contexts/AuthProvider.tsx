@@ -1,5 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { getConnectionPayload, onConnectObservable, UserInfo } from '../../services/bridge-service'
+import request from '../../request'
+import { REQUEST_KEYS } from '../../constants'
+import { getConnectionStatus, onConnectObservable, UserInfo } from '../../services/bridge-service'
 
 type Auth = {
   user?: UserInfo
@@ -13,12 +15,18 @@ export const AuthContext = createContext(defaultValue)
 
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserInfo>()
+  // TODO: add "ready" to use inside Navigation, show fallback til this is true
 
   // Fetch user info
   useEffect(() => {
     const onConnectHandler = () => {
-      const userInfo = getConnectionPayload().userInfo
-      setUser(userInfo)
+      onConnectObservable.unsubscribe(onConnectHandler)
+      request<UserInfo>(REQUEST_KEYS.AUTH_GET_USER_INFO).then((userInfo) => setUser(userInfo))
+    }
+
+    // If it's connected already, just get the info
+    if (getConnectionStatus() === 'connected') {
+      request<UserInfo>(REQUEST_KEYS.AUTH_GET_USER_INFO).then((userInfo) => setUser(userInfo))
     }
 
     onConnectObservable.subscribe(onConnectHandler)
