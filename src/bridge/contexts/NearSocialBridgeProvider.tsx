@@ -1,5 +1,5 @@
-import React from 'react'
-import { createContext, useCallback, useEffect, useState } from 'react'
+import React, { createContext, useCallback, useEffect, useState } from 'react'
+import AuthProvider from '../../auth/contexts/AuthProvider'
 import {
   bridgeServiceObservable,
   initBridgeService,
@@ -72,7 +72,7 @@ const NearSocialBridgeProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <NearSocialBridgeContext.Provider value={{ postMessage, onGetMessage, simulateIFrameMessage }}>
-      {children}
+      <AuthProvider>{children}</AuthProvider>
     </NearSocialBridgeContext.Provider>
   )
 }

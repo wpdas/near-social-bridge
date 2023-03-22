@@ -1,6 +1,25 @@
+1 - [issue] Fazer o app voltar para mesma pagina com o mesmo estado apos o refresh (3 x press R)
+1 - [issue] Quando vou pra outra tela, a tela atual da erro caso tenha propriedades nela que
+esta sendo utilizado;
+
+1 - Criar recurso para saber a altura da tela (subtraindo o espaço usado pelo Near View)
+1 - Usar Storage para sessionStorage/persistStorage?
+1 - Implantar um jeito de acessar a Discovery API localmente
+
 - Criar Link para o navigation: ver arquivo TaskToolbar linha 17 e 88 (menuItems)
 - Colocar no README.md sobre o "Initial Path r=/profile"
 - Melhorar o README.me
 - Colocar exemplo de todos os hooks no README.md
 - Colocar no README sobre o Navigator setar o cumprimento do conteúdo da tela no iframe automaticamente
 - Criar testes
+
+News:
+- Added support to pass Screens like:
+1 - A list of Screen components wrapped with <></>
+2 - A unique Screen component wrapped with <></>
+3 - A list of Screen components
+4 - Only one Screen component as a child
+
+- Sending initial user info along with connect call
+- Added `useAuth` hook. Provides the authenticated user info
+- Added refresh service (only during the development). If you press "R" key 3 times, the app is going to refresh

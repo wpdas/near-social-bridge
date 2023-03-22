@@ -55,6 +55,10 @@ While developing locally, you can just use the URL rendered by this lib. E.g: `h
 
 - `bridgeService`: This is the core service that makes the connection and notifies observers when there is a new message or a connection is established.
 
+**Auth**
+
+- `useAuth` hook: returns the authenticated user info.
+
 **Core JS file**
 
 - `bridge.min.js` file: should be imported inside your Widget using CDN. You can see more here [widget-setup.js](./widget-setup.js).
@@ -137,20 +141,13 @@ import request from 'near-social-bridge/request'
 interface GetUserResponse {
   accountId: string
   profileInfo: {
-    name: string
-    image: {
-      ipfs_cid: string
-    }
-    linktree?: {
-      github?: string
-      twitter?: string
-    }
+    name?: string
   }
 }
 
 // Send a request to Near Social View to get basic user info
 const response = await request<GetUserResponse>('get-user-info')
-console.log(response.userInfo?.profileInfo.name) // Logged in user name
+console.log(response?.profileInfo?.name) // Logged in user name
 ```
 
 **Widget View side:**
@@ -175,6 +172,10 @@ const sendUserInfo = (requestType, payload) => {
   sendMessage(responseBody) // to ne External App
 }
 ```
+
+## Util
+
+**Refresh:** During the development process, if you press "R" key 3 times, the app is going to refresh
 
 ## Testing the Application Inside the Widget
 

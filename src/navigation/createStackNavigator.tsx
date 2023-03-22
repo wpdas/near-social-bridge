@@ -33,44 +33,76 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
   const Navigator: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isReady, setIsReady] = useState(false)
     const navigation = useNavigation()
-    const [screens] = useState(children as any[])
+
+    const [screens, setScreens] = useState<any[]>()
     const [currentScreen, setCurrentScreen] = useState<any>()
 
-    const findScreenAndPopulateProps = useCallback((route?: string) => {
-      const pathParams = route ? route.split('/') : []
-      const routeParams = pathParams.slice(2)
+    useEffect(() => {
+      // Get the Screen childrens
+      const mainChildren = children as any
+      let finalChildren: any
 
-      // Params to be mapped
-      const params: any = {}
-
-      // Search for the Screen by path
-      const urlPath = pathParams[1]
-      const foundScreen = screens.find((screen) => screen.props.name.toLowerCase() === urlPath)
-
-      if (foundScreen) {
-        if (foundScreen.props.pathParams) {
-          // Map the props
-          const foundScreenParamsKeys: [] = foundScreen.props.pathParams.split('/:').slice(1)
-
-          foundScreenParamsKeys.forEach((key, index) => {
-            params[key] = routeParams[index] || undefined
-          })
-        }
-
-        // Set this screen (found by path) as the first to be rendered
-        navigation.push(foundScreen.props.name)
-      } else {
-        // Set the first screen in the stack
-        const firstChildName = screens[0].props.name
-        navigation.push(firstChildName)
+      // A list of Screen components wrapped with <></>
+      if (mainChildren.props?.children?.length) {
+        finalChildren = mainChildren.props?.children
+        // A unique Screen component wrapped with <></>
+      } else if (mainChildren.props?.children?.props?.name) {
+        finalChildren = [mainChildren.props?.children]
+        // A list of Screen components
+      } else if (mainChildren.length) {
+        finalChildren = mainChildren
+        // Theres only one Screen component
+      } else if (mainChildren.props?.name) {
+        finalChildren = [mainChildren]
       }
-    }, [])
+
+      if (!finalChildren) {
+        throw new Error('You have to provide at least one Screen!')
+      }
+
+      setScreens(finalChildren)
+    }, [children])
+
+    const findScreenAndPopulateProps = useCallback(
+      (route?: string) => {
+        if (!screens) return
+
+        const pathParams = route ? route.split('/') : []
+        const routeParams = pathParams.slice(2)
+
+        // Params to be mapped
+        const params: any = {}
+
+        // Search for the Screen by path
+        const urlPath = pathParams[1]
+        const foundScreen = screens.find((screen: any) => screen.props.name.toLowerCase() === urlPath)
+
+        if (foundScreen) {
+          if (foundScreen.props.pathParams) {
+            // Map the props
+            const foundScreenParamsKeys: [] = foundScreen.props.pathParams.split('/:').slice(1)
+
+            foundScreenParamsKeys.forEach((key, index) => {
+              params[key] = routeParams[index] || undefined
+            })
+          }
+
+          // Set this screen (found by path) as the first to be rendered
+          navigation.push(foundScreen.props.name)
+        } else {
+          // Set the first screen in the stack
+          const firstChildName = screens[0].props.name
+          navigation.push(firstChildName)
+        }
+      },
+      [screens]
+    )
 
     useEffect(() => {
       // Internal path (executing inside the iframe or local browser during development)
       const route = getConnectionPayload().initialPath || `/${initialRoute}` || undefined
       findScreenAndPopulateProps(route)
-    }, [])
+    }, [findScreenAndPopulateProps])
 
     useEffect(() => {
       // Use the bridge service to set the initial page
@@ -95,7 +127,7 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
       return () => {
         onConnectObservable.unsubscribe(handler)
       }
-    }, [])
+    }, [findScreenAndPopulateProps])
 
     /**
      * Send the content height to the iframe, so that it can fit the content properly
@@ -111,16 +143,20 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
 
     // Handle the current screen
     useEffect(() => {
-      const _currentScreen = screens.find((screen) => screen.props.name === navigation.location?.[0]) || null
+      if (!screen) return
+
+      const _currentScreen = screens?.find((screen: any) => screen.props.name === navigation.location?.[0]) || null
       setCurrentScreen(_currentScreen)
     }, [navigation.location, screens])
 
     // Handle window location hash changes
     useEffect(() => {
       const handler = (event: HashChangeEvent) => {
+        if (!screen) return
+
         const currentRoute = getPathParams(event.newURL)[0]
         // Reset the screen
-        const _currentScreen = screens.find((screen) => screen.props.name.toLowerCase() === currentRoute) || null
+        const _currentScreen = screens?.find((screen: any) => screen.props.name.toLowerCase() === currentRoute) || null
         if (_currentScreen) {
           setCurrentScreen(_currentScreen)
         }

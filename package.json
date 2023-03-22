@@ -1,27 +1,35 @@
 {
   "name": "near-social-bridge",
-  "version": "1.0.0-beta4",
+  "version": "1.0.0-beta5",
   "description": "This library allows you to use a React App in a Widget created within Near Social as well as send and receive data from it.",
-  "main": "./dist/cjs/src/index.js",
+  "main": "./index.js",
   "module": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist",
-    "build:prod": "npm run clean; tsc -p tsconfig.prod.json; npm run build:cjs",
-    "build:dev": "npm run clean; npm run build:esm; npm run build:cjs",
+    "clean": "rm -rf dist auth bridge navigation request services session-storage utils constants.d.ts constants.js index.d.ts index.js",
+    "build": "npm run clean; tsc -p tsconfig.prod.json; npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
-    "prepack": "npm install; npm run build:prod",
+    "prepack": "npm install; npm run build",
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\""
   },
-  "keywords": ["near social", "react", "app", "bridge", "near", "widget"],
+  "keywords": [
+    "near social",
+    "react",
+    "app",
+    "bridge",
+    "near",
+    "widget"
+  ],
   "author": "Wenderson Pires (wpdas)",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=16",
+    "react-dom": ">=16"
   },
   "devDependencies": {
+    "@types/node": "^18.15.5",
     "@types/react": "^18.0.12",
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
@@ -32,8 +40,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "install": "^0.13.0",
     "prettier": "^2.8.4",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
     "tslib": "2.4.0",
     "typescript": "^4.7.3"
   },

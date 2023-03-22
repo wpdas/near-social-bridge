@@ -3,11 +3,16 @@ const code = `
 <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 <div id="bridge-root"></div>
-<script src="https://unpkg.com/near-social-bridge@1.0.0-beta3/bridge.min.js" crossorigin></script>
+<script src="https://unpkg.com/near-social-bridge@1.0.0-beta5/bridge.min.js" crossorigin></script>
 `;
 
 // External App Url
 const externalAppUrl = "https://<your-external-app-url>.ngrok.app/";
+
+// User Info;
+const accountId = context.accountId ?? "*";
+const profileInfo = Social.getr(`${accountId}/profile`);
+const userInfo = { accountId, profileInfo }
 
 // Initial Path
 const initialPath = props.path;
@@ -21,6 +26,7 @@ State.init({
   currentMessage: {
     type: "connect-view",
     externalAppUrl,
+    userInfo,
     initialPath,
     initialIframeHeight,
   },

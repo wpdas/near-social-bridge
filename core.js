@@ -6,6 +6,7 @@ let state = {
   externalAppUrl: '',
   initialPath: null,
   iframeHeight: 480,
+  userInfo: null,
   sessionStorageClone: {},
   connectMessageSent: false,
 }
@@ -26,6 +27,7 @@ function NearSocialBridgeCore(props) {
         setIframeHeight(e.data.initialIframeHeight || 480)
         state.externalAppUrl = e.data.externalAppUrl
         state.initialPath = e.data.initialPath
+        state.userInfo = e.data.userInfo
         state.iframeHeight = e.data.initialIframeHeight || 480
       }
 
@@ -75,8 +77,8 @@ function NearSocialBridgeCore(props) {
       type: 'connect',
       payload: {
         initialPath: state.initialPath,
+        userInfo: state.userInfo,
       },
-      initialPath: state.initialPath,
       created_at: Date.now(),
     }
   }

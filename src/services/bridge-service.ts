@@ -1,11 +1,36 @@
 import isLocalDev from '../utils/isLocalDev'
 import Observable from '../utils/observable'
 
+export type UserInfo = {
+  accountId: string
+  profileInfo: {
+    backgroundImage?: {
+      url?: string
+    }
+    description?: string
+    name?: string
+    image?: {
+      ipfs_cid: string
+    }
+    linktree?: {
+      github?: string
+      twitter?: string
+      telegram?: string
+      website?: string
+    }
+    tags?: any
+  }
+}
+
 export type ConnectionPayload = {
   /**
    * Initial path to be rendered. This is optionally provided by the Near Social View
    */
   initialPath?: string
+  /**
+   * User info
+   */
+  userInfo?: UserInfo
 }
 
 /**
@@ -47,10 +72,10 @@ const onGetMessage = (event: MessageEvent<any>) => {
     if (event.data.type === 'connect') {
       connectionPayload = event.data.payload
       onConnectObservable.notify(connectionPayload)
-    }
 
-    // Successful connection message
-    console.log('%c --- Near Social Bridge initialized ---', 'background: #282C34; color:#fff')
+      // Successful connection message
+      console.log('%c --- Near Social Bridge initialized ---', 'background: #282C34; color:#fff')
+    }
   }
 
   // Notify all observers

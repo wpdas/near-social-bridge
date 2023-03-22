@@ -2,3 +2,16 @@
 yarn-error.log*
 node_modules
 dist
+
+# build
+auth
+bridge
+navigation
+request
+services
+session-storage
+utils
+constants.d.ts
+constants.js
+index.d.ts
+index.js
