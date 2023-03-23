@@ -1,3 +1,5 @@
+import { REQUEST_KEYS } from '../constants'
+import request from '../request'
 import isLocalDev from '../utils/isLocalDev'
 import Observable from '../utils/observable'
 
@@ -32,6 +34,11 @@ export type ConnectionPayload = {
    * User info
    */
   userInfo?: UserInfo
+
+  /**
+   * Any initial payload provided by VM
+   */
+  initialPayload?: any
 }
 
 /**
@@ -74,15 +81,19 @@ const onGetMessage = (event: MessageEvent<any>) => {
   if (!viewSource && status === 'waiting-for-viewer-signal') {
     // Set the Messager source
     viewSource = event.source
-    status = 'connected'
 
     // Save the welcome payload (connect)
     if (event.data.type === 'connect') {
+      status = 'connected'
+
       // Successful connection message
       console.log('%c --- Near Social Bridge initialized ---', 'background: #282C34; color:#fff')
 
       connectionPayload = event.data.payload
       onConnectObservable.notify(connectionPayload)
+
+      // Send a message back to the View saying the connection is established
+      request(REQUEST_KEYS.BRIDGE_SERVICE_CONNECTION_ESTABLISHED)
     }
   }
 

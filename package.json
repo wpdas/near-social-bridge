@@ -6,7 +6,7 @@
   "module": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist auth bridge navigation request services session-storage utils constants.d.ts constants.js index.d.ts index.js",
+    "clean": "rm -rf dist hooks auth bridge navigation request services session-storage utils constants.d.ts constants.js index.d.ts index.js",
     "build": "npm run clean; tsc -p tsconfig.prod.json; npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",

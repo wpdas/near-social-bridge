@@ -4,6 +4,7 @@ node_modules
 dist
 
 # build
+/hooks
 /auth
 /bridge
 /navigation

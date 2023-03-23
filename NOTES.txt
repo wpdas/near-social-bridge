@@ -33,3 +33,7 @@ News:
 
 - Criado recurso `promisify` para corrigir erro onde as vezes os dados não
 estavam disponíveis (quando usando recursos do Discovery API)
+
+- Foi criado um Widget `NearSocialBridgeCore` para ser usado de forma simples
+- Adicionado `utilsProvider` para prover o Utils
+- Added `useInitialPayload` hook to get the initial payload sent by VM
