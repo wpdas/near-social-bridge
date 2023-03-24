@@ -65,8 +65,8 @@ const requestHandler = (request, response, Utils) => {
     // Fetch profile info like { name, image, description, linktree, ... }
     // This is going to take some time to retrieve and Social.getr is not a Promise by default
     () => Social.getr(`${accountId}/profile`),
-    (response) => {
-      console.log(response) // { name, image, description, linktree, ... }
+    (data) => {
+      console.log(data) // { name, image, description, linktree, ... }
     },
     (error) => {
       console.log('error fetching profile data')
