@@ -14,9 +14,13 @@ npm install near-social-bridge
 
 ## Widget Setup
 
-Open up this initial file [widget-setup.js](./widget-setup.js), copy its content and paste inside your new Widget. [You can create a new Widget inside Near Social here.](https://near.social/#/edit)
+Open up this initial file [**widget-setup.js**](./widget-setup.js), copy its content and paste inside your new Widget. [You can create a new Widget inside Near Social here.](https://near.social/#/edit)
 
-Demo Widget running with an external React App: [**NearSocialBridge_Demo**](https://near.social/#/wendersonpires.near/widget/NearSocialBridge_Demo)
+Demo [**ChatV2**](https://near.social/#/wendersonpires.near/widget/ChatV2) Widget built using this library.
+
+Give it a try. Join room id: **near-social-community**
+
+The repository for this app can be found here: [**chatv2-near-widget-app**](https://github.com/wpdas/chatv2-near-widget-app)
 
 ## Resources
 
