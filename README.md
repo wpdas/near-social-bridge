@@ -1,4 +1,4 @@
-# <img src='./md/near-social-bridge-logo.png' height='20' alt='NEAR Social Bridge Logo' /> NEAR Social Bridge
+# <img src='./md/near-social-bridge-logo.png' height='24' alt='NEAR Social Bridge Logo' /> NEAR Social Bridge
 
 This library allows you to use a React App in a Widget created within Near Social and use it as a backend source. This library is still in progress.
 
