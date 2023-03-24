@@ -1,5 +1,3 @@
-import { REQUEST_KEYS } from '../constants'
-import request from '../request'
 import isLocalDev from '../utils/isLocalDev'
 import Observable from '../utils/observable'
 
@@ -22,6 +20,7 @@ export type UserInfo = {
     }
     tags?: any
   }
+  error?: string
 }
 
 export type ConnectionPayload = {
@@ -91,9 +90,6 @@ const onGetMessage = (event: MessageEvent<any>) => {
 
       connectionPayload = event.data.payload
       onConnectObservable.notify(connectionPayload)
-
-      // Send a message back to the View saying the connection is established
-      request(REQUEST_KEYS.BRIDGE_SERVICE_CONNECTION_ESTABLISHED)
     }
   }
 

@@ -11,6 +11,7 @@ import NavigationProvider, { initialRoute } from './contexts/NavigationProvider'
 import useNavigation from './hooks/useNavigation'
 import { syncContentHeight } from './syncContentHeight'
 import { ParamListBase, Route } from './types'
+import { useAuth } from '../auth'
 
 /**
  * Create and provides a Navigator (Routes controler) and Screen (Route component).
@@ -31,6 +32,7 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
    * @returns
    */
   const Navigator: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const auth = useAuth()
     const [isReady, setIsReady] = useState(false)
     const navigation = useNavigation()
 
@@ -169,8 +171,9 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
       }
     }, [screens])
 
-    // Shows the Fallback component while waiting for the connection
-    if (!isReady) return fallback ? <>{fallback}</> : null
+    // Shows the Fallback component while waiting for the connection and
+    // userInfo
+    if (!isReady || !auth.ready) return fallback ? <>{fallback}</> : null
 
     return <>{currentScreen}</>
   }

@@ -1,6 +1,4 @@
 export const REQUEST_KEYS = {
-  BRIDGE_SERVICE_CONNECTION_ESTABLISHED: 'nsb:bridge-service:connection-established',
-
   SESSION_STORAGE_HYDRATE_VIEWER: 'nsb:session-storage:hydrate-viewer',
   SESSION_STORAGE_HYDRATE_APP: 'nsb:session-storage:hydrate-app',
 

@@ -1,7 +1,7 @@
 {
   "name": "near-social-bridge",
   "version": "1.0.0-beta5",
-  "description": "This library allows you to use a React App in a Widget created within Near Social as well as send and receive data from it.",
+  "description": "This library allows you to use a React App within a Widget created within Near Social and use it as a Backend source.",
   "main": "./index.js",
   "module": "./index.js",
   "types": "./index.d.ts",

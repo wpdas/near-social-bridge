@@ -19,6 +19,48 @@ para que possa ser facilmente acessado como "{userInfo} from "near-social-bridge
 - Criar testes
 - Usar esses dois recursos para melhor desenvolvimento e deploy: 
 https://github.com/FroVolod/near-social%20https://github.com/near/near-vscode
+- Nota para contribuidor:
+Usar algum editor de código como o VSCode para editar a parte do "code", salvar o arquivo
+core.js e também o componente.
+
+ou
+
+Para atualizar o core.js, você tem que colar o conteúdo do core.js
+dentro do script para poder fazer mudanças em tempo real.
+
+```js
+const code = `
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<div id="bridge-root"></div>
+
+<script>
+
+//... core.js content here
+
+</script>
+`
+```
+
+Uma vez que ele estiver pronto, volte com a url do script core.js, copie e
+cole no arquivo core.js e abra seu PR com as mudanças. 
+
+```js
+const code = `
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<div id="bridge-root"></div>
+<script src="https://unpkg.com/near-social-bridge@1.0.0-beta3/bridge.min.js" crossorigin></script>
+`
+```
+
+
+
+NOTAS:
+- É melhor ter o core do Iframe pq da pra usar useEffect, o que não é possivel usando o VM.
+recursos como criar concorrencia de envio de mensagens por exemplo, falham porque
+o "state" não se atualiza dentro de outro blocos de função.
+NOTAS FIM
 
 News:
 - Added support to pass Screens like:
@@ -37,3 +79,5 @@ estavam disponíveis (quando usando recursos do Discovery API)
 - Foi criado um Widget `NearSocialBridgeCore` para ser usado de forma simples
 - Adicionado `utilsProvider` para prover o Utils
 - Added `useInitialPayload` hook to get the initial payload sent by VM
+- Added concurrency control for connection messages
+- Navigator's Fallback is going to shown until it's ready and the user info is provided

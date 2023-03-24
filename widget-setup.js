@@ -32,9 +32,9 @@ const initialPayload = {
  *      There's no Promisse for some features yet, So this is util for when you need to get cached data using DiscoveryAPI, e.g:
  *      utils.promisify(() => Social.getr(`${context.accountId}/profile`), (res) => console.log(res), (err) => console.log(err))
  *
- * @param {{type: string, payload: {}}} request
- * @param {(request) => {send: () => void}} response
- * @param {{promisify:(caller: () => void, resolve: (data) => void, reject: (error) => void)}} Utils
+ * @param {{type: string, payload: {}}} request request with payload sent by External App
+ * @param {(request) => {send: () => void}} response send the answer back to the External App
+ * @param {{promisify:(caller: () => void, resolve: (data) => void, reject: (error) => void)}} utils Utils features like
  */
 const requestHandler = (request, response, Utils) => {
   switch (request.type) {

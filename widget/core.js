@@ -7,6 +7,7 @@ let state = {
   initialPath: null,
   iframeHeight: 480,
   userInfo: null,
+  initialPayload: {},
   sessionStorageClone: {},
   connectMessageSent: false,
 }
@@ -16,8 +17,8 @@ function NearSocialBridgeCore(props) {
   const [externalAppUrl, setExternalAppUrl] = React.useState(state.externalAppUrl)
   const [connectMessageSent, setConnectMessageSent] = React.useState(state.connectMessageSent)
   const [iframeHeight, setIframeHeight] = React.useState(state.iframeHeight)
-  const [sessionStorageClone, setSessionStorageClone] = React.useState(state.sessionStorageClone)
-  const [userInfo, setUserInfo] = React.useState(state.userInfo)
+  const [, setSessionStorageClone] = React.useState(state.sessionStorageClone)
+  const [, setUserInfo] = React.useState(state.userInfo)
 
   React.useEffect(() => {
     const handler = (e) => {
@@ -26,10 +27,11 @@ function NearSocialBridgeCore(props) {
         viewerPort = e.source
         setExternalAppUrl(e.data.externalAppUrl)
         setIframeHeight(e.data.initialIframeHeight || 480)
+        setUserInfo(e.data.userInfo)
         state.externalAppUrl = e.data.externalAppUrl
         state.initialPath = e.data.initialPath
         state.userInfo = e.data.userInfo
-        setUserInfo(e.data.userInfo)
+        state.initialPayload = e.data.initialPayload
         state.iframeHeight = e.data.initialIframeHeight || 480
       }
 
@@ -72,18 +74,16 @@ function NearSocialBridgeCore(props) {
     }
   }
 
-  // Create connection payload
-  const createConnectionPayload = () => {
-    // Return the connect payload
-    return {
-      type: 'connect',
-      payload: {
-        initialPath: state.initialPath,
-        userInfo: state.userInfo,
-      },
-      created_at: Date.now(),
-    }
-  }
+  // Build connection payload
+  const buildConnectionPayload = () => ({
+    type: 'connect',
+    payload: {
+      userInfo: state.userInfo,
+      initialPath: state.initialPath,
+      initialPayload: state.initialPayload,
+    },
+    created_at: Date.now(),
+  })
 
   const onMessageHandler = (message) => {
     // Internal Request Handler
@@ -93,6 +93,7 @@ function NearSocialBridgeCore(props) {
         internalRequestHandler(message.data)
       } else {
         // Is to the View
+        // Send it straight to the View
         sendMessageToView(message.data)
       }
     }
@@ -113,10 +114,10 @@ function NearSocialBridgeCore(props) {
         break
       case 'nsb:navigation:sync-content-height':
         syncContentHeight(message.type, message.payload)
-        sendMessageToView(message)
+        sendMessageToView(message) // The view need to handle it
         break
       case 'nsb:auth:get-user-info':
-        sendMessageToView(message)
+        sendMessageToView(message) // The view need to handle it
         break
     }
   }
@@ -131,7 +132,7 @@ function NearSocialBridgeCore(props) {
     sendMessage(responseBody)
   }
 
-  const sessionStorageHydrateApp = (requestType, payload) => {
+  const sessionStorageHydrateApp = (requestType) => {
     const responseBody = buildAnswer(requestType, state.sessionStorageClone)
     sendMessage(responseBody)
   }
@@ -156,12 +157,12 @@ function NearSocialBridgeCore(props) {
     }
 
     // Send the welcome message (connects with the external app)
-    const welcomePayload = createConnectionPayload()
+    const welcomePayload = buildConnectionPayload()
     sendMessage(welcomePayload)
 
     // Wait a bit and send the message again to ensure the app and scripts are loaded and ready
     setTimeout(() => {
-      sendMessage(createConnectionPayload())
+      sendMessage(buildConnectionPayload())
     }, 2000)
   }
 
