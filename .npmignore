@@ -3,4 +3,5 @@ temp
 .github
 bridge.js
 yarn.lock
-widget
+widget/core.js
+widget/NearSocialBridgeCore.js
