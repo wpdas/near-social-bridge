@@ -6,13 +6,8 @@ esta sendo utilizado;
 Atualmente o tamanho usado é 96px
 1 - Usar Storage para sessionStorage/persistStorage?
 1 - Implantar um jeito de acessar a Discovery API localmente
-1 - Voltar com "env" por causa das redes testnet e mainnet
-1 - Criar prop "userInfo" dentro de [import { getConnectionPayload } from "near-social-bridge/services/bridge-service";]
-para que possa ser facilmente acessado como "{userInfo} from "near-social-bridge/services/bridge-service""
 
-- Adicionar informaçoes sobre o `promisify` no README
 - Criar Link para o navigation: ver arquivo TaskToolbar linha 17 e 88 (menuItems)
-- Colocar no README.md sobre o "Initial Path r=/profile"
 - Melhorar o README.me
 - Colocar exemplo de todos os hooks no README.md
 - Colocar no README sobre o Navigator setar o cumprimento do conteúdo da tela no iframe automaticamente
@@ -23,37 +18,6 @@ https://github.com/FroVolod/near-social%20https://github.com/near/near-vscode
 Usar algum editor de código como o VSCode para editar a parte do "code", salvar o arquivo
 core.js e também o componente.
 
-ou
-
-Para atualizar o core.js, você tem que colar o conteúdo do core.js
-dentro do script para poder fazer mudanças em tempo real.
-
-```js
-const code = `
-<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-<div id="bridge-root"></div>
-
-<script>
-
-//... core.js content here
-
-</script>
-`
-```
-
-Uma vez que ele estiver pronto, volte com a url do script core.js, copie e
-cole no arquivo core.js e abra seu PR com as mudanças. 
-
-```js
-const code = `
-<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-<div id="bridge-root"></div>
-<script src="https://unpkg.com/near-social-bridge@1.0.0-beta3/bridge.min.js" crossorigin></script>
-`
-```
-
 
 
 NOTAS:
@@ -62,7 +26,7 @@ recursos como criar concorrencia de envio de mensagens por exemplo, falham porqu
 o "state" não se atualiza dentro de outro blocos de função.
 NOTAS FIM
 
-News:
+News (publicado na 1.0.0-beta5):
 - Added support to pass Screens like:
 1 - A list of Screen components wrapped with <></>
 2 - A unique Screen component wrapped with <></>
