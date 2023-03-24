@@ -1,6 +1,6 @@
 # Near Social Bridge - beta
 
-This library allows you to use a React App in a Widget created within Near Social as well as send and receive data from it.
+This library allows you to use a React App in a Widget created within Near Social and use it as a Backend source. This library is still in the testing phase.
 
 ## Install
 
@@ -16,7 +16,7 @@ npm install near-social-bridge
 
 Open up this initial file [widget-setup.js](./widget-setup.js), copy its content and paste inside your new Widget. [You can create a new Widget inside Near Social here.](https://near.social/#/edit)
 
-Demo Widget running with an external React App: [**NearSocialBridge_Demo**](https://near.social/#/wendersonpires.near/widget/NearSocialBridge_Demo) [It may not be available as I'm still testing the features a lot and I need to turn off the app sometimes.]
+Demo Widget running with an external React App: [**NearSocialBridge_Demo**](https://near.social/#/wendersonpires.near/widget/NearSocialBridge_Demo)
 
 ## Resources
 
@@ -24,6 +24,7 @@ Demo Widget running with an external React App: [**NearSocialBridge_Demo**](http
 
 - `NearSocialBridgeProvider` provider: start the connection between the External App and Near Social View;
 - `useNearSocialBridge` hook: allow get and send messages to Near Social View;
+- `useInitialPayload` hook: returns the initial payload sent by the VM (Widget);
 
 **Navigation**
 
@@ -43,7 +44,32 @@ While developing locally, you can just use the URL rendered by this lib. E.g: `h
 
 **Request**
 
-- `request`: Allow to make requests to the View using the Bridge Service. The Widget should handle each request properly.
+- `request`: Allow to make requests to the View using the Bridge Service. The Widget should handle each request properly. In the Widget side, the handler is going to provide 3 props: `request` with its type and payload, `response` that is the way the app send a answer back to the external app and `utils` that provides some useful features like the `promisify`.
+
+You can see more below in the [Shortcut - How to use](#shortcut---how-to-use) session.
+
+**Utils**
+
+- `utils`: is only available inside a request handler scope. This currently provides the `promisify` method.
+- `promisify`: this method provides a way to expect a given method to return something. Some Discovery API resources are not Promises and therefore the data may not be available at the exact moment the application requests it. promisify will help to know when a data was returned:
+
+```js
+const requestHandler = (request, response, Utils) => {
+  const accountId = context.accountId
+
+  Utils.promisify(
+    // Fetch profile info like { name, image, description, linktree, ... }
+    // This is going to take some time to retrieve and Social.getr is not a Promise by default
+    () => Social.getr(`${accountId}/profile`),
+    (response) => {
+      console.log(response) // { name, image, description, linktree, ... }
+    },
+    (error) => {
+      console.log('error fetching profile data')
+    }
+  )
+}
+```
 
 **Session Storage**
 
@@ -58,10 +84,6 @@ While developing locally, you can just use the URL rendered by this lib. E.g: `h
 **Auth**
 
 - `useAuth` hook: returns the authenticated user info.
-
-**Core JS file**
-
-- `bridge.min.js` file: should be imported inside your Widget using CDN. You can see more here [widget-setup.js](./widget-setup.js).
 
 ## Shortcut - How to use
 
@@ -133,43 +155,79 @@ const Profile: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
 
 For example, if in the app you create a request with the following type "get-user-info", the View should respond accordingly.
 
-**Your app side:**
+**React App side:**
 
 ```tsx
 import request from 'near-social-bridge/request'
 
 interface GetUserResponse {
   accountId: string
-  profileInfo: {
-    name?: string
-  }
 }
 
 // Send a request to Near Social View to get basic user info
 const response = await request<GetUserResponse>('get-user-info')
-console.log(response?.profileInfo?.name) // Logged in user name
+console.log(response.accountId) // Signed in user accountId
 ```
 
-**Widget View side:**
+**Widget side:**
 
 ```js
-const requestsHandler = (message) => {
-  switch (message.type) {
+const requestsHandler = (request, response) => {
+  switch (request.type) {
     case 'get-user-info':
-      sendUserInfo(message.type, message.payload)
+      sendUserInfo(request, response)
       break
   }
 }
 
 // Send user info
-const sendUserInfo = (requestType, payload) => {
-  const accountId = context.accountId ?? '*'
-  const profileInfo = Social.getr(`${accountId}/profile`)
-  const responseBody = buildAnswer(requestType, {
-    accountId,
-    profileInfo,
-  })
-  sendMessage(responseBody) // to ne External App
+const sendUserInfo = (request, response) => {
+  const accountId = context.accountId
+  // Send a response to the External App (React App)
+  // "response" needs the "request" object to know the type of the request
+  // you can read this as "a response to a request"
+  response(request).send({ accountId })
+}
+```
+
+You can optionally use the `utils` prop to use useful resources like the `promisify`. It helps when the app needs to wait for some cached data and then handle the success or failure. Look at this example below where the same request above is providing a more complex user data:
+
+**Widget side:**
+
+```js
+const requestsHandler = (request, response, Utils) => {
+  switch (request.type) {
+    case 'get-user-info':
+      sendUserInfo(request, response, Utils)
+      break
+  }
+}
+
+// Send user info [this is just an example, you can have this data by using the "useAuth()" hook]
+const sendUserInfo = (request, response, Utils) => {
+  const accountId = context.accountId
+
+  // check if user is signed in
+  if (!accountId) {
+    response(request).send({ error: 'user is not signed in' })
+    return
+  }
+
+  Utils.promisify(
+    // Fetch profile info like { name, image, description, linktree, ... }
+    // This is going to take some time to retrieve and Social.getr is not a Promise by default
+    () => Social.getr(`${accountId}/profile`),
+    (res) => {
+      // Send the response
+      response(request).send({
+        accountId,
+        profileInfo: res,
+      })
+    },
+    (err) => {
+      console.log('error fetching profile data', err)
+    }
+  )
 }
 ```
 

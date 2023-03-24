@@ -49,7 +49,7 @@ const getAccountIdHandler = (request, response) => {
   console.log(request.payload) // Any data sent by the External App
   // You can use any Discovery API feature here
   const accountId = context.accountId
-  // Send response back to the External App
+  // Send a response to the External App (React App)
   // "response" needs the "request" object to know the type of the request
   // you can read this as "a response to a request"
   response(request).send({ accountId })

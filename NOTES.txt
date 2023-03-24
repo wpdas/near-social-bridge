@@ -79,5 +79,4 @@ estavam disponíveis (quando usando recursos do Discovery API)
 - Foi criado um Widget `NearSocialBridgeCore` para ser usado de forma simples
 - Adicionado `utilsProvider` para prover o Utils
 - Added `useInitialPayload` hook to get the initial payload sent by VM
-- Added concurrency control for connection messages
 - Navigator's Fallback is going to shown until it's ready and the user info is provided
