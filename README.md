@@ -1,6 +1,6 @@
-# Near Social Bridge - beta
+# NEAR Social Bridge
 
-This library allows you to use a React App in a Widget created within Near Social and use it as a Backend source. This library is still in the testing phase.
+This library allows you to use a React App in a Widget created within Near Social and use it as a backend source. This library is still in progress.
 
 ## Install
 
@@ -242,3 +242,21 @@ const sendUserInfo = (request, response, Utils) => {
 ## Testing the Application Inside the Widget
 
 You can develop using `localhost` without any problems, it's just that the app won't have access to the data the widget can provide. If you want to test your app while developing, use a service like [ngrok](https://ngrok.com/) to help you, since it will expose your application globally to be accessed within the Widget.
+
+## TODOs
+
+Below are some things I'd like to include:
+
+- Use VM locally to test the app;
+- Use [`near-social CLI`](https://github.com/FroVolod/near-social) to change the NearSocialBridgeCore locally and deploy to SocialDB;
+- Try to run a React App inside a Widget locally using the local VM & Gateway. Not sure if this is possible but it would be really useful.
+  References:
+
+  1 - "Becoming a Gateway": https://youtu.be/yzGuZkORR3I?t=984
+
+  2 - Snippet:
+
+```js
+import Discovery from 'near-discovery'
+;<Discovery src="<widget-path-here>" OnSignTransaction={SignTransaction} />
+```
