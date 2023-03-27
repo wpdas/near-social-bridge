@@ -2,8 +2,12 @@
 1 - [issue] Quando vou pra outra tela, a tela atual da erro caso tenha propriedades nela que
 esta sendo utilizado;
 
+- Criar recurso para saber a altura da tela (subtraindo o espaço usado pelo Near View)
+Atualmente o tamanho usado é 96px [Impossível no momento já que o Widget nao tem acesso ao Window.innerHeight]
 1 - Usar Storage para sessionStorage/persistStorage?
 1 - Implantar um jeito de acessar a Discovery API localmente
+- Arrumar sessionStorage usando Storage da Near social. [Náo é recomendado usar o Storage API porque
+ele seta globalmente dentro do Widget, todos os usuarios seriam afetados]
 
 - Criar Link para o navigation: ver arquivo TaskToolbar linha 17 e 88 (menuItems)
 - Melhorar o README.me
@@ -21,9 +25,19 @@ PRIORIDADE:
 - `request` now has a try-again mechanic - DONE
 - `request` now is using reject method - DONE
 - Tentar usar uma lib gratuita para export o app (tentar usar configuracao de CORS usando Next/Node)
-- Arrumar sessionStorage usando Storage da Near social?
-- Criar recurso para saber a altura da tela (subtraindo o espaço usado pelo Near View)
-Atualmente o tamanho usado é 96px
+: Duas solucoes possiveis: Usar Next App ou Nodemon (buildar o projeto a cada alteracao, isso vai ser demorado)
+=> Melhor opcao é implantar um app Next (passar os headers requests que o localtunnel pede) e testar.
+=> Se funcionar, mostrar o caminho de configuracao no README
+
+REFS:
+[ngrok de graça (ver como desativar msg de boas vindas)] - Melhor que localtunnel
+https://github.com/localtunnel/localtunnel
+https://www.appsloveworld.com/reactjs/100/11/how-to-set-headers-for-a-react-app-created-using-create-react-app
+https://www.npmjs.com/package/nodemon
+https://www.softwaretestinghelp.com/ngrok-alternatives/
+
+ERRO GRAVE:
+- Storage API nao funciona no app quando vai pra Prod. Opcao: usar o orbitdb (https://github.com/orbitdb/orbit-db)
 
 
 

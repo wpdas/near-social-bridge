@@ -26,9 +26,14 @@ export const buildRequestBody = (type: string, payload?: {}) => {
  * @param requestType Request type to be handled inside the View (you can use `buildRequestBody` in order to
  * follow the pattern)
  * @param payload Any payload to be sent to the View
+ * @param {forceTryAgain: boolean, timeout: number} options Force the request to re-try every <timeout> (default is 1 second)
  * @returns
  */
-const request = <Data extends {}>(requestType: string, payload?: {}) => {
+const request = <Data extends {}>(
+  requestType: string,
+  payload?: {},
+  options?: { forceTryAgain?: boolean; timeout?: number }
+) => {
   initBridgeService()
 
   return new Promise<Data>((resolve, reject) => {
@@ -61,9 +66,11 @@ const request = <Data extends {}>(requestType: string, payload?: {}) => {
             reject(`the Widget did not send a answer for request of type ${requestType}`)
           }
         }
-      }, 500)
+      }, options?.timeout || 1000)
     }
-    checkAndTryAgain()
+    if (options?.forceTryAgain) {
+      checkAndTryAgain()
+    }
   })
 }
 
