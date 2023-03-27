@@ -2,8 +2,6 @@
 1 - [issue] Quando vou pra outra tela, a tela atual da erro caso tenha propriedades nela que
 esta sendo utilizado;
 
-1 - Criar recurso para saber a altura da tela (subtraindo o espaço usado pelo Near View)
-Atualmente o tamanho usado é 96px
 1 - Usar Storage para sessionStorage/persistStorage?
 1 - Implantar um jeito de acessar a Discovery API localmente
 
@@ -17,6 +15,14 @@ https://github.com/FroVolod/near-social%20https://github.com/near/near-vscode
 - Nota para contribuidor:
 Usar algum editor de código como o VSCode para editar a parte do "code", salvar o arquivo
 core.js e também o componente.
+
+PRIORIDADE:
+- Added message concurrency control - DONE
+- `request` now has a try-again mechanic - DONE
+- `request` now is using reject method - DONE
+- Arrumar sessionStorage usando Storage da Near social
+- Criar recurso para saber a altura da tela (subtraindo o espaço usado pelo Near View)
+Atualmente o tamanho usado é 96px
 
 
 

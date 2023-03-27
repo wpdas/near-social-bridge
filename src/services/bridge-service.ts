@@ -61,15 +61,30 @@ export const bridgeServiceObservable: Observable<MessageEvent<any>> = new Observ
  */
 export const onConnectObservable: Observable<ConnectionPayload> = new Observable()
 
+// Message concurrency controll
+let lastMsgSentAt = new Date()
+
 /**
  * Post message
  * @param message
  * @returns
  */
 export const postMessage = (message: any) => {
-  if (!viewSource && !isLocalDev) return console.warn('Message source was not initialized!')
+  if (!viewSource && !isLocalDev) {
+    // Present helpful message
+    return console.warn('Message source was not initialized!')
+  }
 
-  viewSource?.postMessage(message, '*')
+  // Wait half second before sending the next message (avoid msg without answer)
+  if (Math.abs(lastMsgSentAt.getTime() - Date.now()) / 1000 >= 0.5) {
+    lastMsgSentAt = new Date()
+    viewSource?.postMessage(message, '*')
+  } else {
+    lastMsgSentAt = new Date()
+    setTimeout(() => {
+      viewSource?.postMessage(message, '*')
+    }, 500)
+  }
 }
 
 /**
@@ -88,6 +103,10 @@ const onGetMessage = (event: MessageEvent<any>) => {
       // Successful connection message
       console.log('%c --- Near Social Bridge initialized ---', 'background: #282C34; color:#fff')
 
+      // Set initial last message sent time
+      lastMsgSentAt = new Date()
+
+      // Dispath notification: connection established
       connectionPayload = event.data.payload
       onConnectObservable.notify(connectionPayload)
     }

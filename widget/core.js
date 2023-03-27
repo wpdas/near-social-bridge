@@ -170,7 +170,7 @@ function NearSocialBridgeCore(props) {
   if (!state.externalAppUrl) return null
 
   return React.createElement('iframe', {
-    sandbox: 'allow-scripts',
+    sandbox: 'allow-scripts allow-popups-to-escape-sandbox allow-popups',
     id: 'myIframe',
     src: externalAppUrl,
     style: { border: 'none', width: '100%', height: iframeHeight + 'px', margin: 0, padding: 0 },

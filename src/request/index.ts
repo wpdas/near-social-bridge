@@ -31,10 +31,13 @@ export const buildRequestBody = (type: string, payload?: {}) => {
 const request = <Data extends {}>(requestType: string, payload?: {}) => {
   initBridgeService()
 
-  return new Promise<Data>((resolve) => {
+  return new Promise<Data>((resolve, reject) => {
+    let gotPayload = false
+    let tries = 0
     // Observe it till get the answer from the View
     const checkMessage = (e: MessageEvent<ResponseData<Data>>) => {
       if (e.data.type === 'answer' && e.data.requestType === requestType) {
+        gotPayload = true
         resolve(e.data.payload)
         bridgeServiceObservable.unsubscribe(checkMessage)
       }
@@ -45,6 +48,22 @@ const request = <Data extends {}>(requestType: string, payload?: {}) => {
     // Post Message
     const message = buildRequestBody(requestType, payload)
     postMessage(message)
+
+    // Timer to try again
+    const checkAndTryAgain = () => {
+      setTimeout(() => {
+        if (!gotPayload) {
+          if (tries < 10) {
+            tries++
+            postMessage(message)
+            checkAndTryAgain()
+          } else {
+            reject(`the Widget did not send a answer for request of type ${requestType}`)
+          }
+        }
+      }, 500)
+    }
+    checkAndTryAgain()
   })
 }
 

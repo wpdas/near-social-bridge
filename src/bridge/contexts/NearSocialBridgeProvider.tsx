@@ -1,7 +1,9 @@
+import isLocalDev from '../../utils/isLocalDev'
 import React, { createContext, useCallback, useEffect, useState } from 'react'
 import AuthProvider from '../../auth/contexts/AuthProvider'
 import {
   bridgeServiceObservable,
+  onConnectObservable,
   initBridgeService,
   postMessage as postMessageService,
 } from '../../services/bridge-service'
@@ -23,12 +25,20 @@ export const NearSocialBridgeContext = createContext(defaultValue)
 
 interface Props {
   children: React.ReactNode
+  fallback?: React.ReactNode
 }
 
-const NearSocialBridgeProvider: React.FC<Props> = ({ children }) => {
+/**
+ * Provides the Near Social Bridge features
+ *
+ * fallback component is displayed (if provided) until the connection is established with the Widget
+ * @returns
+ */
+const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback }) => {
   const [_onGetMessage, set_onGetMessage] = useState<{
     cb: GetMessageCallBack
   }>({ cb: () => {} })
+  const [isConnected, setIsConnected] = useState(false)
 
   /**
    * Post Message
@@ -69,6 +79,23 @@ const NearSocialBridgeProvider: React.FC<Props> = ({ children }) => {
       bridgeServiceObservable.unsubscribe(handler)
     }
   }, [_onGetMessage])
+
+  // Get to know when the connection is established. The children is going to render after the connection
+  useEffect(() => {
+    const handler = () => {
+      setIsConnected(true)
+    }
+    onConnectObservable.subscribe(handler)
+
+    return () => {
+      onConnectObservable.unsubscribe(handler)
+    }
+  }, [])
+
+  if (!isConnected && !isLocalDev) {
+    if (fallback) return <>{fallback}</>
+    return null
+  }
 
   return (
     <NearSocialBridgeContext.Provider value={{ postMessage, onGetMessage, simulateIFrameMessage }}>

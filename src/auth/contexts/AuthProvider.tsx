@@ -24,12 +24,14 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   useEffect(() => {
     const onConnectHandler = () => {
       onConnectObservable.unsubscribe(onConnectHandler)
-      request<UserInfo>(REQUEST_KEYS.AUTH_GET_USER_INFO).then((userInfo) => {
-        if (!userInfo.error) {
-          setUser(userInfo)
-        }
-        setReady(true)
-      })
+      setTimeout(() => {
+        request<UserInfo>(REQUEST_KEYS.AUTH_GET_USER_INFO).then((userInfo) => {
+          if (!userInfo.error) {
+            setUser(userInfo)
+          }
+          setReady(true)
+        })
+      }, 1000)
     }
 
     // If it's connected already, just get the info
