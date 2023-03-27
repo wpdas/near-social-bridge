@@ -32,21 +32,4 @@ recursos como criar concorrencia de envio de mensagens por exemplo, falham porqu
 o "state" não se atualiza dentro de outro blocos de função.
 NOTAS FIM
 
-News (publicado na 1.0.0-beta5):
-- Added support to pass Screens like:
-1 - A list of Screen components wrapped with <></>
-2 - A unique Screen component wrapped with <></>
-3 - A list of Screen components
-4 - Only one Screen component as a child
-
-- Sending initial user info along with connect call
-- Added `useAuth` hook. Provides the authenticated user info
-- Added refresh service (only during the development). If you press "R" key 3 times, the app is going to refresh
-
-- Criado recurso `promisify` para corrigir erro onde as vezes os dados não
-estavam disponíveis (quando usando recursos do Discovery API)
-
-- Foi criado um Widget `NearSocialBridgeCore` para ser usado de forma simples
-- Adicionado `utilsProvider` para prover o Utils
-- Added `useInitialPayload` hook to get the initial payload sent by VM
-- Navigator's Fallback is going to shown until it's ready and the user info is provided
+News (publicado na 1.0.0-beta8):

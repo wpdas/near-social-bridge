@@ -26,7 +26,7 @@ The repository for this app can be found here: [**chatv2-near-widget-app**](http
 
 **Bridge**
 
-- `NearSocialBridgeProvider` provider: start the connection between the External App and Near Social View;
+- `NearSocialBridgeProvider` provider: start the connection between the External App and Near Social View. This component accepts a fallback component that's going to be shown until the connection with the Widget is established. You can set it using the `fallback` prop;
 - `useNearSocialBridge` hook: allow get and send messages to Near Social View;
 - `useInitialPayload` hook: returns the initial payload sent by the VM (Widget);
 
@@ -93,11 +93,12 @@ const requestHandler = (request, response, Utils) => {
 
 You can explore a sample app here [Example Near Widget App](https://github.com/Wpdas/example-near-widget-app). But below are some shortcuts for you to configure your project.
 
-1 - Wrap your App with NearSocialBridgeProvider:
+1 - Wrap your App with NearSocialBridgeProvider (the `fallback` component is optional):
 
 ```tsx
 root.render(
-  <NearSocialBridgeProvider>
+  // fallback is going to be shown until the connection with Widget is established.
+  <NearSocialBridgeProvider fallback={<p>Loading...</p>}>
     <App />
   </NearSocialBridgeProvider>
 )
