@@ -20,7 +20,8 @@ PRIORIDADE:
 - Added message concurrency control - DONE
 - `request` now has a try-again mechanic - DONE
 - `request` now is using reject method - DONE
-- Arrumar sessionStorage usando Storage da Near social
+- Tentar usar uma lib gratuita para export o app (tentar usar configuracao de CORS usando Next/Node)
+- Arrumar sessionStorage usando Storage da Near social?
 - Criar recurso para saber a altura da tela (subtraindo o espaço usado pelo Near View)
 Atualmente o tamanho usado é 96px
 
