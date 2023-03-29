@@ -125,7 +125,7 @@ const requestHandler = (request, response) => {
 const getRoomsListHandler = (request, response) => {
   const { limit } = request.payload;
   // ... use Discovery API to fetch rooms list
-  const roomsList = Storage.privateGet("app:rooms-list"),
+  const rooms = Storage.privateGet("app:rooms-list"),
   // ... some logic
   response(request).send({ roomsList: rooms.slice(0, limit) });
 };
@@ -204,7 +204,7 @@ Use `mockUser` to mock authenticated user. You can use `createMockUser()` method
 ```ts
 import { createMockUser, mockUser } from 'near-social-bridge'
 
-// You can optionally set default data. All the data is random generated using `@faker-js/faker` module.
+// You can optionally set default data. All the data is randomly generated using `@faker-js/faker` module.
 const fakeUser = createMockUser({ firstName: 'Wenderson' })
 mockUser(fakeUser)
 // Now your app has an "authenticated" user
