@@ -2,7 +2,6 @@
 
 Below are some things I'd like to include:
 
-- Build Wiki;
 - Use VM locally to test the app (if possible);
 - Use [`near-social CLI`](https://github.com/FroVolod/near-social) to change the NearSocialBridgeCore locally and deploy to SocialDB;
 

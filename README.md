@@ -16,15 +16,32 @@ npm install near-social-bridge # or yarn add near-social-bridge
 
 ## Table of contents
 
-- [First setup the library](#green_book-installation)
-- [Main Resources](#gear-main-resources)
-  - [API](#api)
-  - [Hooks](#hooks)
-  - [Higher-Order Component (HOC)](#HOC)
-- [Live Demos](#eyes-live-demos)
-- [Limitations](#stop_sign-limitations)
-- [Changelogs](#notebook-changelogs)
-- [License](#scroll-license)
+- [First setup the library](#first-setup-the-library)
+- [Create the requests](#create-the-requests)
+  - [Simple Request](#simple-request)
+  - [Create Requests Mocks](#create-requests-mocks)
+  - [Handling the requests inside the Widget](#handling-the-requests-inside-the-widget)
+  - [Using request handler Utils - Widget side](#using-request-handler-utils-widget-side)
+  - [Requests - Knowing more](#requests---knowing-more)
+- [Mock](#mock)
+  - [Setup Mocks](#setup-mocks)
+  - [Mock Authenticated User](#mock-authenticated-user)
+  - [Create Requests Mocks - revisit](#create-requests-mocks-revisit)
+- [Use Navigation](#use-navigation)
+  - [Implementing routes](#implementing-routes)
+- [Session Storage](#session-storage)
+- [Persist Storage](#persist-storage)
+- [Hooks](#hooks)
+  - [useNearSocialBridge](#usenearsocialbridge)
+  - [useInitialPayload](#useinitialpayload)
+  - [useNavigation](#usenavigation)
+  - [useSessionStorage](#usesessionstorage)
+  - [useAuth](#useauth)
+- [Preparing a new Widget](#preparing-a-new-widget)
+- [Good to know](#good-to-know)
+  - [Shortcut to refresh the application](#shortcut-to-refresh-the-application)
+  - [Production environment](#production-environment)
+- [Testing the Application Inside the Widget](#testing-the-application-inside-the-widget)
 
 ## First setup the library
 
@@ -46,7 +63,7 @@ return (
 
 You can make requests to the Widget and each request must be handled appropriately by the Widget. You can also mock your requests so that they work locally while you are developing the application. All mocks will be automatically disabled when the app is running inside the Widget.
 
-### Simple request
+### Simple Request
 
 ```ts
 import { request } from 'near-social-bridge'
@@ -458,7 +475,7 @@ And that's basically it. Again, remember that once your application is running i
 
 During the development process, if you press "R" key 3 times, the app is going to refresh.
 
-### Production env:
+### Production environment
 
 You must set the env var REACT_APP_ENV as "production" in your deployment script, in order to disable development functionalities:
 
