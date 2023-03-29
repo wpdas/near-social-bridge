@@ -79,11 +79,6 @@ const request = <Data extends {}>(
     }
     if (options?.forceTryAgain) {
       checkAndTryAgain()
-    } else {
-      // If !forceTryAgain, Reject if it doesnt has an answer in 10 seconds
-      setTimeout(() => {
-        reject(`the Widget did not send a answer for request of type ${requestType}`)
-      }, 10000)
     }
   })
 }

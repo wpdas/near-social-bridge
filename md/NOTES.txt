@@ -21,6 +21,7 @@ Usar algum editor de código como o VSCode para editar a parte do "code", salvar
 core.js e também o componente.
 
 PRIORIDADE:
+- Implantar session storage usando Storage API e atualizar documentacao
 - Checar o porque do tamanho do arquivo do bundle com a lib está tao grande
 - As vezes o tamanho do iframe nao atualiza quando o app é inicializado
 
