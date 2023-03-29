@@ -1,5 +1,5 @@
 import { REQUEST_KEYS } from '../constants'
-import request from '../request'
+import request from '../request/request'
 import { onConnectObservable } from '../services/bridge-service'
 import Observable from '../utils/observable'
 

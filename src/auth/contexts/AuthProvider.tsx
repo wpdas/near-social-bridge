@@ -1,7 +1,6 @@
-import React, { createContext, useEffect, useState } from 'react'
-import request from '../../request'
-import { REQUEST_KEYS } from '../../constants'
+import React, { createContext, useCallback, useEffect, useState } from 'react'
 import { getConnectionStatus, onConnectObservable, UserInfo } from '../../services/bridge-service'
+import getUserInfo from '../getUserInfo'
 import isLocalDev from '../../utils/isLocalDev'
 
 type Auth = {
@@ -20,41 +19,41 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   const [user, setUser] = useState<UserInfo>()
   const [ready, setReady] = useState(false)
 
-  // Fetch user info
-  useEffect(() => {
-    const onConnectHandler = () => {
-      onConnectObservable.unsubscribe(onConnectHandler)
-      setTimeout(() => {
-        request<UserInfo>(REQUEST_KEYS.AUTH_GET_USER_INFO).then((userInfo) => {
-          if (!userInfo.error) {
-            setUser(userInfo)
-          }
-          setReady(true)
-        })
-      }, 1000)
-    }
-
-    // If it's connected already, just get the info
-    // TODO: Refactor, this is the same code present above
-    if (getConnectionStatus() === 'connected') {
-      request<UserInfo>(REQUEST_KEYS.AUTH_GET_USER_INFO).then((userInfo) => {
+  const fetchUserInfo = useCallback(() => {
+    getUserInfo()
+      .then((userInfo) => {
         if (!userInfo.error) {
           setUser(userInfo)
         }
         setReady(true)
       })
+      .catch(() => {
+        setReady(true)
+      })
+  }, [])
+
+  // Fetch user info
+  useEffect(() => {
+    const onConnectHandler = () => {
+      onConnectObservable.unsubscribe(onConnectHandler)
+      fetchUserInfo()
     }
 
-    // If it's DEV
+    // If it's connected already, just get the info
+    if (getConnectionStatus() === 'connected') {
+      fetchUserInfo()
+    }
+
+    // DEV - calls anyways if it's localhost
     if (isLocalDev) {
-      setReady(true)
+      fetchUserInfo()
     }
 
     onConnectObservable.subscribe(onConnectHandler)
     return () => {
       onConnectObservable.unsubscribe(onConnectHandler)
     }
-  }, [])
+  }, [fetchUserInfo])
 
   return <AuthContext.Provider value={{ user, ready }}>{children}</AuthContext.Provider>
 }

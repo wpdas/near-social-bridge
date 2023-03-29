@@ -28,6 +28,8 @@ PRIORIDADE:
 : Duas solucoes possiveis: Usar Next App ou Nodemon (buildar o projeto a cada alteracao, isso vai ser demorado)
 => Melhor opcao é implantar um app Next (passar os headers requests que o localtunnel pede) e testar.
 => Se funcionar, mostrar o caminho de configuracao no README
+- A solucao acima é mais cara que usar NGrok, então, talvez a solucao seja criar uma VM simulada localmente, injentando
+a API de forma fake, elas devem ter a opcao de passar mocks
 
 REFS:
 [ngrok de graça (ver como desativar msg de boas vindas)] - Melhor que localtunnel
