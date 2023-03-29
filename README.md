@@ -1,6 +1,6 @@
 # <img src='./md/near-social-bridge-logo.png' height='24' alt='NEAR Social Bridge Logo' /> NEAR Social Bridge
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/wpdas/near-social-bridge/publish.yml?branch=main&style=flat&colorA=000000&colorB=000000)](https://github.com/wpdas/near-social-bridge/actions?query=workflow%3Apublish)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/wpdas/near-social-bridge/publish.yml?style=flat&colorA=000000&colorB=000000)](https://github.com/wpdas/near-social-bridge/actions?query=workflow%3Apublish)
 [![Version](https://img.shields.io/npm/v/near-social-bridge?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/near-social-bridge)
 [![Downloads](https://img.shields.io/npm/dt/near-social-bridge.svg?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/near-social-bridge)
 
