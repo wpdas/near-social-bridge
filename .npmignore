@@ -1,6 +1,7 @@
 src
 temp
 .github
+md
 bridge.js
 yarn.lock
 widget/core.js
