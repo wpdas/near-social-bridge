@@ -1,9 +1,17 @@
 // Crucial checks
 if (!props.externalAppUrl) {
   return (
-    <p style={{ fontWeight: 600, color: '#AB2E28', fontFamily: 'Courier new' }}>
-      Error: "externalAppUrl" prop must be provided
-    </p>
+    <div>
+      <p style={{ fontWeight: 600, color: '#AB2E28', fontFamily: 'Courier new' }}>
+        This Widget is part of the <a href="https://github.com/wpdas/near-social-bridge">"near-social-bridge"</a>{' '}
+        library that makes it possible to develop common ReactJS applications and inject them into the Widget having
+        access to all Discovery API resources.
+      </p>
+      <p style={{ fontWeight: 600, color: '#AB2E28', fontFamily: 'Courier new' }}>
+        Learn more here:{' '}
+        <a href="https://github.com/wpdas/near-social-bridge">https://github.com/wpdas/near-social-bridge</a>
+      </p>
+    </div>
   )
 }
 

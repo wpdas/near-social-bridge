@@ -21,7 +21,7 @@ const initialPayload = {
 }
 
 /**
- * Request Handlers - Backend.
+ * Request Handlers.
  *
  * - request: payload sent by External App
  *

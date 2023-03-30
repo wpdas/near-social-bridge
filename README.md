@@ -12,7 +12,7 @@ Library destined only to applications that will run inside a Widget [(Near Socia
 npm install near-social-bridge # or yarn add near-social-bridge
 ```
 
-You can try a live demo built with this library [here](https://alpha.near.org/#/wendersonpires.near/widget/ChatV2). The repository of this demo is [here](https://github.com/wpdas/chatv2-near-widget-app).
+You can try a live demo built using this library [here](https://alpha.near.org/#/wendersonpires.near/widget/ChatV2). The repository of this demo is [here](https://github.com/wpdas/chatv2-near-widget-app).
 
 <p align="center">
   <img src="./md/chatv2.png" />
@@ -411,6 +411,21 @@ const MyComponent = () => {
   const auth = useAuth()
   console.log(auth.ready) // true or false (it's true when the request to get the user info is completed)
   console.log(auth.user?.accountId) // E.g: wendersonpires.near
+}
+```
+
+### useWidgetView
+
+Provides access to methods and props which can affect the Widget View:
+
+```ts
+import { useWidgetView } from 'near-social-bridge'
+
+const MyComponent = () => {
+  const widgetView = useWidgetView()
+
+  // Set the widget view height to 700px
+  widgetView.setHeight(700)
 }
 ```
 
