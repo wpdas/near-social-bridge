@@ -8,15 +8,17 @@ This library allows you to create a common application using ReactJS and inject 
 
 Library destined only to applications that will run inside a Widget [(Near Social)](https://near.social)
 
-```sh
-npm install near-social-bridge # or yarn add near-social-bridge
-```
-
 You can try a live demo built using this library [here](https://alpha.near.org/#/wendersonpires.near/widget/ChatV2). The repository of this demo is [here](https://github.com/wpdas/chatv2-near-widget-app).
 
-<p align="center">
-  <img src="./md/chatv2.png" />
-</p>
+**Install it using npm or yarn:**
+
+```sh
+# npm
+npm install near-social-bridge
+
+# yarn
+yarn add near-social-bridge
+```
 
 ## Table of contents
 
@@ -41,6 +43,7 @@ You can try a live demo built using this library [here](https://alpha.near.org/#
   - [useNavigation](#usenavigation)
   - [useSessionStorage](#usesessionstorage)
   - [useAuth](#useauth)
+  - [useWidgetView](#usewidgetview)
 - [Preparing a new Widget](#preparing-a-new-widget)
 - [Good to know](#good-to-know)
   - [Shortcut to refresh the application](#shortcut-to-refresh-the-application)
