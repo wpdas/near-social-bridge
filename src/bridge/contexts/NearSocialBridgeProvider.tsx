@@ -29,9 +29,9 @@ interface Props {
 }
 
 /**
- * Provides the Near Social Bridge features
+ * Provides the Near Social Bridge features.
  *
- * fallback component is displayed (if provided) until the connection is established with the Widget
+ * Fallback component is displayed (if provided) until the connection is established with the Widget
  * @returns
  */
 const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback }) => {

@@ -17,7 +17,7 @@ const code = `
 <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 <div id="bridge-root"></div>
-<script src="https://unpkg.com/near-social-bridge@1.0.0-rc1/widget/core.min.js" crossorigin></script>
+<script src="https://unpkg.com/near-social-bridge@1.0.0-rc3/widget/core.min.js" crossorigin></script>
 `
 
 // (i) Discovery API uses cached data structure
@@ -140,33 +140,59 @@ const onMessageHandler = (message) => {
   const utils = {
     promisify: Utils.promisify,
   }
-  props.requestHandler(request, responseFactory.build(), utils)
-}
 
-// REQUEST HANDLERS BELOW
-// Todos os tipos "nsb" passam pelo core.js primeiro
-const handlerCoreRequests = (message) => {
-  switch (message.type) {
-    case 'nsb:navigation:sync-content-height':
-      setIframeHeight(message.type, message.payload)
-      break
-    // NEW
-    case 'nsb:auth:get-user-info':
-      getUserInfo(message.type, message.payload)
-      break
-    // NEW
+  if (props.requestHandler) {
+    props.requestHandler(request, responseFactory.build(), utils)
   }
 }
 
-// [DON'T REMOVE]: Set thew new iFrame height based on the new screen/route
-const setIframeHeight = (requestType, payload) => {
-  State.update({ iframeHeight: payload.height + 20 })
+// REQUEST HANDLERS BELOW
+const handlerCoreRequests = (message) => {
+  switch (message.type) {
+    case 'nsb:session-storage:hydrate-viewer':
+      sessionStorageHydrateViewer(message.type, message.payload)
+      break
+    case 'nsb:session-storage:hydrate-app':
+      sessionStorageHydrateApp(message.type, message.payload)
+      break
+    case 'nsb:navigation:sync-content-height':
+      setIframeHeight(message.type, message.payload)
+      break
+    case 'nsb:auth:get-user-info':
+      getUserInfo(message.type, message.payload)
+      break
+  }
 }
 
-// NEW
-// [DON'T REMOVE]
+const CORE_STORAGE_KEY = 'app:storage'
+// Store data
+const sessionStorageHydrateViewer = (requestType, payload) => {
+  if (payload) {
+    // store data
+    Storage.privateSet(CORE_STORAGE_KEY, payload)
+
+    const responseBody = buildAnswer(requestType, payload)
+    Utils.sendMessage(responseBody)
+  }
+}
+
+// Retrieve stored data
+const sessionStorageHydrateApp = (requestType) => {
+  // get stored data
+  const storageData = Storage.privateGet(CORE_STORAGE_KEY)
+  const responseBody = buildAnswer(requestType, storageData)
+  Utils.sendMessage(responseBody)
+}
+
+// Set thew new iFrame height based on the new screen/route
+const setIframeHeight = (requestType, payload) => {
+  State.update({ iframeHeight: payload.height + 20 })
+  const responseBody = buildAnswer(requestType, {})
+  Utils.sendMessage(responseBody)
+}
+
 // Get user info
-const getUserInfo = (requestType, payload) => {
+const getUserInfo = (requestType) => {
   // check if user is signed in
   if (!accountId) {
     const responseBody = buildAnswer(requestType, {
@@ -190,8 +216,6 @@ const getUserInfo = (requestType, payload) => {
     }
   )
 }
-// NEW
-// REQUEST HANDLERS ABOVE
 
 return (
   <div>

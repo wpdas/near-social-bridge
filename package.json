@@ -1,13 +1,13 @@
 {
   "name": "near-social-bridge",
-  "version": "1.0.0-rc2",
+  "version": "1.0.0-rc3",
   "description": "This library allows you to create a common application using ReactJS and inject it in a controlled way into a Widget on Near Social. Therefore, the Widget talks to the React application and vice versa, making it possible to consume Discovery API resources within the React application.",
   "main": "./index.js",
   "module": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
     "clean": "rm -rf dist hooks auth bridge navigation request services session-storage utils constants.d.ts constants.js index.d.ts index.js",
-    "build": "npm run clean; tsc -p tsconfig.prod.json; npm run build:cjs",
+    "build": "npm run clean; tsc -p tsconfig.prod.json",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "prepack": "npm install; npm run build",

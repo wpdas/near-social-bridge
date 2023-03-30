@@ -8,16 +8,14 @@ let state = {
   iframeHeight: 480,
   userInfo: null,
   initialPayload: {},
-  sessionStorageClone: {},
   connectMessageSent: false,
 }
 
 // Core Component
-function NearSocialBridgeCore(props) {
+function NearSocialBridgeCore() {
   const [externalAppUrl, setExternalAppUrl] = React.useState(state.externalAppUrl)
   const [connectMessageSent, setConnectMessageSent] = React.useState(state.connectMessageSent)
   const [iframeHeight, setIframeHeight] = React.useState(state.iframeHeight)
-  const [, setSessionStorageClone] = React.useState(state.sessionStorageClone)
   const [, setUserInfo] = React.useState(state.userInfo)
 
   React.useEffect(() => {
@@ -88,53 +86,16 @@ function NearSocialBridgeCore(props) {
   const onMessageHandler = (message) => {
     // Internal Request Handler
     if (message.data.from === 'external-app') {
-      // Is to the Core
-      if (message.data.type.includes('nsb:')) {
-        internalRequestHandler(message.data)
-      } else {
-        // Is to the View
-        // Send it straight to the View
-        sendMessageToView(message.data)
+      // Send to View
+      sendMessageToView(message.data)
+
+      // core.js - internal handlers
+      switch (message.data.type) {
+        case 'nsb:navigation:sync-content-height':
+          syncContentHeight(message.data.type, message.data.payload)
+          break
       }
     }
-  }
-
-  /**
-   * Core - Internal Request handlers
-   * All core data "nsb" will pass here first
-   * @param {*} message
-   */
-  const internalRequestHandler = (message) => {
-    switch (message.type) {
-      case 'nsb:session-storage:hydrate-viewer':
-        sessionStorageHydrateViewer(message.type, message.payload)
-        break
-      case 'nsb:session-storage:hydrate-app':
-        sessionStorageHydrateApp(message.type, message.payload)
-        break
-      case 'nsb:navigation:sync-content-height':
-        syncContentHeight(message.type, message.payload)
-        sendMessageToView(message) // The view need to handle it
-        break
-      case 'nsb:auth:get-user-info':
-        sendMessageToView(message) // The view need to handle it
-        break
-    }
-  }
-
-  const sessionStorageHydrateViewer = (requestType, payload) => {
-    if (payload) {
-      setSessionStorageClone(payload)
-      state.sessionStorageClone = payload
-    }
-
-    const responseBody = buildAnswer(requestType, payload)
-    sendMessage(responseBody)
-  }
-
-  const sessionStorageHydrateApp = (requestType) => {
-    const responseBody = buildAnswer(requestType, state.sessionStorageClone)
-    sendMessage(responseBody)
   }
 
   const syncContentHeight = (requestType, payload) => {
@@ -147,12 +108,13 @@ function NearSocialBridgeCore(props) {
     sendMessage(responseBody)
   }
 
-  function onLoadHandler(e) {
+  function onLoadHandler() {
     // On load iframe
-    // On get msg from External App
     if (!connectMessageSent) {
       setConnectMessageSent(true)
       state.connectMessageSent = true
+
+      // On get msg from External App
       window.addEventListener('message', onMessageHandler, false)
     }
 
