@@ -22,7 +22,8 @@ core.js e também o componente.
 
 PRIORIDADE:
 - Implantar session storage usando Storage API e atualizar documentacao
-- Checar o porque do tamanho do arquivo do bundle com a lib está tao grande
+- Checar o porque do tamanho do arquivo do bundle com a lib está tao grande (@faker-js/faker)
+-- switched from @faker-js/faker to @ngneat/falso
 - As vezes o tamanho do iframe nao atualiza quando o app é inicializado
 
 - Added message concurrency control - DONE
@@ -41,9 +42,6 @@ https://github.com/localtunnel/localtunnel
 https://www.appsloveworld.com/reactjs/100/11/how-to-set-headers-for-a-react-app-created-using-create-react-app
 https://www.npmjs.com/package/nodemon
 https://www.softwaretestinghelp.com/ngrok-alternatives/
-
-ERRO GRAVE:
-- Storage API nao funciona no app quando vai pra Prod. Opcao: usar o orbitdb (https://github.com/orbitdb/orbit-db)
 
 
 

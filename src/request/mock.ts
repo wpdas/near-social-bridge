@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { randFirstName, randLastName, randDomainName, randUserName, randLine, randUrl } from '@ngneat/falso'
 import { REQUEST_KEYS } from '../constants'
 import { UserInfo } from '../services/bridge-service'
 import isDevelopment from '../utils/isDevelopment'
@@ -21,24 +21,25 @@ let mockOptions: { delay: number } = { delay: 500 }
 export const createMockUser = (defaultValues?: {
   accountId?: string
   firstName?: string
-  middleName?: string
+  lastName?: string
   backgroundImage?: string
   imageIPFScid?: string
 }): UserInfo => {
-  const userFirstName = defaultValues?.firstName || faker.name.firstName()
-  const userMiddleName = defaultValues?.middleName || faker.name.middleName()
-  const linktree = faker.internet.domainName()
+  const userFirstName = defaultValues?.firstName || randFirstName()
+  const userLastName = defaultValues?.lastName || randLastName()
+  const linktree = randDomainName()
   return {
     accountId:
-      defaultValues?.accountId || `${faker.internet.userName(userFirstName, userMiddleName)}.near`.toLowerCase(),
+      defaultValues?.accountId ||
+      `${randUserName({ firstName: userFirstName, lastName: userLastName })}.near`.toLowerCase(),
     profileInfo: {
       backgroundImage: {
         url:
           defaultValues?.backgroundImage ||
           'https://media.licdn.com/dms/image/C4E16AQGYJPypiink2w/profile-displaybackgroundimage-shrink_350_1400/0/1653934756486?e=1684972800&v=beta&t=9xQG1PqqF7TpTKyoTDOIWVIigxo3wdgmu0eDBw5uwug',
       },
-      description: faker.random.words(10),
-      name: `${userFirstName} ${userMiddleName}`,
+      description: randLine({ lineCount: 1 }),
+      name: `${userFirstName} ${userLastName}`,
       image: {
         ipfs_cid:
           defaultValues?.imageIPFScid ||
@@ -48,7 +49,7 @@ export const createMockUser = (defaultValues?: {
         github: linktree,
         twitter: linktree,
         telegram: linktree,
-        website: faker.internet.url(),
+        website: randUrl(),
       },
     },
   }
