@@ -1,8 +1,8 @@
-import { randFirstName, randLastName, randDomainName, randUserName, randLine, randUrl } from '@ngneat/falso'
 import { REQUEST_KEYS } from '../constants'
 import { UserInfo } from '../services/bridge-service'
 import isDevelopment from '../utils/isDevelopment'
 import isLocalDev from '../utils/isLocalDev'
+import { loremIpsum, randName, randUserName } from '../utils/faker/elements'
 
 /**
  * Global mock state
@@ -25,31 +25,27 @@ export const createMockUser = (defaultValues?: {
   backgroundImage?: string
   imageIPFScid?: string
 }): UserInfo => {
-  const userFirstName = defaultValues?.firstName || randFirstName()
-  const userLastName = defaultValues?.lastName || randLastName()
-  const linktree = randDomainName()
+  const userFirstName = defaultValues?.firstName || randName()
+  const userLastName = defaultValues?.lastName || randName()
+  const linktree = userFirstName.toLowerCase()
   return {
-    accountId:
-      defaultValues?.accountId ||
-      `${randUserName({ firstName: userFirstName, lastName: userLastName })}.near`.toLowerCase(),
+    accountId: defaultValues?.accountId || `${randUserName(userFirstName, userLastName)}.near`.toLowerCase(),
     profileInfo: {
       backgroundImage: {
         url:
           defaultValues?.backgroundImage ||
           'https://media.licdn.com/dms/image/C4E16AQGYJPypiink2w/profile-displaybackgroundimage-shrink_350_1400/0/1653934756486?e=1684972800&v=beta&t=9xQG1PqqF7TpTKyoTDOIWVIigxo3wdgmu0eDBw5uwug',
       },
-      description: randLine({ lineCount: 1 }),
+      description: loremIpsum,
       name: `${userFirstName} ${userLastName}`,
       image: {
-        ipfs_cid:
-          defaultValues?.imageIPFScid ||
-          'https://ipfs.near.social/ipfs/bafkreibexmm5sv6i4dlod2awyjciftb3fu3y63wkcsky6wxyei4kzj3v2a',
+        ipfs_cid: defaultValues?.imageIPFScid || `https://i.pravatar.cc/150?u=${userFirstName}`,
       },
       linktree: {
         github: linktree,
         twitter: linktree,
         telegram: linktree,
-        website: randUrl(),
+        website: 'fakedomain.fake.io',
       },
     },
   }
