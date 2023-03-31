@@ -1,9 +1,9 @@
 # <img src='./md/near-social-bridge-logo.png' height='24' alt='NEAR Social Bridge Logo' /> NEAR Social Bridge
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/wpdas/near-social-bridge/publish.yml?style=flat&colorA=000000&colorB=000000)](https://github.com/wpdas/near-social-bridge/actions?query=workflow%3Apublish)
-[![Build Size](https://img.shields.io/bundlephobia/minzip/near-social-bridge?label=bundle%20size&style=flat&colorA=000000&colorB=000000)](https://bundlephobia.com/package/near-social-bridge)
-[![Version](https://img.shields.io/npm/v/near-social-bridge?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/near-social-bridge)
-[![Downloads](https://img.shields.io/npm/dt/near-social-bridge.svg?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/near-social-bridge)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/wpdas/near-social-bridge/publish.yml?style=for-the-badge&colorB=000000)](https://github.com/wpdas/near-social-bridge/actions?query=workflow%3Apublish)
+[![Build Size](https://img.shields.io/bundlephobia/minzip/near-social-bridge/1.0.1?label=bundle%20size&style=for-the-badge&colorB=000000)](https://bundlephobia.com/package/near-social-bridge)
+[![Version](https://img.shields.io/npm/v/near-social-bridge?style=for-the-badge&colorB=000000)](https://www.npmjs.com/package/near-social-bridge)
+[![Downloads](https://img.shields.io/npm/dt/near-social-bridge.svg?style=for-the-badge&colorB=000000)](https://www.npmjs.com/package/near-social-bridge)
 
 This library allows you to create a common application using ReactJS and inject it in a controlled way into a Widget on Near Social. Therefore, the Widget talks to the React application and vice versa, making it possible to consume Discovery API resources within the React application.
 
