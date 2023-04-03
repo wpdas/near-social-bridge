@@ -6,3 +6,7 @@ export const REQUEST_KEYS = {
 
   AUTH_GET_USER_INFO: 'nsb:auth:get-user-info',
 }
+
+export const LOCAL_MOCK_KEYS = {
+  INITIAL_PAYLOAD: 'nsb:mock:initial-payload'
+}

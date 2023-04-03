@@ -33,6 +33,7 @@ yarn add near-social-bridge
 - [Mock](#mock)
   - [Setup Mocks](#setup-mocks)
   - [Mock Authenticated User](#mock-authenticated-user)
+  - [Mock Initial Payload](#mock-initial-payload)
   - [Create Requests Mocks - revisit](#create-requests-mocks-revisit)
 - [Use Navigation](#use-navigation)
   - [Implementing routes](#implementing-routes)
@@ -212,10 +213,30 @@ Use `mockUser` to mock authenticated user. You can use `createMockUser()` method
 ```ts
 import { createMockUser, mockUser } from 'near-social-bridge'
 
-// You can optionally set default data. All the data is randomly generated using `@faker-js/faker` module.
+// You can optionally set default data. All the data is randomly generated.
 const fakeUser = createMockUser({ firstName: 'Wenderson' })
 mockUser(fakeUser)
 // Now your app has an "authenticated" user
+```
+
+### Mock Initial Payload
+
+Use `mockInitialPayload` to mock the initial payload (sent by the Widget).
+
+```ts
+// Mock
+import { mockInitialPayload } from 'near-social-bridge'
+
+mockInitialPayload({
+  defaultRoom: 'dragon-ball-z',
+})
+
+// App
+import { useInitialPayload } from 'near-social-bridge/hooks'
+
+const MyComponent = () => {
+  const { defaultRoom } = useInitialPayload() // 'dragon-ball-z'
+}
 ```
 
 ### Create Requests Mocks (revisit)

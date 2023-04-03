@@ -1,4 +1,4 @@
-import { REQUEST_KEYS } from '../constants'
+import { LOCAL_MOCK_KEYS, REQUEST_KEYS } from '../constants'
 import { UserInfo } from '../services/bridge-service'
 import isDevelopment from '../utils/isDevelopment'
 import isLocalDev from '../utils/isLocalDev'
@@ -49,6 +49,14 @@ export const createMockUser = (defaultValues?: {
       },
     },
   }
+}
+
+/**
+ * Mock the `initialPayload` prop
+ * @param initialPayload 
+ */
+export const mockInitialPayload = (initialPayload: Record<any, any>) => {
+  globalMock[LOCAL_MOCK_KEYS.INITIAL_PAYLOAD] = () => initialPayload
 }
 
 /**

@@ -1,3 +1,6 @@
+import { LOCAL_MOCK_KEYS } from '../constants'
+import { globalMock } from '../request/mock'
+import isDevelopment from '../utils/isDevelopment'
 import isLocalDev from '../utils/isLocalDev'
 import Observable from '../utils/observable'
 
@@ -132,6 +135,12 @@ export const getConnectionStatus = () => status
  * @param viewMessageSource
  */
 export const initBridgeService = () => {
+  // Process mock
+  if (isDevelopment && isLocalDev && globalMock[LOCAL_MOCK_KEYS.INITIAL_PAYLOAD]) {
+    connectionPayload.initialPayload = { ...globalMock[LOCAL_MOCK_KEYS.INITIAL_PAYLOAD]() }
+  }
+
+  // Normal Flow
   if (status === 'pending') {
     status = 'waiting-for-viewer-signal'
     window.addEventListener('message', onGetMessage, false)

@@ -11,7 +11,7 @@ import {
  * @returns Initial payload sent by View
  */
 const useInitialPayload = <T>() => {
-  const [initialPayload, setInitialPayload] = useState<T>(getConnectionPayload() as T)
+  const [initialPayload, setInitialPayload] = useState<T>(getConnectionPayload().initialPayload as T)
 
   useEffect(() => {
     if (getConnectionStatus() === 'connected') {
