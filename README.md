@@ -245,7 +245,10 @@ You can revisit this session [here](#create-requests-mocks).
 
 ## Use Navigation
 
-This **optional** resource was created in order to facilitate the passage of data between routes, since the main domain will always be https://near.social or other fixed domain. Note that you will still be able to use any other routing solution.
+This **optional** feature was created to facilitate data passing between routes as the main domain will always be https://near.social or another fixed domain. Please note that you will still be able to use any other routing solution.
+
+<details>
+<summary><strong>Show more</strong></summary>
 
 While using the Widget, the url should be like `https://near.social/#/wendersonpires.near/widget/MyWidget?path=/profile`
 where the `?path=` is the param with the route value. E.g: `?path=/timeline`.
@@ -311,6 +314,8 @@ const Profile: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
   }
 }
 ```
+
+</details>
 
 ## Session Storage
 
