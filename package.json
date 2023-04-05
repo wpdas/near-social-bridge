@@ -24,7 +24,7 @@
     "widget",
     "backend"
   ],
-  "author": "Wenderson Pires (wpdas)",
+  "author": "Wenderson Pires wendersonpdas@gmail.com",
   "license": "MIT",
   "peerDependencies": {
     "react": ">=16",
