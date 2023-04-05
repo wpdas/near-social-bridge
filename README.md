@@ -7,7 +7,7 @@
 
 This library allows you to create a common application using ReactJS and inject it in a controlled way into a Widget on Near Social. Therefore, the Widget talks to the React application and vice versa, making it possible to consume Discovery API resources within the React application.
 
-Library destined only to applications that will run inside a Widget [(Near Social)](https://near.social)
+Library intended only for applications that will run within [Near Social](https://alpha.near.org/)
 
 You can try a live demo built using this library [here](https://alpha.near.org/#/wendersonpires.near/widget/ChatV2). The repository of this demo is [here](https://github.com/wpdas/chatv2-near-widget-app).
 
