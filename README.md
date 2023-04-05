@@ -529,20 +529,36 @@ You must set the env var REACT_APP_ENV as "production" in your deployment script
 
 ## Testing the Application Inside the Widget
 
-To test your app while developing, use a service like [ngrok](https://ngrok.com/) to help you, since it will expose your application globally to be accessed within the Widget.
+To test your app, you can install the [**NEAR Social Local Viewer CLI**](https://github.com/wpdas/near-social-local-viewer). It will allow you to execute and test your Widget locally using all the Discovery API resources without any problem.
 
-If you used the `npx create-react-app` command, Ngrok with free plan won't work inside the Widget as a message from the service will block the app.
-
-In order to bypass Ngrok's free account lock screen, you must create your application using [Next.js](https://nextjs.org/) and send the following parameter in the header:
+1 - Install NEAR Social Local Viewer CLI using npm or yarn:
 
 ```sh
-# set Header key: value
-"ngrok-skip-browser-warning": "any-value"
+# npm
+npm install near-social-local-viewer --save-dev
+
+# yarn
+yarn add near-social-local-viewer -D
 ```
 
-or
+2 - Now you can create a script within `package.json` file:
+
+```json
+{
+  "scripts": {
+    "start:widget": "npx init-viewer path/to/Widget.jsx"
+  }
+}
+```
+
+3 - or just run:
 
 ```sh
-# set Header key: value
-"User-Agent": "custom/non-standard browser"
+npx init-viewer path/to/Widget.jsx
+
+# e.g: npx init-viewer widget/ChatV2.jsx
 ```
+
+4 - Once your Widget is ready, you can deploy it to Near Social: <br/>
+4.1 - You can deploy it by copying and pasting; <br/>
+4.2 - Or using [near-social CLI](https://github.com/FroVolod/near-social).
