@@ -15,10 +15,10 @@ You can try a live demo built using this library [here](https://alpha.near.org/#
 
 ```sh
 # npm
-npm install near-social-bridge
+npm install near-social-bridge --save-dev
 
 # yarn
-yarn add near-social-bridge
+yarn add near-social-bridge -D
 ```
 
 ## Table of contents
