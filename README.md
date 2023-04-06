@@ -551,7 +551,7 @@ yarn add near-social-local-viewer -D
 ```json
 {
   "scripts": {
-    "start:widget": "npx init-viewer path/to/Widget.jsx"
+    "start:widget": "npx init-viewer path/to/widgets/"
   }
 }
 ```
@@ -559,9 +559,9 @@ yarn add near-social-local-viewer -D
 3 - or just run:
 
 ```sh
-npx init-viewer path/to/Widget.jsx
+npx init-viewer path/to/widgets/
 
-# e.g: npx init-viewer widget/ChatV2.jsx
+# e.g: npx init-viewer widgets/
 ```
 
 4 - Once your Widget is ready, you can deploy it to Near Social: <br/>
