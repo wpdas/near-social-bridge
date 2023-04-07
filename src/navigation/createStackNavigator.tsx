@@ -12,6 +12,7 @@ import useNavigation from './hooks/useNavigation'
 import { syncContentHeight } from './syncContentHeight'
 import { ParamListBase, Route } from './types'
 import { useAuth } from '../auth'
+import Spinner from '../components/Spinner'
 
 /**
  * Create and provides a Navigator (Routes controler) and Screen (Route component).
@@ -173,7 +174,7 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
 
     // Shows the Fallback component while waiting for the connection and
     // userInfo
-    if (!isReady || !auth.ready) return fallback ? <>{fallback}</> : null
+    if (!isReady || !auth.ready) return fallback ? <>{fallback}</> : <Spinner />
 
     return <>{currentScreen}</>
   }

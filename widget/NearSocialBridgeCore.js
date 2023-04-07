@@ -47,11 +47,14 @@ const Utils = {
   /**
    * Call resolve or reject for a given caller
    * E.g:
-   * Utils.promisify(() => getCachedObject(), (res) => console.log(res), (err) => console.log(err))
+   * var timeout = 5000 // 5sec
+   * Utils.promisify(() => getCachedObject(), (res) => console.log(res), (err) => console.log(err), timeout)
+   *
+   * Default timeout is 10 seconds
    */
-  promisify: (caller, resolve, reject) => {
+  promisify: (caller, resolve, reject, _timeout) => {
     const timer = 1000
-    const timeout = timer * 10
+    const timeout = _timeout || timer * 10
     let timeoutCheck = 0
 
     const find = () => {
@@ -192,10 +195,21 @@ const sessionStorageHydrateViewer = (requestType, payload) => {
 
 // Retrieve stored data
 const sessionStorageHydrateApp = (requestType) => {
-  // get stored data
-  const storageData = Storage.privateGet(CORE_STORAGE_KEY)
-  const responseBody = buildAnswer(requestType, storageData)
-  Utils.sendMessage(responseBody)
+  Utils.promisify(
+    // get stored data
+    () => Storage.privateGet(CORE_STORAGE_KEY),
+    (storageData) => {
+      const responseBody = buildAnswer(requestType, storageData)
+      Utils.sendMessage(responseBody)
+    },
+    () => {
+      // After 3 seconds, if no data is found, just send
+      // an empty answer
+      const responseBody = buildAnswer(requestType)
+      Utils.sendMessage(responseBody)
+    },
+    3000
+  )
 }
 
 // Set thew new iFrame height based on the new screen/route

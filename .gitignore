@@ -5,6 +5,7 @@ dist
 temp
 
 # build
+/components
 /hooks
 /auth
 /bridge

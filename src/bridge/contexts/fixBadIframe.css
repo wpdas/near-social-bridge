@@ -1,0 +1,12 @@
+/*
+ This is a palliative feature to fix a bug that happens with react.
+ When content inside an iframe is updated, react adds an iframe covering the entire
+ screen using the maximum z-index, thus making any interaction with the application impossible.
+
+ Using "react-error-overlay": "6.0.9" didn't fix the issue.
+
+ Source: https://stackoverflow.com/questions/69051008/react-injecting-iframe-with-max-z-index-on-reload-after-changes-development
+*/
+body > iframe[style*='2147483647']{
+  display: none;
+}
