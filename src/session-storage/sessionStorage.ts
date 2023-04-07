@@ -53,7 +53,7 @@ const hydrateViewer = async () => {
 const hydrate = async () => {
   // Request to hydrate the external app
   const view_sessionStorageClone = await request(REQUEST_KEYS.SESSION_STORAGE_HYDRATE_APP, undefined, {
-    forceTryAgain: true,
+    forceTryAgain: false,
   })
 
   // Hydrate _storage with data stored in the Viewer "sessionStorageClone" state
