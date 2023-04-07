@@ -8,5 +8,5 @@ export const REQUEST_KEYS = {
 }
 
 export const LOCAL_MOCK_KEYS = {
-  INITIAL_PAYLOAD: 'nsb:mock:initial-payload'
+  INITIAL_PAYLOAD: 'nsb:mock:initial-payload',
 }

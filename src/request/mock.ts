@@ -5,13 +5,13 @@ import isLocalDev from '../utils/isLocalDev'
 import { loremIpsum, randName, randUserName } from '../utils/faker/elements'
 
 /**
- * Global mock state
+ * Global Mock State
  */
-export const globalMock: Record<string, Function> = {
-  // Minimum mocked answers to make it works locally (localhost)
-  // auto inject "nsb:navigation:sync-content-height" mock
-  [REQUEST_KEYS.NAVIGATION_SYNC_CONTENT_HIGHT_VIEWER]: () => null,
-}
+export const globalMock: Record<string, Function> = {}
+
+/**
+ * Mock Options
+ */
 let mockOptions: { delay: number } = { delay: 500 }
 
 /**
@@ -53,7 +53,7 @@ export const createMockUser = (defaultValues?: {
 
 /**
  * Mock the `initialPayload` prop
- * @param initialPayload 
+ * @param initialPayload
  */
 export const mockInitialPayload = (initialPayload: Record<any, any>) => {
   globalMock[LOCAL_MOCK_KEYS.INITIAL_PAYLOAD] = () => initialPayload
