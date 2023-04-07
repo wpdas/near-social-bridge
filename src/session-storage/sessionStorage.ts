@@ -43,7 +43,7 @@ const keys = () => Object.keys(_storage)
  */
 const hydrateViewer = async () => {
   // Hydrate the Viewer "sessionStorageClone" state with External App _storage object
-  await request(REQUEST_KEYS.SESSION_STORAGE_HYDRATE_VIEWER, _storage)
+  await request(REQUEST_KEYS.SESSION_STORAGE_HYDRATE_VIEWER, _storage, { forceTryAgain: true })
   sessionStorageUpdateObservable.notify(_storage)
 }
 

@@ -1,4 +1,3 @@
-import isLocalDev from '../../utils/isLocalDev'
 import React, { createContext, useCallback, useEffect, useState } from 'react'
 import AuthProvider from '../../auth/contexts/AuthProvider'
 import {
@@ -8,6 +7,10 @@ import {
   postMessage as postMessageService,
 } from '../../services/bridge-service'
 import { GetMessageCallBack, NearSocialBridgeProps } from '../types'
+import isDevelopment from '../../utils/isDevelopment'
+import { initRefreshService } from '../../utils/refresh'
+import Spinner from '../../components/Spinner'
+import './fixBadIframe.css' // DON'T REMOVE
 
 const defaultValue: NearSocialBridgeProps = {
   postMessage: () => {
@@ -92,9 +95,9 @@ const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback }) => {
     }
   }, [])
 
-  if (!isConnected && !isLocalDev) {
+  if (!isConnected) {
     if (fallback) return <>{fallback}</>
-    return null
+    return <Spinner />
   }
 
   return (
@@ -105,3 +108,8 @@ const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback }) => {
 }
 
 export default NearSocialBridgeProvider
+
+// DEV Utils features
+if (isDevelopment) {
+  initRefreshService()
+}
