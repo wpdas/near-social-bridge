@@ -519,6 +519,10 @@ return (
 And that's basically it. Again, remember that once your application is running inside the Widget, if it is making requests, you must handle each one of them inside the Widget, otherwise the unhandled requests will fail.
 
 ## Good to know
+  
+### Server-Side Rendering
+  
+SSR is not supported yet!
 
 ### Shortcut to refresh the application
 
