@@ -1,5 +1,5 @@
 import { getConnectionStatus } from '../services/bridge-service'
-import isLocalDev from '../utils/isLocalDev'
+// import isLocalDev from '../utils/isLocalDev'
 import sessionStorage, { sessionStorageUpdateObservable } from './sessionStorage'
 
 let isLocalStorageAccessible = true
@@ -13,7 +13,8 @@ try {
 
 const setItem = (key: string, value: any) => {
   return new Promise<void>((resolve) => {
-    if (isLocalDev && isLocalStorageAccessible) {
+    // if (isLocalDev && isLocalStorageAccessible) {
+    if (isLocalStorageAccessible) {
       resolve(localStorage.setItem(key, value))
     } else {
       resolve(sessionStorage.setItem(key, value))
@@ -24,7 +25,8 @@ const setItem = (key: string, value: any) => {
 const getItem = (key: string) => {
   return new Promise((resolve) => {
     // Local host: localStorage
-    if (isLocalDev && isLocalStorageAccessible) {
+    // if (isLocalDev && isLocalStorageAccessible) {
+    if (isLocalStorageAccessible) {
       resolve(localStorage.getItem(key))
       return
     }
@@ -45,7 +47,8 @@ const getItem = (key: string) => {
 
 const removeItem = (key: string) => {
   return new Promise<void>((resolve) => {
-    if (isLocalDev && isLocalStorageAccessible) {
+    // if (isLocalDev && isLocalStorageAccessible) {
+    if (isLocalStorageAccessible) {
       resolve(localStorage.removeItem(key))
     } else {
       resolve(sessionStorage.removeItem(key))

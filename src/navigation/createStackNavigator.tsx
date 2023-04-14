@@ -9,9 +9,9 @@ import getPathParams from '../utils/getPathParams'
 import React, { useCallback, useEffect, useState } from 'react'
 import NavigationProvider, { initialRoute } from './contexts/NavigationProvider'
 import useNavigation from './hooks/useNavigation'
-import { syncContentHeight } from './syncContentHeight'
 import { ParamListBase, Route } from './types'
 import { useAuth } from '../auth'
+import { syncContentHeight } from './syncContentHeight'
 import Spinner from '../components/Spinner'
 
 /**
@@ -39,6 +39,8 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
 
     const [screens, setScreens] = useState<any[]>()
     const [currentScreen, setCurrentScreen] = useState<any>()
+
+    const [syncContentHeightDone, setSyncContentHeightDone] = useState(false)
 
     useEffect(() => {
       // Get the Screen childrens
@@ -136,13 +138,24 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
      * Send the content height to the iframe, so that it can fit the content properly
      */
     useEffect(() => {
+      // DEPRECATED
       if (currentScreen?.props?.iframeHeight) {
-        const screenElementContentHeight = currentScreen.props.iframeHeight
-
-        // Sync Height
-        syncContentHeight(screenElementContentHeight)
+        console.warn(
+          'Deprecated: iframeHeight prop is no longer supported. The screen content height is sync with the iframe height automatically!'
+        )
       }
     }, [currentScreen])
+
+    /**
+     * Get the content height and set it automatically to the iframe's height
+     */
+    useEffect(() => {
+      if (currentScreen && isReady && auth.ready) {
+        // Send the content height to the core.js
+        setSyncContentHeightDone(false)
+        syncContentHeight().finally(() => setSyncContentHeightDone(true))
+      }
+    }, [currentScreen, isReady, auth.ready])
 
     // Handle the current screen
     useEffect(() => {
@@ -176,7 +189,7 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
     // userInfo
     if (!isReady || !auth.ready) return fallback ? <>{fallback}</> : <Spinner />
 
-    return <>{currentScreen}</>
+    return <div style={{ opacity: syncContentHeightDone ? 1 : 0 }}>{currentScreen}</div>
   }
 
   const WrappedNavigator: React.FC<{ children: React.ReactNode }> = ({ children }) => {

@@ -1,3 +1,5 @@
+'use client'
+
 import getPathParams from '../../utils/getPathParams'
 import React, { createContext, useCallback, useEffect, useState } from 'react'
 import { HistoryProps, NavigationProps, ParamListBase } from '../types'
@@ -29,7 +31,7 @@ type NavigationProviderProps = {
    *
    * Make sure you are passing thrhoug `urlParams` with the welcomePayload, e.g:
    *
-   * // SETUP: [Navigation] Get URL params
+   * SETUP: [Navigation] Get URL params
    * const urlParams = props.r;
    *
    * const welcomePayload = {

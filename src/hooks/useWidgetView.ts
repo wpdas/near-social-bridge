@@ -9,7 +9,9 @@ const useWidgetView = () => {
      * Update the View height
      * @param height Height
      */
-    setHeight: (height: number) => syncContentHeight(height),
+    setHeight: (height: number) => {
+      syncContentHeight(height)
+    },
   }
 }
 

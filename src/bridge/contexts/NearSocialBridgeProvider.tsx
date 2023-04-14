@@ -1,3 +1,5 @@
+'use client'
+
 import React, { createContext, useCallback, useEffect, useState } from 'react'
 import AuthProvider from '../../auth/contexts/AuthProvider'
 import {
@@ -7,8 +9,6 @@ import {
   postMessage as postMessageService,
 } from '../../services/bridge-service'
 import { GetMessageCallBack, NearSocialBridgeProps } from '../types'
-import isDevelopment from '../../utils/isDevelopment'
-import { initRefreshService } from '../../utils/refresh'
 import Spinner from '../../components/Spinner'
 import './fixBadIframe.css' // DON'T REMOVE
 
@@ -108,8 +108,3 @@ const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback }) => {
 }
 
 export default NearSocialBridgeProvider
-
-// DEV Utils features
-if (isDevelopment) {
-  initRefreshService()
-}

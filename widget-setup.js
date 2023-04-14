@@ -3,11 +3,11 @@
  */
 const externalAppUrl = 'https://<external-app-link-here>'
 /**
- * Initial Path (optional but recommended)
+ * Initial Path (optional)
  */
 const path = props.path
 /**
- * Initial view height (optional but recommended)
+ * Initial view height (optional)
  */
 const initialViewHeight = 500
 /**

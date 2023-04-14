@@ -51,7 +51,10 @@ const names = [
   'Tibet',
 ]
 
-export const randName = () => names[Math.round(Math.random() * names.length - 1)]
+export const randName = () => {
+  const index = Math.max(0, Math.floor(Math.random() * names.length - 1))
+  return names[index]
+}
 
 export const randUserName = (firstName: string, lastName: string) => `${firstName}${lastName}`
 
