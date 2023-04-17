@@ -55,6 +55,7 @@ const getAccountIdHandler = (request, response) => {
   response(request).send({ accountId })
 }
 
+// use `wendersonpires.testnet/widget/NearSocialBridgeCore` as source if you want to use "testnet" environment
 return (
   <Widget
     src={'wendersonpires.near/widget/NearSocialBridgeCore'}

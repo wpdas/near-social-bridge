@@ -579,6 +579,7 @@ const getAccountIdHandler = (request, response) => {
 }
 
 // NearSocialBridgeCore widget is the core that makes all the "magic" happens
+// use `wendersonpires.testnet/widget/NearSocialBridgeCore` as source if you want to use "testnet" environment
 return (
   <Widget
     src={'wendersonpires.near/widget/NearSocialBridgeCore'}
@@ -592,6 +593,8 @@ return (
   />
 )
 ```
+
+**testnet:** Use `wendersonpires.testnet/widget/NearSocialBridgeCore` while creating your application using the testnet environment.
 
 And that's basically it. Again, remember that once your application is running inside the Widget, if it is making requests, you must handle each one of them inside the Widget, otherwise the unhandled requests will fail.
 
