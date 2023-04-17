@@ -9,9 +9,9 @@ This library allows you to create a common application using ReactJS and inject 
 
 Library intended only for applications that will run within [Near Social](https://alpha.near.org/)
 
-**Client-side example: [ChatV2 Widget Repo](https://github.com/wpdas/chatv2-near-widget-app)**
+**Client-side render example: [ChatV2 Widget Repo](https://github.com/wpdas/chatv2-near-widget-app)**
 
-**Server-side example: [NextJS Widget Repo](https://github.com/wpdas/nextjs-near-widget-app)**
+**Server-side render example: [NextJS Widget Repo](https://github.com/wpdas/nextjs-near-widget-app)**
 
 ## Install
 
@@ -27,8 +27,8 @@ yarn add near-social-bridge
 
 ## Table of contents
 
-- [First setup the library](#first-setup-the-library)
-- [Create the requests](#create-the-requests)
+- [Setup](#setup)
+- [Requests](#requests)
   - [Simple Request](#simple-request)
   - [Create Requests Mocks](#create-requests-mocks)
   - [Handling the requests inside the Widget](#handling-the-requests-inside-the-widget)
@@ -58,7 +58,7 @@ yarn add near-social-bridge
   - [Server-Side Rendering](#server-side-rendering)
 - [Testing the Application Inside the Widget](#testing-the-application-inside-the-widget)
 
-## First setup the library
+## Setup
 
 You should import the `near-social-bridge.css` to your application.
 
@@ -81,7 +81,7 @@ return (
 )
 ```
 
-## Create the requests
+## Requests
 
 You can make requests to the Widget and each request must be handled appropriately by the Widget. You can also mock your requests so that they work locally while you are developing the application. All mocks will be automatically disabled when the app is running inside the Widget.
 
@@ -302,7 +302,7 @@ const { Navigator, Screen } = createStackNavigator<NavigationProps>(<Spinner />)
 
 When using `Navigator` with `autoHeightSync` set as `true`, the height of the iframe is automatically adjusted to the initial screen content. If more content is inserted inside the screen after the first render, you can use [`useSyncContentHeight`](#usesynccontentheight) hook to sync the height again.
 
-The `Screen` component allows you to pass some useful properties, one of them is the `iframeHeight` which will set the the initial iframe's height needed to show this screen within the Widget even before the first render. If `Navigator` was called with `autoHeightSync`, the height is going to be adjusted automatically when the screen content is rendered.
+The `Screen` component allows you to pass some useful properties, one of them is the `iframeHeight` which will set the initial iframe's height needed to show this screen within the Widget even before the first render. If `Navigator` was called with `autoHeightSync`, the height is going to be adjusted automatically when the screen content is rendered.
 
 ```tsx
 return (
