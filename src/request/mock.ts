@@ -1,7 +1,5 @@
 import { LOCAL_MOCK_KEYS, REQUEST_KEYS } from '../constants'
 import { UserInfo } from '../services/bridge-service'
-// import isDevelopment from '../utils/isDevelopment'
-// import isLocalDev from '../utils/isLocalDev'
 import { loremIpsum, randName, randUserName } from '../utils/faker/elements'
 
 /**
@@ -66,7 +64,6 @@ export const mockInitialPayload = (initialPayload: Record<any, any>) => {
  */
 export const getMockedResponse = async <Data extends {}>(requestType: string, payload?: {}) => {
   return new Promise<Data>((resolve) => {
-    // if (isDevelopment && isLocalDev && Object.keys(globalMock).length > 0) {
     if (Object.keys(globalMock).length > 0) {
       const response = globalMock[requestType] ?? null
       setTimeout(() => {

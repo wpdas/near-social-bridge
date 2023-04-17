@@ -1,6 +1,4 @@
 import { initBridgeService, bridgeServiceObservable, postMessage } from '../services/bridge-service'
-// import isDevelopment from '../utils/isDevelopment'
-// import isLocalDev from '../utils/isLocalDev'
 import { getMockedResponse, globalMock } from './mock'
 
 export type ResponseData<D extends {}> = {
@@ -38,7 +36,6 @@ const request = <Data extends {}>(
   options?: { forceTryAgain?: boolean; timeout?: number }
 ) => {
   // Use mock? -> is dev, is local, the "requestType" has a mock
-  // if (isDevelopment && isLocalDev && globalMock[requestType]) {
   if (globalMock[requestType]) {
     return getMockedResponse<Data>(requestType, payload)
   }

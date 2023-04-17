@@ -1,9 +1,8 @@
 'use client'
 
 import React, { createContext, useCallback, useEffect, useState } from 'react'
-import { getConnectionStatus, onConnectObservable, UserInfo } from '../../services/bridge-service'
+import { onConnectObservable, UserInfo } from '../../services/bridge-service'
 import getUserInfo from '../getUserInfo'
-// import isLocalDev from '../../utils/isLocalDev'
 
 type Auth = {
   user?: UserInfo
@@ -41,15 +40,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
       fetchUserInfo()
     }
 
-    // If it's connected already, just get the info
-    if (getConnectionStatus() === 'connected') {
-      fetchUserInfo()
-    }
-
-    // DEV - calls anyways if it's localhost
-    // if (isLocalDev) {
     fetchUserInfo()
-    // }
 
     onConnectObservable.subscribe(onConnectHandler)
     return () => {

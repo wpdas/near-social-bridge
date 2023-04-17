@@ -1,7 +1,5 @@
 import { LOCAL_MOCK_KEYS } from '../constants'
 import { globalMock } from '../request/mock'
-// import isDevelopment from '../utils/isDevelopment'
-// import isLocalDev from '../utils/isLocalDev'
 import Observable from '../utils/observable'
 
 export type UserInfo = {
@@ -73,7 +71,6 @@ let lastMsgSentAt = new Date()
  * @returns
  */
 export const postMessage = (message: any) => {
-  // if (!viewSource && !isLocalDev) {
   if (!viewSource) {
     return
   }
@@ -136,7 +133,6 @@ export const getConnectionStatus = () => status
  */
 export const initBridgeService = () => {
   // Process mock
-  // if (isDevelopment && isLocalDev && globalMock[LOCAL_MOCK_KEYS.INITIAL_PAYLOAD]) {
   if (globalMock[LOCAL_MOCK_KEYS.INITIAL_PAYLOAD]) {
     connectionPayload.initialPayload = { ...globalMock[LOCAL_MOCK_KEYS.INITIAL_PAYLOAD]() }
   }
