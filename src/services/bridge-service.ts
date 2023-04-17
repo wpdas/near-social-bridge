@@ -75,8 +75,7 @@ let lastMsgSentAt = new Date()
 export const postMessage = (message: any) => {
   // if (!viewSource && !isLocalDev) {
   if (!viewSource) {
-    // Present helpful message
-    return console.warn('Message source was not initialized!')
+    return
   }
 
   // Wait half second before sending the next message (avoid msg without answer)

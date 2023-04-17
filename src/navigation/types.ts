@@ -36,7 +36,7 @@ export declare type Route<RouteName> = Readonly<{
    */
   key?: string
   /**
-   * DEPRECATED (height is sync automatically now) - Height to sync with the Near Social Viewer Iframe
+   * Height to sync with the Near Social Viewer Iframe
    */
   iframeHeight?: number
   /**

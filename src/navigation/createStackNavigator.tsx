@@ -1,3 +1,4 @@
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import {
   onConnectObservable,
   ConnectionPayload,
@@ -6,13 +7,12 @@ import {
 } from '../services/bridge-service'
 import getHostname from '../utils/getHostname'
 import getPathParams from '../utils/getPathParams'
-import React, { useCallback, useEffect, useState } from 'react'
 import NavigationProvider, { initialRoute } from './contexts/NavigationProvider'
 import useNavigation from './hooks/useNavigation'
 import { ParamListBase, Route } from './types'
 import { useAuth } from '../auth'
 import { syncContentHeight } from './syncContentHeight'
-import Spinner from '../components/Spinner'
+import isBrowser from '../utils/isBrowser'
 
 /**
  * Create and provides a Navigator (Routes controler) and Screen (Route component).
@@ -27,22 +27,21 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
   /**
    * Navigator Component (Routes controler)
    *
-   * - This will send the content height (using Screen iframeHeight prop) to the iframe automatically, so that, the iframe will fit the right size
+   * - use `autoHeightSync` to make it sync the iframe's height with the content's height.
    *
-   * @param param0
    * @returns
    */
-  const Navigator: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const Navigator: React.FC<{ children: React.ReactNode; autoHeightSync?: boolean }> = ({
+    children,
+    autoHeightSync,
+  }) => {
     const auth = useAuth()
     const [isReady, setIsReady] = useState(false)
     const navigation = useNavigation()
 
     const [screens, setScreens] = useState<any[]>()
-    const [currentScreen, setCurrentScreen] = useState<any>()
 
-    const [syncContentHeightDone, setSyncContentHeightDone] = useState(false)
-
-    useEffect(() => {
+    const getScreens = useCallback(() => {
       // Get the Screen childrens
       const mainChildren = children as any
       let finalChildren: any
@@ -65,8 +64,18 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
         throw new Error('You have to provide at least one Screen!')
       }
 
-      setScreens(finalChildren)
+      return finalChildren
     }, [children])
+
+    // Initialize the current screen using the first child of the list of screens
+    const [currentScreen, setCurrentScreen] = useState<any>(getScreens()[0])
+
+    useEffect(() => {
+      // Get the Screen childrens
+      const screensList = getScreens()
+
+      setScreens(screensList)
+    }, [getScreens])
 
     const findScreenAndPopulateProps = useCallback(
       (route?: string) => {
@@ -138,11 +147,11 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
      * Send the content height to the iframe, so that it can fit the content properly
      */
     useEffect(() => {
-      // DEPRECATED
       if (currentScreen?.props?.iframeHeight) {
-        console.warn(
-          'Deprecated: iframeHeight prop is no longer supported. The screen content height is sync with the iframe height automatically!'
-        )
+        const screenElementContentHeight = currentScreen.props.iframeHeight
+
+        // Sync Height
+        syncContentHeight(screenElementContentHeight)
       }
     }, [currentScreen])
 
@@ -150,20 +159,25 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
      * Get the content height and set it automatically to the iframe's height
      */
     useEffect(() => {
-      if (currentScreen && isReady && auth.ready) {
+      if (currentScreen && isReady && auth.ready && autoHeightSync) {
         // Send the content height to the core.js
-        setSyncContentHeightDone(false)
-        syncContentHeight().finally(() => setSyncContentHeightDone(true))
+        syncContentHeight()
       }
-    }, [currentScreen, isReady, auth.ready])
+    }, [currentScreen, isReady, auth.ready, autoHeightSync])
 
     // Handle the current screen
     useEffect(() => {
       if (!screen) return
 
       const _currentScreen = screens?.find((screen: any) => screen.props.name === navigation.location?.[0]) || null
-      setCurrentScreen(_currentScreen)
-    }, [navigation.location, screens])
+      if (!currentScreen && _currentScreen) {
+        setCurrentScreen(_currentScreen)
+      }
+
+      if (currentScreen?.props?.name !== _currentScreen?.props?.name) {
+        setCurrentScreen(_currentScreen)
+      }
+    }, [navigation.location, screens, currentScreen])
 
     // Handle window location hash changes
     useEffect(() => {
@@ -186,16 +200,22 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
     }, [screens])
 
     // Shows the Fallback component while waiting for the connection and
-    // userInfo
-    if (!isReady || !auth.ready) return fallback ? <>{fallback}</> : <Spinner />
+    if (fallback) {
+      if (!isReady || !auth.ready) return <>{fallback}</>
+    }
 
-    return <div style={{ opacity: syncContentHeightDone ? 1 : 0 }}>{currentScreen}</div>
+    return <>{currentScreen}</>
   }
 
-  const WrappedNavigator: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  /**
+   * Navigator
+   *
+   * - use `autoHeightSync` to make it sync the iframe's height with the content's height.
+   */
+  const WrappedNavigator: React.FC<{ children: React.ReactNode; autoHeightSync?: boolean }> = ({ children }) => {
     return (
       <NavigationProvider>
-        <Navigator>{children}</Navigator>
+        <Navigator autoHeightSync>{children}</Navigator>
       </NavigationProvider>
     )
   }
@@ -203,16 +223,27 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
   /**
    * Screen Component (Route)
    *
-   * @param param0
    * @returns
    */
   const Screen: React.FC<Route<keyof T>> = ({ key, name, component, pathParams }) => {
     const navigation = useNavigation()
+    const [params, setParams] = useState<any>()
+
+    // Set params
+    useLayoutEffect(() => {
+      if (navigation?.location && !params) {
+        setParams(navigation.location[1])
+      }
+    }, [navigation.location, params])
+
     const Component = component
 
     // Internal path (executing inside the iframe)
-    const url = new URL(window.location.href)
-    const path = url.searchParams.get('r')
+    let path: string | null = null
+    if (isBrowser()) {
+      const url = new URL(window.location.href)
+      path = url.searchParams.get('r')
+    }
 
     return (
       <div id="nsb-navigation-screen">
@@ -222,7 +253,7 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
             route: {
               key,
               name,
-              params: { ...navigation.location[1] },
+              params: params ? { ...params } : {},
               path,
               pathParams,
             },

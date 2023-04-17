@@ -1,5 +1,5 @@
 import React from 'react'
-import './spinner.css'
+// import './spinner.css'
 
 const Spinner = () => (
   <div style={{ margin: 'auto', paddingTop: '236px', width: '100%' }}>

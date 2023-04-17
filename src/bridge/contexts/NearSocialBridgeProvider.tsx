@@ -9,8 +9,6 @@ import {
   postMessage as postMessageService,
 } from '../../services/bridge-service'
 import { GetMessageCallBack, NearSocialBridgeProps } from '../types'
-import Spinner from '../../components/Spinner'
-import './fixBadIframe.css' // DON'T REMOVE
 
 const defaultValue: NearSocialBridgeProps = {
   postMessage: () => {
@@ -95,9 +93,8 @@ const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback }) => {
     }
   }, [])
 
-  if (!isConnected) {
-    if (fallback) return <>{fallback}</>
-    return <Spinner />
+  if (!isConnected && fallback) {
+    return <>{fallback}</>
   }
 
   return (

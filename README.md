@@ -56,15 +56,22 @@ yarn add near-social-bridge
 
 ## First setup the library
 
-You should wrap your app with `NearSocialBridgeProvider` which will start the connection between the React App and the Widget inside Near Social. The connection only occurs when the application is running inside the Widget.
+You should import the `near-social-bridge.css` to your application.
 
-This component accepts a fallback component that's going to be shown ntil the connection with the Widget is established or the Widget response timeout is reached.. You can set it using the `fallback` prop.
+```tsx
+import 'near-social-bridge/near-social-bridge.css'
+```
+
+Then, you need to wrap your app with `NearSocialBridgeProvider` which will start the connection between the React App and the Widget inside Near Social. The connection only occurs when the application is running inside the Widget.
+
+This component accepts a fallback component that's going to be shown until the connection with the Widget is established or the Widget response timeout is reached.. You can set it using the `fallback` prop.
 
 ```tsx
 import { NearSocialBridgeProvider } from 'near-social-bridge'
+import { Spinner } from 'near-social-bridge'
 // ...
 return (
-  <NearSocialBridgeProvider fallback={<p>Loading...</p>}>
+  <NearSocialBridgeProvider fallback={<Spinner />}>
     <App />
   </NearSocialBridgeProvider>
 )
@@ -276,22 +283,27 @@ export type ProfileScreenProps = IFrameStackScreenProps<NavigationProps, 'Profil
 
 Use the `createStackNavigator` method to receive the `Navigator` and `Screen` components. They will be used to manage each screen.
 
+You can also set a fallback component to show while the connection is being established.
+
 ```tsx
 import { createStackNavigator } from 'near-social-bridge/navigation'
+import { Spinner } from 'near-social-bridge'
 import { NavigationProps } from './NavigationProps'
 
-// Optional Fallback Loading component to show while the connection is being established
-const FallbackLoadingComponent = () => <p>Loading...</p>
+// Optional Fallback Loading component to show while the connection is being established. Using
+// Spinner component provided by the lib
 
-const { Navigator, Screen } = createStackNavigator<NavigationProps>(<FallbackLoadingComponent />)
+const { Navigator, Screen } = createStackNavigator<NavigationProps>(<Spinner />)
 ```
 
-When using `Screen` component, the height of the iframe is automatically adjusted to the initial screen content. If more content is inserted inside the screen after the first render, you can use [`useSyncContentHeight`](#usesynccontentheight) hook to sync the height again.
+When using `Navigator` with `autoHeightSync` set as `true`, the height of the iframe is automatically adjusted to the initial screen content. If more content is inserted inside the screen after the first render, you can use [`useSyncContentHeight`](#usesynccontentheight) hook to sync the height again.
+
+The `Screen` component allows you to pass some useful properties, one of them is the `iframeHeight` which will set the the initial iframe's height needed to show this screen within the Widget even before the first render. If `Navigator` was called with `autoHeightSync`, the height is going to be adjusted automatically when the screen content is rendered.
 
 ```tsx
 return (
-  <Navigator>
-    <Screen name="Home" component={Home} />
+  <Navigator autoHeightSync>
+    <Screen name="Home" component={Home} iframeHeight={420} />
     <Screen name="Profile" component={Profile} />
   </Navigator>
 )
@@ -584,8 +596,6 @@ And that's basically it. Again, remember that once your application is running i
 ### Server-Side Rendering
 
 SSR is supported starting with version 1.3.0!
-
-**NextJS 13:** You should use `'use client'` to avoid issues.
 
 ## Testing the Application Inside the Widget
 
