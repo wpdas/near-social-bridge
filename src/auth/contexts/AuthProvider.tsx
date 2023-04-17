@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useCallback, useEffect, useState } from 'react'
-import { onConnectObservable, UserInfo } from '../../services/bridge-service'
+import { getConnectionPayload, onConnectObservable, UserInfo } from '../../services/bridge-service'
 import getUserInfo from '../getUserInfo'
 
 type Auth = {
@@ -35,6 +35,12 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
   // Fetch user info
   useEffect(() => {
+    // Set the initial user info
+    const preUserInfo = getConnectionPayload().userInfo
+    if (preUserInfo) {
+      setUser(preUserInfo)
+    }
+
     const onConnectHandler = () => {
       onConnectObservable.unsubscribe(onConnectHandler)
       fetchUserInfo()

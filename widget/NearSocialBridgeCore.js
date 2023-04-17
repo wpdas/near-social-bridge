@@ -239,8 +239,9 @@ const getUserInfo = (requestType) => {
       })
       Utils.sendMessage(responseBody)
     },
-    (err) => {
-      console.log('error fetching profile data', err)
+    () => {
+      // Send the accountId only
+      Utils.sendMessage({ accountId })
     }
   )
 }
