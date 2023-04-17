@@ -1,7 +1,7 @@
 # <img src='./md/near-social-bridge-logo.png' height='24' alt='NEAR Social Bridge Logo' /> NEAR Social Bridge
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/wpdas/near-social-bridge/publish.yml?style=for-the-badge&colorB=000000)](https://github.com/wpdas/near-social-bridge/actions?query=workflow%3Apublish)
-[![Build Size](https://img.shields.io/bundlephobia/minzip/near-social-bridge?label=bundle%20size&style=for-the-badge&colorB=000000)](https://bundlephobia.com/package/near-social-bridge)
+[![Build Size](https://img.shields.io/bundlephobia/minzip/near-social-bridge/1.0.1?label=bundle%20size&style=for-the-badge&colorB=000000)](https://bundlephobia.com/package/near-social-bridge)
 [![Version](https://img.shields.io/npm/v/near-social-bridge?style=for-the-badge&colorB=000000)](https://www.npmjs.com/package/near-social-bridge)
 [![Downloads](https://img.shields.io/npm/dt/near-social-bridge.svg?style=for-the-badge&colorB=000000)](https://www.npmjs.com/package/near-social-bridge)
 
@@ -9,9 +9,13 @@ This library allows you to create a common application using ReactJS and inject 
 
 Library intended only for applications that will run within [Near Social](https://alpha.near.org/)
 
-You can try a live demo built using this library [here](https://alpha.near.org/#/wendersonpires.near/widget/ChatV2). The repository of this demo is [here](https://github.com/wpdas/chatv2-near-widget-app).
+**Client-side example: [ChatV2 Widget Repo](https://github.com/wpdas/chatv2-near-widget-app)**
 
-**Install it using npm or yarn:**
+**Server-side example: [NextJS Widget Repo](https://github.com/wpdas/nextjs-near-widget-app)**
+
+## Install
+
+Install it using npm or yarn:
 
 ```sh
 # npm
