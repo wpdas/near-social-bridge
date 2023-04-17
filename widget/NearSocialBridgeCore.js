@@ -31,7 +31,7 @@ const code = `
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reseter.css/1.0.8/reseter.min.css">
 <div id="bridge-root"></div>
-<script src="https://unpkg.com/near-social-bridge@1.0.1/widget/core.min.js" crossorigin></script>
+<script src="https://unpkg.com/near-social-bridge@1.3.0/widget/core.min.js" crossorigin></script>
 `
 
 // (i) Discovery API uses cached data structure

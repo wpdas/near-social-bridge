@@ -15,10 +15,10 @@ You can try a live demo built using this library [here](https://alpha.near.org/#
 
 ```sh
 # npm
-npm install near-social-bridge --save-dev
+npm install near-social-bridge
 
 # yarn
-yarn add near-social-bridge -D
+yarn add near-social-bridge
 ```
 
 ## Table of contents
@@ -46,23 +46,32 @@ yarn add near-social-bridge -D
   - [useSessionStorage](#usesessionstorage)
   - [useAuth](#useauth)
   - [useWidgetView](#usewidgetview)
+  - [useSyncContentHeight](#usesynccontentheight)
+- [Utils](#utils)
+  - [initRefreshService](#initrefreshservice)
 - [Preparing a new Widget](#preparing-a-new-widget)
 - [Good to know](#good-to-know)
-  - [Shortcut to refresh the application](#shortcut-to-refresh-the-application)
-  - [Production environment](#production-environment)
+  - [Server-Side Rendering](#server-side-rendering)
 - [Testing the Application Inside the Widget](#testing-the-application-inside-the-widget)
 
 ## First setup the library
 
-You should wrap your app with `NearSocialBridgeProvider` which will start the connection between the React App and the Widget inside Near Social. The connection only occurs when the application is running inside the Widget.
+You should import the `near-social-bridge.css` to your application.
 
-This component accepts a fallback component that's going to be shown ntil the connection with the Widget is established or the Widget response timeout is reached.. You can set it using the `fallback` prop.
+```tsx
+import 'near-social-bridge/near-social-bridge.css'
+```
+
+Then, you need to wrap your app with `NearSocialBridgeProvider` which will start the connection between the React App and the Widget inside Near Social. The connection only occurs when the application is running inside the Widget.
+
+This component accepts a fallback component that's going to be shown until the connection with the Widget is established or the Widget response timeout is reached.. You can set it using the `fallback` prop.
 
 ```tsx
 import { NearSocialBridgeProvider } from 'near-social-bridge'
+import { Spinner } from 'near-social-bridge'
 // ...
 return (
-  <NearSocialBridgeProvider fallback={<p>Loading...</p>}>
+  <NearSocialBridgeProvider fallback={<Spinner />}>
     <App />
   </NearSocialBridgeProvider>
 )
@@ -245,16 +254,9 @@ You can revisit this session [here](#create-requests-mocks).
 
 ## Use Navigation
 
-This **optional** feature was created to facilitate data passing between routes as the main domain will always be https://near.social or another fixed domain. Please note that you will still be able to use any other routing solution.
+This feature was created to facilitate data passing between routes as the main domain will always be https://near.social or another fixed domain. It'll also maintain the same route after a page refresh during the development process. Please note that you will still be able to use any other routing solution.
 
-<details>
-<summary><strong>Show more</strong></summary>
-
-While using the Widget, the url should be like `https://near.social/#/wendersonpires.near/widget/MyWidget?path=/profile`
-where the `?path=` is the param with the route value. E.g: `?path=/timeline`.
-
-While developing locally, you can just use the URL rendered by this lib. E.g: `http://localhost:1234/#/profile` where
-`#/profile` is the current route.
+To force the app to start in a specific route, you should set a `path` parameter like so `https://near.social/#/wendersonpires.near/widget/MyWidget?path=/profile` where the `?path=` is the param with the route value. E.g: `?path=/timeline`.
 
 ### Implementing routes
 
@@ -281,21 +283,26 @@ export type ProfileScreenProps = IFrameStackScreenProps<NavigationProps, 'Profil
 
 Use the `createStackNavigator` method to receive the `Navigator` and `Screen` components. They will be used to manage each screen.
 
+You can also set a fallback component to show while the connection is being established.
+
 ```tsx
 import { createStackNavigator } from 'near-social-bridge/navigation'
+import { Spinner } from 'near-social-bridge'
 import { NavigationProps } from './NavigationProps'
 
-// Optional Fallback Loading component to show while the connection is being established
-const FallbackLoadingComponent = () => <p>Loading...</p>
+// Optional Fallback Loading component to show while the connection is being established. Using
+// Spinner component provided by the lib
 
-const { Navigator, Screen } = createStackNavigator<NavigationProps>(<FallbackLoadingComponent />)
+const { Navigator, Screen } = createStackNavigator<NavigationProps>(<Spinner />)
 ```
 
-The `Screen` component allows you to pass some useful properties, one of them is the `iframeHeight` which will set the height of the iframe needed to show this screen within the Widget.
+When using `Navigator` with `autoHeightSync` set as `true`, the height of the iframe is automatically adjusted to the initial screen content. If more content is inserted inside the screen after the first render, you can use [`useSyncContentHeight`](#usesynccontentheight) hook to sync the height again.
+
+The `Screen` component allows you to pass some useful properties, one of them is the `iframeHeight` which will set the the initial iframe's height needed to show this screen within the Widget even before the first render. If `Navigator` was called with `autoHeightSync`, the height is going to be adjusted automatically when the screen content is rendered.
 
 ```tsx
 return (
-  <Navigator>
+  <Navigator autoHeightSync>
     <Screen name="Home" component={Home} iframeHeight={420} />
     <Screen name="Profile" component={Profile} />
   </Navigator>
@@ -314,8 +321,6 @@ const Profile: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
   }
 }
 ```
-
-</details>
 
 ## Session Storage
 
@@ -459,6 +464,74 @@ const MyComponent = () => {
 }
 ```
 
+### useSyncContentHeight
+
+You can use this hook to do a content height sync. Thus, the height of the viewer's iframe will always have the updated height.
+
+```ts
+import { useSyncContentHeight } from 'near-social-bridge'
+
+const MyComponent = () => {
+  const { done, syncAgain } = useSyncContentHeight()
+  console.log('is sync done?', done)
+
+  const [list, setList] = useState(['a'])
+
+  useEffect(() => {
+    setList(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'])
+    syncAgain()
+  }, [])
+
+  return (
+    <div className="flex flex-col">
+      <p>list</p>
+      {list.map((item) => (
+        <p key={item}>{item}</p>
+      ))}
+    </div>
+  )
+}
+```
+
+Or, you can just use `useSyncContentHeight()`:
+
+```ts
+import { useSyncContentHeight } from 'near-social-bridge'
+
+const MyComponent = () => {
+  useSyncContentHeight()
+
+  const list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']
+
+  return (
+    <div className="flex flex-col">
+      <p>list</p>
+      {list.map((item) => (
+        <p key={item}>{item}</p>
+      ))}
+    </div>
+  )
+}
+```
+
+## Utils
+
+### initRefreshService
+
+If you use this service during the development process, when you press "R" key 3 times, the app is going to refresh.
+
+```ts
+import { initRefreshService } from 'near-social-bridge/utils'
+
+// ...
+useEffect(() => {
+  if (isDev) {
+    initRefreshService()
+  }
+}, [])
+// ...
+```
+
 ## Preparing a new Widget
 
 Create a new Widget, copy [the content of file **widget-setup.js**](./widget-setup.js) and paste it inside your new Widget. Then set its initial props as you wish:
@@ -469,11 +542,11 @@ Create a new Widget, copy [the content of file **widget-setup.js**](./widget-set
  */
 const externalAppUrl = 'https://<external-app-link-here>'
 /**
- * Initial Path (optional but recommended)
+ * Initial Path (optional)
  */
 const path = props.path
 /**
- * Initial view height (optional but recommended)
+ * Initial view height (optional)
  */
 const initialViewHeight = 500
 /**
@@ -519,22 +592,10 @@ return (
 And that's basically it. Again, remember that once your application is running inside the Widget, if it is making requests, you must handle each one of them inside the Widget, otherwise the unhandled requests will fail.
 
 ## Good to know
-  
+
 ### Server-Side Rendering
-  
-SSR is not supported yet!
 
-### Shortcut to refresh the application
-
-During the development process, if you press "R" key 3 times, the app is going to refresh.
-
-### Production environment
-
-You must set the env var REACT_APP_ENV as "production" in your deployment script, in order to disable development functionalities:
-
-```json
-"build": "cross-env REACT_APP_ENV=production ... <the rest of the build script>"
-```
+SSR is supported starting with version 1.3.0!
 
 ## Testing the Application Inside the Widget
 

@@ -10,3 +10,6 @@ export * from './session-storage'
 export * from './auth'
 export * from './hooks'
 export * from './components'
+
+// Utils
+export { initRefreshService } from './utils/refresh'
