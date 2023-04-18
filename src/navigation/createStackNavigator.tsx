@@ -159,11 +159,11 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
      * Get the content height and set it automatically to the iframe's height
      */
     useEffect(() => {
-      if (currentScreen && isReady && auth.ready && autoHeightSync) {
+      if (currentScreen && isReady && autoHeightSync) {
         // Send the content height to the core.js
         syncContentHeight()
       }
-    }, [currentScreen, isReady, auth.ready, autoHeightSync])
+    }, [currentScreen, isReady, autoHeightSync])
 
     // Handle the current screen
     useEffect(() => {
