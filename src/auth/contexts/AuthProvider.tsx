@@ -38,7 +38,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     const onConnectHandler = () => {
       // Set the initial user info
       const preUserInfo = getConnectionPayload().userInfo
-      if (preUserInfo) {
+      if (preUserInfo?.accountId) {
         setUser(preUserInfo)
       }
 
