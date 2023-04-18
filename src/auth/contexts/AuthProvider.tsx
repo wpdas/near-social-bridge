@@ -35,13 +35,13 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
   // Fetch user info
   useEffect(() => {
-    // Set the initial user info
-    const preUserInfo = getConnectionPayload().userInfo
-    if (preUserInfo) {
-      setUser(preUserInfo)
-    }
-
     const onConnectHandler = () => {
+      // Set the initial user info
+      const preUserInfo = getConnectionPayload().userInfo
+      if (preUserInfo) {
+        setUser(preUserInfo)
+      }
+
       onConnectObservable.unsubscribe(onConnectHandler)
       fetchUserInfo()
     }
