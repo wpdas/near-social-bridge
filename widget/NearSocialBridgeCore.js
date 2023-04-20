@@ -59,7 +59,7 @@ const Utils = {
 
     const find = () => {
       const response = caller()
-      if (response) {
+      if (response !== undefined && response !== null) {
         resolve(response)
       } else {
         if (timeoutCheck < timeout) {
