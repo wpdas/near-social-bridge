@@ -573,6 +573,7 @@ localStorage.getItem('name') // "Wenderson"
 import { useEffect } from 'react'
 import { NearSocialBridgeProvider, overrideLocalStorage } from 'near-social-bridge'
 import MyComponent from './MyComponent'
+import MyComponent2 from './MyComponent2'
 
 overrideLocalStorage()
 
