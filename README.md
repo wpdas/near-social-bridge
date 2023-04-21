@@ -561,6 +561,7 @@ import { overrideLocalStorage } from 'near-social-bridge/utils'
 // using `sessionStorage` under the hood
 overrideLocalStorage()
 
+// The Widget won't break
 localStorage.setItem('name', 'Wenderson')
 localStorage.getItem('name') // "Wenderson"
 ```
