@@ -86,12 +86,13 @@ import 'near-social-bridge/near-social-bridge.css'
 
 overrideLocalStorage()
 
-// ...
-return (
-  <NearSocialBridgeProvider waitForStorage fallback={<Spinner />}>
-    <App />
-  </NearSocialBridgeProvider>
-)
+const App = () => {
+  return (
+    <NearSocialBridgeProvider waitForStorage fallback={<Spinner />}>
+      <Components />
+    </NearSocialBridgeProvider>
+  )
+}
 ```
 
 ## Requests
