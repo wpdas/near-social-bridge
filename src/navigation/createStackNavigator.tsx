@@ -200,7 +200,7 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
     }, [screens])
 
     // Shows the Fallback component while waiting for the connection and
-    if (fallback) {
+    if (fallback && !auth.user) {
       if (!isReady || !auth.ready) return <>{fallback}</>
     }
 

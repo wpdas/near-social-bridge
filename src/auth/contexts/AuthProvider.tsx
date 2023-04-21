@@ -1,11 +1,14 @@
 'use client'
 
 import React, { createContext, useCallback, useEffect, useState } from 'react'
-import { getConnectionPayload, onConnectObservable, UserInfo } from '../../services/bridge-service'
+import { getConnectionPayload, getConnectionStatus, onConnectObservable, UserInfo } from '../../services/bridge-service'
 import getUserInfo from '../getUserInfo'
 
 type Auth = {
   user?: UserInfo
+  /**
+   * Request for complete user data completed?
+   */
   ready: boolean
 }
 
@@ -33,14 +36,22 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
       })
   }, [])
 
+  // Set the initial user info
+  const setPreUserInfo = useCallback(() => {
+    const preUserInfo = getConnectionPayload().userInfo
+    if (preUserInfo?.accountId) {
+      setUser(preUserInfo)
+    }
+  }, [])
+
   // Fetch user info
   useEffect(() => {
+    if (getConnectionStatus() === 'connected') {
+      setPreUserInfo()
+    }
+
     const onConnectHandler = () => {
-      // Set the initial user info
-      const preUserInfo = getConnectionPayload().userInfo
-      if (preUserInfo?.accountId) {
-        setUser(preUserInfo)
-      }
+      setPreUserInfo()
 
       onConnectObservable.unsubscribe(onConnectHandler)
       fetchUserInfo()
@@ -52,7 +63,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     return () => {
       onConnectObservable.unsubscribe(onConnectHandler)
     }
-  }, [fetchUserInfo])
+  }, [fetchUserInfo, setPreUserInfo])
 
   return <AuthContext.Provider value={{ user, ready }}>{children}</AuthContext.Provider>
 }
