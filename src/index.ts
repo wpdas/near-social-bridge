@@ -12,4 +12,4 @@ export * from './hooks'
 export * from './components'
 
 // Utils
-export { initRefreshService } from './utils/refresh'
+export * from './utils'

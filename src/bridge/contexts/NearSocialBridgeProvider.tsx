@@ -9,6 +9,7 @@ import {
   postMessage as postMessageService,
 } from '../../services/bridge-service'
 import { GetMessageCallBack, NearSocialBridgeProps } from '../types'
+import { sessionStorageUpdateObservable } from '../../session-storage/sessionStorage'
 
 const defaultValue: NearSocialBridgeProps = {
   postMessage: () => {
@@ -26,7 +27,14 @@ export const NearSocialBridgeContext = createContext(defaultValue)
 
 interface Props {
   children: React.ReactNode
+  /**
+   * Fallback component that's going to be shown until the connection with the Widget is established or the Widget response timeout is reached.
+   */
   fallback?: React.ReactNode
+  /**
+   * Wait for storage to be hydrated before render the children. Fallback component is going to be shown if provided.
+   */
+  waitForStorage?: boolean
 }
 
 /**
@@ -35,11 +43,12 @@ interface Props {
  * Fallback component is displayed (if provided) until the connection is established with the Widget
  * @returns
  */
-const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback }) => {
+const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback, waitForStorage }) => {
   const [_onGetMessage, set_onGetMessage] = useState<{
     cb: GetMessageCallBack
   }>({ cb: () => {} })
   const [isConnected, setIsConnected] = useState(false)
+  const [isStorageReady, setIsStorageReady] = useState(false)
 
   /**
    * Post Message
@@ -93,8 +102,33 @@ const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback }) => {
     }
   }, [])
 
-  if (!isConnected && fallback) {
-    return <>{fallback}</>
+  // Check if storage is ready
+  if (waitForStorage) {
+    const handler = () => {
+      sessionStorageUpdateObservable.unsubscribe(handler)
+      setIsStorageReady(true)
+    }
+    sessionStorageUpdateObservable.subscribe(handler)
+  }
+
+  // Wait connection
+  if (!isConnected) {
+    if (fallback) {
+      return <>{fallback}</>
+    }
+
+    // SSR - It's necessary. So that, `overrideLocalStorage`, it's going to work without issue
+    return <div />
+  }
+
+  // Wait storage to be ready (optional)
+  if (waitForStorage && !isStorageReady) {
+    if (fallback) {
+      return <>{fallback}</>
+    }
+
+    // SSR - It's necessary. So that, `overrideLocalStorage`, it's going to work without issue
+    return <div />
   }
 
   return (

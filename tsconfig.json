@@ -20,9 +20,6 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@lib/*": ["./*"]
-    }
+    "baseUrl": "."
   }
 }

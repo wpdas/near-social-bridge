@@ -1,3 +1,4 @@
 import { initRefreshService } from './refresh'
+import { overrideLocalStorage } from './overrideLocalStorage'
 
-export { initRefreshService }
+export { initRefreshService, overrideLocalStorage }

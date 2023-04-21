@@ -53,6 +53,7 @@ yarn add near-social-bridge
   - [useSyncContentHeight](#usesynccontentheight)
 - [Utils](#utils)
   - [initRefreshService](#initrefreshservice)
+  - [overrideLocalStorage](#overridelocalstorage)
 - [Preparing a new Widget](#preparing-a-new-widget)
 - [Good to know](#good-to-know)
   - [Server-Side Rendering](#server-side-rendering)
@@ -68,14 +69,26 @@ import 'near-social-bridge/near-social-bridge.css'
 
 Then, you need to wrap your app with `NearSocialBridgeProvider` which will start the connection between the React App and the Widget inside Near Social. The connection only occurs when the application is running inside the Widget.
 
-This component accepts a fallback component that's going to be shown until the connection with the Widget is established or the Widget response timeout is reached.. You can set it using the `fallback` prop.
+This component accepts a fallback component that's going to be shown until the connection with the Widget is established or the Widget response timeout is reached. You can set it using the `fallback` prop.
+
+If your app is using (or has dependencies using) `localStorage` you'll need to override the `window.localStorage` with the Widget's `Storage` API as `localStorage` is not supported by the VM. You can do it using `overrideLocalStorage` like so:
 
 ```tsx
-import { NearSocialBridgeProvider } from 'near-social-bridge'
-import { Spinner } from 'near-social-bridge'
+import { overrideLocalStorage } from 'near-social-bridge/utils'
+overrideLocalStorage()
+```
+
+When using `overrideLocalStorage`, it's recommended that you set `NearSocialBridgeProvider.waitForStorage` as `true`, so that, the bridge is going to wait for the storage to be hydrated before rendering the children.
+
+```tsx
+import { NearSocialBridgeProvider, Spinner, overrideLocalStorage } from 'near-social-bridge'
+import 'near-social-bridge/near-social-bridge.css'
+
+overrideLocalStorage()
+
 // ...
 return (
-  <NearSocialBridgeProvider fallback={<Spinner />}>
+  <NearSocialBridgeProvider waitForStorage fallback={<Spinner />}>
     <App />
   </NearSocialBridgeProvider>
 )
@@ -534,6 +547,59 @@ useEffect(() => {
   }
 }, [])
 // ...
+```
+
+### overrideLocalStorage
+
+This is a feature that overrides the `window.localStorage` with the Widget's `Storage`, so that, you can keep using `window.localStorage` but the Widget's `Storage` is going to be the source of data.
+
+**If using CSR:**
+
+```ts
+import { overrideLocalStorage } from 'near-social-bridge/utils'
+
+// using `sessionStorage` under the hood
+overrideLocalStorage()
+
+localStorage.setItem('name', 'Wenderson')
+localStorage.getItem('name') // "Wenderson"
+```
+
+**If using SSR:**
+
+```ts
+// Page or index.tsx
+import { useEffect } from 'react'
+import { NearSocialBridgeProvider, overrideLocalStorage } from 'near-social-bridge'
+import MyComponent from './MyComponent'
+
+overrideLocalStorage()
+
+const SSRApp = () => {
+  useEffect(() => {
+    localStorage.setItem('name', 'Wenderson')
+  }, [])
+
+  return (
+    <NearSocialBridgeProvider waitForStorage>
+      <MyComponent />
+      <MyComponent2 />
+    </NearSocialBridgeProvider>
+  )
+}
+
+export default SSRApp
+
+// MyComponent
+const MyComponent = () => {
+  console.log(localStorage.getItem('name')) // "Wenderson"
+}
+
+// MyComponent2
+import { sessionStorage } from 'near-social-bridge'
+const MyComponent2 = () => {
+  console.log(sessionStorage.getItem('name')) // "Wenderson"
+}
 ```
 
 ## Preparing a new Widget

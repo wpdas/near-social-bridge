@@ -1,6 +1,6 @@
 import { REQUEST_KEYS } from '../constants'
 import request from '../request/request'
-import { onConnectObservable } from '../services/bridge-service'
+import { getConnectionStatus, onConnectObservable } from '../services/bridge-service'
 import Observable from '../utils/observable'
 
 /**
@@ -14,7 +14,11 @@ const setItem = (key: string, value: any) => {
   const updatedStorage: any = { ..._storage }
   updatedStorage[key] = value
   _storage = updatedStorage
-  hydrateViewer()
+
+  // Hydrate only when connection is established
+  if (getConnectionStatus() === 'connected') {
+    hydrateViewer()
+  }
 }
 
 const getItem = (key: string) => _storage[key] || null
@@ -55,9 +59,17 @@ const hydrate = async () => {
     forceTryAgain: false,
   })
 
+  // Check if there're data inside the _storage before the connection, if so, update the viewer
+  const hasPreviousData = Object.keys(_storage).length > 0
+
   // Hydrate _storage with data stored in the Viewer "sessionStorageClone" state
-  _storage = view_sessionStorageClone || {}
+  _storage = { ...view_sessionStorageClone, ..._storage } || {}
   sessionStorageUpdateObservable.notify(_storage)
+
+  // Update the viewer (only if there're data inside the _storage before the connection)
+  if (hasPreviousData) {
+    hydrateViewer()
+  }
 }
 
 // Every time the bridge connection is established, hydrate the storage
