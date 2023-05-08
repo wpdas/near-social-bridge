@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   onConnectObservable,
   ConnectionPayload,
@@ -227,14 +227,9 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
    */
   const Screen: React.FC<Route<keyof T>> = ({ key, name, component, pathParams }) => {
     const navigation = useNavigation()
-    const [params, setParams] = useState<any>()
 
     // Set params
-    useLayoutEffect(() => {
-      if (navigation?.location && !params) {
-        setParams(navigation.location[1])
-      }
-    }, [navigation.location, params])
+    const params = navigation?.location && navigation?.location[1] ? navigation.location[1] : undefined
 
     const Component = component
 
