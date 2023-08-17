@@ -176,14 +176,14 @@ A convenient API to get data from the SocialDB contract. [Complete Docs Here](ht
 ```ts
 import { Social } from 'near-social-bridge/api'
 
-Social.get('wendersonpires.testnet/widget/*').then((response) => console.log(res))
+Social.get('wendersonpires.testnet/widget/*').then((response) => console.log(response))
 // {HelloWorld: '...', Chat: '...', ChatV2: '...'}
 ```
 
 **Social.getr**
 
 ```ts
-Social.getr('wendersonpires.testnet/profile').then((response) => console.log(res))
+Social.getr('wendersonpires.testnet/profile').then((response) => console.log(response))
 // {name: 'Wenderson Pires'}
 ```
 
