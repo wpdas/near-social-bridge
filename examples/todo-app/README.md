@@ -4,7 +4,7 @@ A simple app where you can view the last stored greeting and send a new greeting
 
 ## Demo Image
 
-<p align="left">
+<p align="center">
   <img src="demo.png" />
 </p>
 
