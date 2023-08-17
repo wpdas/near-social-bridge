@@ -9,10 +9,6 @@ This library allows you to create a common application using ReactJS and use it 
 
 Library intended only for applications that will run within [Near Social](https://alpha.near.org/)
 
-**Client-side render example: [ChatV2 Widget Repo](https://github.com/wpdas/chatv2-near-widget-app)**
-
-**Server-side render example: [NextJS Widget Repo](https://github.com/wpdas/nextjs-near-widget-app)**
-
 ## Install
 
 Install it using npm or yarn:
@@ -24,6 +20,15 @@ npm install near-social-bridge
 # yarn
 yarn add near-social-bridge
 ```
+
+## Examples
+
+Check out some examples:
+
+- [Greeting App](https://github.com/wpdas/near-social-bridge/tree/main/examples/greeting-app)
+- [Todo App](https://github.com/wpdas/near-social-bridge/tree/main/examples/todo-app)
+- [Chat App](https://github.com/wpdas/chatv2-near-widget-app)
+- [SSR NextJS Test App](https://github.com/wpdas/nextjs-near-widget-app)
 
 ## Quick Guide
 
@@ -188,7 +193,7 @@ Social.getr('wendersonpires.testnet/profile').then((response) => console.log(res
 Social.index('widget-chatv2-dev', 'room', {
   limit: 1000,
   order: 'desc',
-}).then((response) => console.log(res))
+}).then((response) => console.log(response))
 // [{accountId: 'xyz', blockHeight: 99, value: 'xyz'}, {...}, {...}, {...}]
 ```
 
@@ -196,7 +201,7 @@ Social.index('widget-chatv2-dev', 'room', {
 
 ```ts
 const data = { experimental: { test: 'test' } }
-Social.set(data).then((response) => console.log(res))
+Social.set(data).then((response) => console.log(response))
 // If Success: {wendersonpires.testnet: {experimental: {...}}}
 // If Canceled: {error: 'the action was canceled'}
 ```
@@ -204,7 +209,7 @@ Social.set(data).then((response) => console.log(res))
 **Social.keys**
 
 ```ts
-Social.keys('wendersonpires.testnet/experimental').then((response) => console.log(res))
+Social.keys('wendersonpires.testnet/experimental').then((response) => console.log(response))
 // {wendersonpires.testnet: {experimental: {...}}}
 ```
 

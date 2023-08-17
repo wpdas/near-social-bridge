@@ -1,4 +1,4 @@
-import { Near } from 'near-social-bridge'
+import { Near } from 'near-social-bridge/api'
 
 const CONTRACT_ID = 'dev-1692221685438-15421910364142'
 
