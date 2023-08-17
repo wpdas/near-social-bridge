@@ -17,3 +17,7 @@ npm run start
 ```
 
 You'll be presented with a list of Widgets, click on `TodoApp` to see the app in action.
+
+<p align="center">
+  <img src="demo.png" />
+</p>
