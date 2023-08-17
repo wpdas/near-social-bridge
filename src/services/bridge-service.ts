@@ -93,11 +93,12 @@ export const postMessage = (message: any) => {
  */
 const onGetMessage = (event: MessageEvent<any>) => {
   if (!viewSource && status === 'waiting-for-viewer-signal') {
-    // Set the Messager source
-    viewSource = event.source
-
     // Save the welcome payload (connect)
     if (event.data.type === 'connect') {
+      // Set the Messager source
+      // NOTE: Fix the webpack sending message first
+      viewSource = event.source
+
       status = 'connected'
 
       // Successful connection message

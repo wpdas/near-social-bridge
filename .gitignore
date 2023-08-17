@@ -3,8 +3,10 @@ yarn-error.log*
 node_modules
 dist
 temp
+notas.txt
 
 # build
+/api
 /components
 /hooks
 /auth

@@ -25,9 +25,35 @@ npm install near-social-bridge
 yarn add near-social-bridge
 ```
 
-## Table of contents
+## Quick Guide
+
+Here's a quick guide to you get to know how to use Near Social Bridge with basic stuff.
 
 - [Setup](#setup)
+- [BOS API](#bos-api)
+  - [Near API](#near-api)
+  - [Social API](#social-api)
+  - [Storage API](#storage-api)
+- [Requests](#requests)
+  - [Simple Request](#simple-request)
+  - [Handling the requests inside the Widget](#handling-the-requests-inside-the-widget)
+  - [Using request handler Utils - Widget side](#using-request-handler-utils-widget-side)
+- [Persist Storage](#persist-storage)
+- [Hooks](#hooks)
+  - [useAuth](#useauth)
+  - [useSyncContentHeight](#usesynccontentheight)
+- [Preparing a new Widget](#preparing-a-new-widget)
+- [Testing the Application Inside the Widget](#testing-the-application-inside-the-widget)
+
+## Complete Guide
+
+Here's a complete guide where you can go over all features provided by Near Social Bridge.
+
+- [Setup](#setup)
+- [BOS API](#bos-api)
+  - [Near API](#near-api)
+  - [Social API](#social-api)
+  - [Storage API](#storage-api)
 - [Requests](#requests)
   - [Simple Request](#simple-request)
   - [Create Requests Mocks](#create-requests-mocks)
@@ -93,6 +119,137 @@ const App = () => {
     </NearSocialBridgeProvider>
   )
 }
+```
+
+## BOS API
+
+We've incorporated some APIs to allow your app to interact with different blockchains, websites, and store data in a decentralized way. These features are basically mirroring the [BOS API](https://docs.near.org/bos/api/home) features.
+
+There is a deployed `Hello World` smart contract in the NEAR network at `nearsocialexamples.near` that we're going to use. The contract exposes two methods:
+
+- `set_greeting(message: string): void`, which accepts a message and stores it in the contract state.
+- `get_greeting(): string` which returns the stored greeting.
+
+### Near API
+
+A convenient API to interact with the NEAR blockchain. [Complete Docs Here](https://docs.near.org/bos/api/near).
+
+**Near.view**
+
+This will conduct a call to a smart contract that will get a stored message onchain.
+
+```ts
+import { Near } from 'near-social-bridge/api'
+
+// Contract
+const CONTRACT_ID = 'nearsocialexamples.near'
+
+Near.view<string>(CONTRACT_ID, 'get_greeting').then((response) => console.log(response))
+// {message: "The most recent stored greeting message"}
+```
+
+**Near.call**
+
+This will conduct a call to a smart contract that will store a message onchain.
+
+```ts
+import { Near } from 'near-social-bridge/api'
+
+// Contract
+const CONTRACT_ID = 'nearsocialexamples.near'
+
+// Set data
+Near.call<{ message: string }>(CONTRACT_ID, 'set_greeting', { message: greeting })
+```
+
+### Social API
+
+A convenient API to get data from the SocialDB contract. [Complete Docs Here](https://docs.near.org/bos/api/social).
+
+**Social.get**
+
+```ts
+import { Social } from 'near-social-bridge/api'
+
+Social.get('wendersonpires.testnet/widget/*').then((response) => console.log(res))
+// {HelloWorld: '...', Chat: '...', ChatV2: '...'}
+```
+
+**Social.getr**
+
+```ts
+Social.getr('wendersonpires.testnet/profile').then((response) => console.log(res))
+// {name: 'Wenderson Pires'}
+```
+
+**Social.index**
+
+```ts
+Social.index('widget-chatv2-dev', 'room', {
+  limit: 1000,
+  order: 'desc',
+}).then((response) => console.log(res))
+// [{accountId: 'xyz', blockHeight: 99, value: 'xyz'}, {...}, {...}, {...}]
+```
+
+**Social.set**
+
+```ts
+const data = { experimental: { test: 'test' } }
+Social.set(data).then((response) => console.log(res))
+// If Success: {wendersonpires.testnet: {experimental: {...}}}
+// If Canceled: {error: 'the action was canceled'}
+```
+
+**Social.keys**
+
+```ts
+Social.keys('wendersonpires.testnet/experimental').then((response) => console.log(res))
+// {wendersonpires.testnet: {experimental: {...}}}
+```
+
+### Storage API
+
+`Storage` object to store data for components that is persistent across refreshes. [Complete Docs Here](https://docs.near.org/bos/api/storage).
+
+**Storage.set**
+
+`Storage.set(key, value)` - sets the public value for a given key under the current widget. The value will be public, so other widgets can read it.
+
+```ts
+import { Storage } from 'near-social-bridge/api'
+
+Storage.set('my-storage-key', JSON.stringify({ age: 33, name: 'Wendz' })).then((response) => console.log(response))
+// {ok: true}
+```
+
+**Storage.get**
+
+`Storage.get(key, widgetSrc?)` - returns the public value for a given key under the given widgetSrc or the current component if `widgetSrc` is omitted. Can only read public values.
+
+```ts
+Storage.get('my-storage-key').then((response) => console.log(response))
+// {"age":33,"name":"Wendz"}
+```
+
+**Storage.privateSet**
+
+`Storage.privateSet(key, value)` - sets the private value for a given key under the current component. The value is private, only the current component can read it.
+
+```ts
+Storage.privateSet('my-private-key', JSON.stringify({ age: 18, name: 'Wendz Private' })).then((response) =>
+  console.log(response)
+)
+// {ok: true}
+```
+
+**Storage.privateGet**
+
+`Storage.privateGet(key)` - returns the private value for a given key under the current component.
+
+```ts
+Storage.privateGet('my-private-key').then((response) => console.log(response))
+// {"age":18,"name":"Wendz Private"}
 ```
 
 ## Requests
@@ -342,7 +499,7 @@ const Profile: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
 
 ## Session Storage
 
-This feature stores data for one session. While testing inside a Widget, data is lost when the browser tab is reloaded or closed. You will have access to methods like `setItem`, `getItem`, `removeItem`, `clear` and `keys`. Data is automatically synchronized between the React App and the Widget.
+This feature stores data for components that is persistent across refreshes. You will have access to methods like `setItem`, `getItem`, `removeItem`, `clear` and `keys`. Data is automatically synchronized between the React App and the BOS Component.
 
 ```ts
 import { sessionStorage } from 'near-social-bridge'
@@ -381,7 +538,7 @@ export const store = init<RootModel>({
 
 ### useNearSocialBridge
 
-Allow to get message from Widget and send messages to Widget:
+Allow to get message from BOS Component and send messages to BOS Component:
 
 ```tsx
 import { useNearSocialBridge } from 'near-social-bridge'
@@ -390,16 +547,16 @@ const MyComponent = () => {
   const { onGetMessage, postMessage } = useNearSocialBridge()
 
   useEffect(() => {
-    // Receives a message from Widget
+    // Receives a message from BOS Component
     onGetMessage((message: any) => {
-      console.log('Got message from Widget:', message)
+      console.log('Got message from BOS Component:', message)
     })
 
     return () => onGetMessage(null)
   }, [])
 
   const sendMessageToWidget = () => {
-    // Sends a message to Widget
+    // Sends a message to BOS Component
     postMessage('My awesome message! :D')
   }
 
@@ -409,14 +566,14 @@ const MyComponent = () => {
 
 ### useInitialPayload
 
-Returns the initial payload sent by the Widget:
+Returns the initial payload sent by the BOS Component:
 
 ```ts
 import { useInitialPayload } from 'near-social-bridge'
 
 const MyComponent = () => {
   const initialPayload = useInitialPayload()
-  console.log(initialPayload) // initial payload sent by the Widget
+  console.log(initialPayload) // initial payload sent by the BOS Component
   // ...
 }
 ```
@@ -469,7 +626,7 @@ const MyComponent = () => {
 
 ### useWidgetView
 
-Provides access to methods and props which can affect the Widget View:
+Provides access to methods and props which can affect the BOS Component View:
 
 ```ts
 import { useWidgetView } from 'near-social-bridge'
@@ -477,7 +634,7 @@ import { useWidgetView } from 'near-social-bridge'
 const MyComponent = () => {
   const widgetView = useWidgetView()
 
-  // Set the widget view height to 700px
+  // Set the BOS Component view height to 700px
   widgetView.setHeight(700)
 }
 ```
@@ -552,7 +709,7 @@ useEffect(() => {
 
 ### overrideLocalStorage
 
-This is a feature that overrides the `window.localStorage` with the Widget's `Storage`, so that, you can keep using `window.localStorage` but the Widget's `Storage` is going to be the source of data.
+This is a feature that overrides the `window.localStorage` with the BOS Component's `Storage`, so that, you can keep using `window.localStorage` but the BOS Component's `Storage` is going to be the source of data.
 
 **If using CSR:**
 
@@ -562,7 +719,7 @@ import { overrideLocalStorage } from 'near-social-bridge/utils'
 // using `sessionStorage` under the hood
 overrideLocalStorage()
 
-// The Widget won't break
+// The BOS Component won't break
 localStorage.setItem('name', 'Wenderson')
 localStorage.getItem('name') // "Wenderson"
 ```
@@ -605,9 +762,9 @@ const MyComponent2 = () => {
 }
 ```
 
-## Preparing a new Widget
+## Preparing a new BOS Component
 
-Create a new Widget, copy [the content of file **widget-setup.js**](./widget-setup.js) and paste it inside your new Widget. Then set its initial props as you wish:
+Create a new BOS Component, copy [the content of file **widget-setup.js**](./widget-setup.js) and paste it inside your new BOS Component. Then set its initial props as you wish:
 
 ```js
 /**
@@ -647,7 +804,7 @@ const getAccountIdHandler = (request, response) => {
   response(request).send({ accountId })
 }
 
-// NearSocialBridgeCore widget is the core that makes all the "magic" happens
+// NearSocialBridgeCore BOS Component is the core that makes all the "magic" happens
 // use `wendersonpires.testnet/widget/NearSocialBridgeCore` as source if you want to use "testnet" environment
 return (
   <Widget
@@ -665,7 +822,7 @@ return (
 
 **testnet:** Use `wendersonpires.testnet/widget/NearSocialBridgeCore` while creating your application using the testnet environment.
 
-And that's basically it. Again, remember that once your application is running inside the Widget, if it is making requests, you must handle each one of them inside the Widget, otherwise the unhandled requests will fail.
+And that's basically it. Again, remember that once your application is running inside the BOS Component, if it is making requests, you must handle each one of them inside the BOS Component, otherwise the unhandled requests will fail.
 
 ## Good to know
 
@@ -673,9 +830,9 @@ And that's basically it. Again, remember that once your application is running i
 
 SSR is supported starting with version 1.3.0!
 
-## Testing the Application Inside the Widget
+## Testing the Application Inside a Local Viewer
 
-To test your app, you can install the [**NEAR Social Local Viewer CLI**](https://github.com/wpdas/near-social-local-viewer). It will allow you to execute and test your Widget locally using all the Discovery API resources without any problem.
+To test your app, you can install the [**NEAR Social Local Viewer CLI**](https://github.com/wpdas/near-social-local-viewer). It will allow you to execute and test your BOS Component locally using all the Discovery API resources without any problem.
 
 1 - Install NEAR Social Local Viewer CLI using npm or yarn:
 
@@ -705,6 +862,6 @@ npx init-viewer path/to/widgets/
 # e.g: npx init-viewer widgets/
 ```
 
-4 - Once your Widget is ready, you can deploy it to Near Social: <br/>
+4 - Once your BOS Component is ready, you can deploy it to Near Social: <br/>
 4.1 - You can deploy it by copying and pasting; <br/>
 4.2 - Or using [near-social CLI](https://github.com/FroVolod/near-social).
