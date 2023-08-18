@@ -10,7 +10,7 @@ Unfortunately it is not possible to embed a Widget inside a React application. T
 
 **Using `VM.require` on BOS side:**
 
-There's a way to fetch the JSX info using a Widget, but there's a lock to prevent this code from being passed on. https://github.com/NearSocial/VM/blob/master/src/lib/vm/vm.js#L289
+There's a way to fetch the JSX info using a Widget, but there's a lock to prevent this code from being passed on. https://github.com/NearSocial/VM/blob/master/src/lib/vm/vm.js#L303
 
 ```jsx
 const HelloWorld = VM.require('wendersonpires.testnet/widget/HelloWorld')
@@ -24,7 +24,7 @@ const stringifiedComponent = JSON.stringify(HelloWorld) // The idea was to send 
 
 ## Using VM
 
-This is the only way found out till now.You can find the files on this directory.
+This is the only way found out till now. You can find the files on this directory.
 
 You may need to install the needed dependencies required by the `useLazyBOS.tsx`, `vm/vm.js` and `vm/utils.js` files.
 
