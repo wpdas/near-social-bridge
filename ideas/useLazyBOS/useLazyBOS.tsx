@@ -20,7 +20,7 @@ const fetchComponentGlobal = async (source: string) => {
 }
 
 const queue: { id: string; done: boolean; comp?: () => JSX.Element }[] = []
-let filaRunning = false
+let running = false
 const down = () => {
   const init = (index: number) => {
     if (queue[index]) {
@@ -54,12 +54,12 @@ const down = () => {
     } else {
       // Final update
       // setComponents([...componentsLoader]);
-      filaRunning = false
+      running = false
     }
   }
 
-  if (!filaRunning) {
-    filaRunning = true
+  if (!running) {
+    running = true
     init(0)
   }
 }
