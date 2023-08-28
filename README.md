@@ -47,7 +47,7 @@ Here's a quick guide to you get to know how to use Near Social Bridge with basic
 - [Hooks](#hooks)
   - [useAuth](#useauth)
   - [useSyncContentHeight](#usesynccontentheight)
-- [Preparing a new Widget](#preparing-a-new-widget)
+- [Preparing a new BOS Component](#preparing-a-new-bos-component)
 - [Testing the Application Inside the Widget](#testing-the-application-inside-the-widget)
 
 ## Complete Guide
@@ -85,7 +85,7 @@ Here's a complete guide where you can go over all features provided by Near Soci
 - [Utils](#utils)
   - [initRefreshService](#initrefreshservice)
   - [overrideLocalStorage](#overridelocalstorage)
-- [Preparing a new Widget](#preparing-a-new-widget)
+- [Preparing a new BOS Component](#preparing-a-new-bos-component)
 - [Good to know](#good-to-know)
   - [Server-Side Rendering](#server-side-rendering)
 - [Testing the Application Inside the Widget](#testing-the-application-inside-the-widget)
