@@ -1,5 +1,6 @@
 import { Highlight, Spinner, Stack, Text, Heading, Code } from '@chakra-ui/react'
 import { Features } from '../stack/types'
+import { CheckIcon, WarningIcon } from '@chakra-ui/icons'
 
 export type TestStatusType = 'pending' | 'running' | 'success' | 'error'
 
@@ -35,7 +36,7 @@ const TestStatus: React.FC<Props> = ({ status = 'pending', features }) => {
           {label[status]}
         </Highlight>
 
-        {status === 'running' && <Spinner color="orange.200" size="sm" />}
+        {status === 'running' && <Spinner color="orange.300" size="sm" />}
       </Stack>
       {status !== 'pending' && features && (
         <>
@@ -45,9 +46,9 @@ const TestStatus: React.FC<Props> = ({ status = 'pending', features }) => {
                 <Text>
                   Feature: <Code>{feature.name}</Code>
                 </Text>
-                {feature.status === 'running' && <Spinner color="green.200" size="sm" />}
-                {feature.status === 'success' && <Text>Success</Text>}
-                {feature.status === 'error' && <Text>Error</Text>}
+                {feature.status === 'running' && <Spinner color="green.300" size="sm" />}
+                {feature.status === 'success' && <CheckIcon w={4} h={4} color="green.300" />}
+                {feature.status === 'error' && <WarningIcon w={4} h={4} color="red.300" />}
               </Stack>
             )
           })}

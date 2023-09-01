@@ -41,7 +41,7 @@ const Home = () => {
   return (
     <Container>
       <Stack>
-        <Heading size="md">Near Social Bridge - SSR Tests</Heading>
+        <Heading size="md">Near Social Bridge - SSR</Heading>
         <Text>Cada teste deve rodar em uma rota.</Text>
         <Text>Seguir a ordem do README.md</Text>
 
