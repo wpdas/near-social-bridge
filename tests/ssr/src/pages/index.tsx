@@ -46,8 +46,8 @@ const Home = () => {
         <Text>Seguir a ordem do README.md</Text>
 
         <SocialAPIStack run={stacks.nearAPI.run} onComplete={testFinished} />
-        {/* <SocialAPIStack run={stacks.nearAPI.run} onComplete={() => runNow(STACK_KEYS.socialAPI)} /> */}
-        {/* <SocialAPIStack run={stacks.socialAPI.run} onComplete={testFinished} /> */}
+        {/* <SocialAPIStack run={stacks.nearAPI.run} onComplete={() => runNow(STACK_KEYS.socialAPI)} />
+        <SocialAPIStack run={stacks.socialAPI.run} onComplete={testFinished} /> */}
       </Stack>
     </Container>
   )
