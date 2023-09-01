@@ -81,7 +81,7 @@ const SocialAPIStack: StackTest = ({ run, onComplete }) => {
   return (
     <Stack mt={4}>
       <Divider />
-      <TestStatus title="Social API" status={testStatus} features={_features} />
+      <TestStatus test_id="test_social_api" title="Social API" status={testStatus} features={_features} />
     </Stack>
   )
 }

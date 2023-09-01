@@ -19,14 +19,15 @@ const label = {
 }
 
 type Props = {
+  test_id: string
   title: string
   status?: TestStatusType
   features?: Features
 }
 
-const TestStatus: React.FC<Props> = ({ status = 'pending', features }) => {
+const TestStatus: React.FC<Props> = ({ test_id, status = 'pending', features }) => {
   return (
-    <Stack>
+    <Stack id={`${test_id}_${status}`}>
       <Stack flexDirection="row" alignItems="center">
         <Heading size="sm">Social API - </Heading>
         <Highlight
