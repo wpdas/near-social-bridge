@@ -16,7 +16,7 @@ import MockStack from './stack/MockStack'
 import UseAuthStack from './stack/UseAuthStack'
 import NavigationStack from './stack/NavigationStack'
 import SessionStorageStack from './stack/SessionStorageStack'
-import PersistStorageStack from './stack/PersistStorage'
+import PersistStorageStack from './stack/PersistStorageStack'
 
 const initialStackState = {
   nearAPI: { run: false },
