@@ -33,7 +33,7 @@ const SessionStorageStack: StackComponent = ({ title, onComplete }) => {
 
     updateStackFeatures(TEST_STACK_KEY, { name: 'removeItem', status: 'running' })
     sessionStorage.removeItem('age')
-    if (sessionStorage.keys().length === 1) {
+    if (!sessionStorage.getItem('age')) {
       updateStackFeatures(TEST_STACK_KEY, { name: 'removeItem', status: 'success' })
     } else {
       updateStackFeatures(TEST_STACK_KEY, { name: 'removeItem', status: 'error' })
