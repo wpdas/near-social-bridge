@@ -1,53 +1,105 @@
-import { Heading, Stack, Text } from '@chakra-ui/react'
-import Container from './components/Container'
-import { useAuth, useInitialPayload } from '@lib'
-import { useCallback, useState } from 'react'
-import SocialAPIStack from './stack/SocialAPI'
+import { useCallback, useEffect, useState } from 'react'
+import { Divider, Heading, Stack, Text } from '@chakra-ui/react'
+import { useSyncContentHeight } from '@lib'
 
-// type StacksControl = {[key: string ]: {run: boolean}}
+import Container from './components/Container'
+import nsv_package from '../../../../package.json'
+import TestStatus from './components/TestStatus'
+import { useTestStack } from '@app/contexts/TestStackProvider'
+
+import TestStack from './stack/TestStack'
+import NearAPIStack from './stack/NearAPIStack'
+import SocialAPIStack from './stack/SocialAPIStack'
+import UseAuthStack from './stack/UseAuthStack'
+import StorageAPIStack from './stack/StorageAPIStack'
 
 const initialStackState = {
-  nearAPI: { run: true }, // TODO
+  nearAPI: { run: true },
   socialAPI: { run: false },
+  storageAPI: { run: false },
+  useAuth: { run: false },
 }
 
 const STACK_KEYS = {
   nearAPI: 'nearAPI',
   socialAPI: 'socialAPI',
+  storageAPI: 'storageAPI',
+  useAuth: 'useAuth',
 }
 
 const Home = () => {
-  // Get auth
-  const auth = useAuth()
-  console.log(auth.user?.accountId)
+  const { timestamp } = useTestStack()
+  const { syncAgain } = useSyncContentHeight()
 
-  // Get initial payload
-  const initialPayload = useInitialPayload()
-  console.log(initialPayload)
+  useEffect(() => {
+    syncAgain()
+  }, [timestamp])
 
   // Stacks
   const [stacks, updateStacks] = useState(initialStackState)
 
   // Go to next test stack
-  const runNow = useCallback((stackKey: string) => {
-    updateStacks({ ...stacks, [stackKey]: { run: true } })
-  }, [])
+  const runNow = useCallback(
+    (stackKey: string) => {
+      updateStacks({ ...stacks, [stackKey]: { run: true } })
+    },
+    [stacks]
+  )
 
   // On test is finished
   const testFinished = () => {
     console.log('Test Finished!!!')
+    syncAgain()
+    setInterval(() => {
+      syncAgain()
+    }, 1000)
   }
 
   return (
     <Container>
       <Stack>
-        <Heading size="md">Near Social Bridge - SSR</Heading>
-        <Text>Cada teste deve rodar em uma rota.</Text>
-        <Text>Seguir a ordem do README.md</Text>
+        <Heading size="md">Near Social Bridge - v{nsv_package.version}</Heading>
+        <Text>Live test stack</Text>
 
-        <SocialAPIStack run={stacks.nearAPI.run} onComplete={testFinished} />
-        {/* <SocialAPIStack run={stacks.nearAPI.run} onComplete={() => runNow(STACK_KEYS.socialAPI)} />
-        <SocialAPIStack run={stacks.socialAPI.run} onComplete={testFinished} /> */}
+        {/* If this renders, Near Social Provider is working fine */}
+        <Divider />
+        <TestStatus
+          test_id="test_near_social_provider"
+          title="Near Social Provider"
+          status="success"
+          features={[{ name: 'Bridge service', status: 'success' }]}
+        />
+
+        {/* Test Stacks */}
+
+        <TestStack
+          title="Near API"
+          description={'This is using contract "nearsocialexamples.near"'}
+          TestStackComponent={NearAPIStack}
+          run={stacks.nearAPI.run}
+          onComplete={() => runNow(STACK_KEYS.socialAPI)}
+        />
+
+        <TestStack
+          title="Social API"
+          TestStackComponent={SocialAPIStack}
+          run={stacks.socialAPI.run}
+          onComplete={() => runNow(STACK_KEYS.storageAPI)}
+        />
+
+        <TestStack
+          title="Storage API"
+          TestStackComponent={StorageAPIStack}
+          run={stacks.storageAPI.run}
+          onComplete={() => runNow(STACK_KEYS.useAuth)}
+        />
+
+        <TestStack
+          title="useAuth"
+          TestStackComponent={UseAuthStack}
+          run={stacks.useAuth.run}
+          onComplete={testFinished}
+        />
       </Stack>
     </Container>
   )

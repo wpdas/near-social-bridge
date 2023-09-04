@@ -7,7 +7,7 @@
 
 This library allows you to create a common application using ReactJS and use it inside a BOS Component. Therefore, the BOS Component talks to the React application and vice versa, making it possible to consume Discovery API resources within the React application.
 
-Library intended only for applications that will run within [Near Social](https://alpha.near.org/)
+Library intended only for applications that will run within [BOS](https://near.org/)
 
 ## Install
 
@@ -187,23 +187,23 @@ Social.getr('wendersonpires.testnet/profile').then((response) => console.log(res
 // {name: 'Wenderson Pires'}
 ```
 
-**Social.index**
-
-```ts
-Social.index('widget-chatv2-dev', 'room', {
-  limit: 1000,
-  order: 'desc',
-}).then((response) => console.log(response))
-// [{accountId: 'xyz', blockHeight: 99, value: 'xyz'}, {...}, {...}, {...}]
-```
-
 **Social.set**
 
 ```ts
-const data = { experimental: { test: 'test' } }
+const data = { index: { experimental: JSON.stringify({ key: 'current_time', value: Date.now() }) } }
 Social.set(data).then((response) => console.log(response))
-// If Success: {wendersonpires.testnet: {experimental: {...}}}
+// If Success: {wendersonpires.testnet: {index: {experimental: "..."}}}
 // If Canceled: {error: 'the action was canceled'}
+```
+
+**Social.index**
+
+```ts
+const _index = await Social.index('experimental', 'current_time', {
+  limit: 1000,
+  order: 'desc',
+}).then((response) => console.log(response))
+// [{accountId: 'xyz', blockHeight: 99, value: '1693805434405'}, {...}, {...}, {...}]
 ```
 
 **Social.keys**

@@ -29,7 +29,7 @@ const defaultRequestHandler = (request, response) => {
 
 return (
   <Widget
-    src="wendersonpires.testnet/widget/NearSocialBridgeCore"
+    src="wendersonpires.near/widget/NearSocialBridgeCore"
     props={{
       externalAppUrl,
       path,
