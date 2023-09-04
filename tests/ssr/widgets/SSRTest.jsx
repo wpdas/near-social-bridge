@@ -20,7 +20,7 @@ const requestHandler = (request, response, Utils) => {
 }
 
 const exampleHandler = (request, response) => {
-  response(request).send({ ok: true, for: 'request-01' })
+  response(request).send({ ok: true, for: 'request-01', data_received: request.payload })
 }
 
 const defaultRequestHandler = (request, response) => {

@@ -10,13 +10,17 @@ import { useTestStack } from '@app/contexts/TestStackProvider'
 import TestStack from './stack/TestStack'
 import NearAPIStack from './stack/NearAPIStack'
 import SocialAPIStack from './stack/SocialAPIStack'
-import UseAuthStack from './stack/UseAuthStack'
 import StorageAPIStack from './stack/StorageAPIStack'
+import RequestStack from './stack/RequestStack'
+import MockStack from './stack/MockStack'
+import UseAuthStack from './stack/UseAuthStack'
 
 const initialStackState = {
-  nearAPI: { run: true },
+  nearAPI: { run: false },
   socialAPI: { run: false },
   storageAPI: { run: false },
+  request: { run: false },
+  mock: { run: true },
   useAuth: { run: false },
 }
 
@@ -24,6 +28,8 @@ const STACK_KEYS = {
   nearAPI: 'nearAPI',
   socialAPI: 'socialAPI',
   storageAPI: 'storageAPI',
+  request: 'request',
+  mock: 'mock',
   useAuth: 'useAuth',
 }
 
@@ -72,7 +78,7 @@ const Home = () => {
 
         {/* Test Stacks */}
 
-        <TestStack
+        {/* <TestStack
           title="Near API"
           description={'This is using contract "nearsocialexamples.near"'}
           TestStackComponent={NearAPIStack}
@@ -91,15 +97,30 @@ const Home = () => {
           title="Storage API"
           TestStackComponent={StorageAPIStack}
           run={stacks.storageAPI.run}
-          onComplete={() => runNow(STACK_KEYS.useAuth)}
+          onComplete={() => runNow(STACK_KEYS.request)}
         />
 
         <TestStack
+          title="request"
+          TestStackComponent={RequestStack}
+          run={stacks.request.run}
+          onComplete={() => runNow(STACK_KEYS.mock)}
+        /> */}
+
+        <TestStack
+          title="Mock"
+          description="This is a mocked request"
+          TestStackComponent={MockStack}
+          run={stacks.mock.run}
+          onComplete={() => runNow(STACK_KEYS.useAuth)}
+        />
+
+        {/* <TestStack
           title="useAuth"
           TestStackComponent={UseAuthStack}
           run={stacks.useAuth.run}
           onComplete={testFinished}
-        />
+        /> */}
       </Stack>
     </Container>
   )

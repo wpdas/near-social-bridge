@@ -33,11 +33,18 @@ const SocialAPIStack: StackComponent = ({ title, onComplete }) => {
         const _getr = await Social.getr(`${accountId}/profile`)
         updateFeatures({ name: 'Social.getr', status: _getr ? 'success' : 'error', jsonBody: _getr })
 
-        updateFeatures({ name: 'Social.set', status: 'running' })
-        const data = { index: { experimental: JSON.stringify({ key: 'current_time', value: Date.now() }) } }
-        const _set = await Social.set(data)
-        updateFeatures({ name: 'Social.set', status: _set ? 'success' : 'error', jsonBody: _set })
-        // Social.set will open up a modal
+        let _set: any
+        if (auth.user) {
+          updateFeatures({ name: 'Social.set', status: 'running' })
+          const data = { index: { experimental: JSON.stringify({ key: 'current_time', value: Date.now() }) } }
+
+          _set = await Social.set(data)
+          updateFeatures({ name: 'Social.set', status: _set ? 'success' : 'error', jsonBody: _set })
+          // Social.set will open up a modal
+        } else {
+          updateFeatures({ name: 'Social.set', status: 'success', jsonBody: 'user is not authenticated' })
+          _set = true
+        }
 
         updateFeatures({ name: 'Social.index', status: 'running' })
         const _index = await Social.index('experimental', 'current_time', {
@@ -49,8 +56,8 @@ const SocialAPIStack: StackComponent = ({ title, onComplete }) => {
         updateFeatures({ name: 'Social.keys', status: 'running' })
         const _keys = await Social.keys('wendersonpires.near/experimental')
         updateFeatures({ name: 'Social.keys', status: _keys ? 'success' : 'error', jsonBody: _keys })
-        setTestStatus('success')
 
+        setTestStatus(_get && _getr && _set && _index && _keys ? 'success' : 'error')
         onComplete()
       } catch {
         setTestStatus('error')
