@@ -18,6 +18,13 @@ export interface NavigationProps<S extends ParamListBase> {
    */
   goBack: () => void
 
+  /** Performs a replaceState with arguments */
+  replace<RouteName extends keyof S>(
+    ...args: undefined extends S[RouteName]
+      ? [screen: RouteName] | [screen: RouteName, params: S[RouteName]]
+      : [screen: RouteName, params: S[RouteName]]
+  ): void
+
   /**
    * Current location props [screen name, props]
    */
@@ -27,6 +34,11 @@ export interface NavigationProps<S extends ParamListBase> {
    * An array containing the history of locations visited [[screen name, props], [screen name, props], ...]
    */
   history: HistoryProps[]
+
+  /**
+   * Has started the history list
+   */
+  ready: boolean
 }
 
 // Screen Input params
@@ -129,4 +141,12 @@ export declare type IFrameStackScreenProps<
 > = {
   navigation: IFrameStackNavigationProp<ParamList>
   route: ScreenRouteProp<ParamList, RouteName>
+}
+
+export declare type NavigatorProps<RouteName> = {
+  children: React.ReactNode
+  /** Auto synchronize the iframe height? */
+  autoHeightSync?: boolean
+  /** Default route. If provided, this route is going to be set every time the app reloads. If not used, the last route seen is going to be shown. */
+  defaultRoute?: RouteName
 }

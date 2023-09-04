@@ -14,13 +14,19 @@ import StorageAPIStack from './stack/StorageAPIStack'
 import RequestStack from './stack/RequestStack'
 import MockStack from './stack/MockStack'
 import UseAuthStack from './stack/UseAuthStack'
+import NavigationStack from './stack/NavigationStack'
+import SessionStorageStack from './stack/SessionStorageStack'
+import PersistStorageStack from './stack/PersistStorage'
 
 const initialStackState = {
   nearAPI: { run: false },
   socialAPI: { run: false },
   storageAPI: { run: false },
   request: { run: false },
-  mock: { run: true },
+  mock: { run: false },
+  navigation: { run: false },
+  sessionStorage: { run: false },
+  persistStorage: { run: true },
   useAuth: { run: false },
 }
 
@@ -30,6 +36,9 @@ const STACK_KEYS = {
   storageAPI: 'storageAPI',
   request: 'request',
   mock: 'mock',
+  navigation: 'navigation',
+  sessionStorage: 'sessionStorage',
+  persistStorage: 'persistStorage',
   useAuth: 'useAuth',
 }
 
@@ -101,18 +110,39 @@ const Home = () => {
         />
 
         <TestStack
-          title="request"
+          title="Request"
           TestStackComponent={RequestStack}
           run={stacks.request.run}
           onComplete={() => runNow(STACK_KEYS.mock)}
         /> */}
 
-        <TestStack
+        {/* <TestStack
           title="Mock"
           description="This is a mocked request"
           TestStackComponent={MockStack}
           run={stacks.mock.run}
           onComplete={() => runNow(STACK_KEYS.useAuth)}
+        /> */}
+
+        {/* <TestStack
+          title="Navigation"
+          TestStackComponent={NavigationStack}
+          run={stacks.navigation.run}
+          onComplete={testFinished}
+        /> */}
+
+        {/* <TestStack
+          title="Session Storage"
+          TestStackComponent={SessionStorageStack}
+          run={stacks.sessionStorage.run}
+          onComplete={testFinished}
+        /> */}
+
+        <TestStack
+          title="Persist Storage"
+          TestStackComponent={PersistStorageStack}
+          run={stacks.persistStorage.run}
+          onComplete={testFinished}
         />
 
         {/* <TestStack

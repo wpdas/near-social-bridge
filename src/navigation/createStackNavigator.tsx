@@ -9,7 +9,7 @@ import getHostname from '../utils/getHostname'
 import getPathParams from '../utils/getPathParams'
 import NavigationProvider, { initialRoute } from './contexts/NavigationProvider'
 import useNavigation from './hooks/useNavigation'
-import { ParamListBase, Route } from './types'
+import { NavigatorProps, ParamListBase, Route } from './types'
 import { useAuth } from '../auth'
 import { syncContentHeight } from './syncContentHeight'
 import isBrowser from '../utils/isBrowser'
@@ -31,14 +31,10 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
    *
    * @returns
    */
-  const Navigator: React.FC<{ children: React.ReactNode; autoHeightSync?: boolean }> = ({
-    children,
-    autoHeightSync,
-  }) => {
+  const Navigator: React.FC<NavigatorProps<keyof T>> = ({ children, autoHeightSync, defaultRoute }) => {
     const auth = useAuth()
     const [isReady, setIsReady] = useState(false)
     const navigation = useNavigation()
-
     const [screens, setScreens] = useState<any[]>()
 
     const getScreens = useCallback(() => {
@@ -77,8 +73,10 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
       setScreens(screensList)
     }, [getScreens])
 
+    const [blockFindScreen, setBlockFindScreen] = useState(false) // Prevent it to call navigation.push after initial setup
     const findScreenAndPopulateProps = useCallback(
       (route?: string) => {
+        if (blockFindScreen) return
         if (!screens) return
 
         const pathParams = route ? route.split('/') : []
@@ -102,14 +100,15 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
           }
 
           // Set this screen (found by path) as the first to be rendered
-          navigation.push(foundScreen.props.name)
+          defaultRoute ? navigation.replace(defaultRoute as string) : navigation.push(foundScreen.props.name)
         } else {
           // Set the first screen in the stack
           const firstChildName = screens[0].props.name
-          navigation.push(firstChildName)
+          defaultRoute ? navigation.replace(defaultRoute as string) : navigation.push(firstChildName)
         }
+        setBlockFindScreen(!!route && navigation.ready)
       },
-      [screens]
+      [screens, blockFindScreen, defaultRoute]
     )
 
     useEffect(() => {
@@ -199,6 +198,11 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
       }
     }, [screens])
 
+    // Shows the Fallback component while waiting for the navigation to be ready
+    if (fallback && !navigation.ready) {
+      return <>{fallback}</>
+    }
+
     // Shows the Fallback component while waiting for the connection and
     if (fallback && !auth.user) {
       if (!isReady || !auth.ready) return <>{fallback}</>
@@ -212,10 +216,12 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
    *
    * - use `autoHeightSync` to make it sync the iframe's height with the content's height.
    */
-  const WrappedNavigator: React.FC<{ children: React.ReactNode; autoHeightSync?: boolean }> = ({ children }) => {
+  const WrappedNavigator: React.FC<NavigatorProps<keyof T>> = ({ children, autoHeightSync, defaultRoute }) => {
     return (
       <NavigationProvider>
-        <Navigator autoHeightSync>{children}</Navigator>
+        <Navigator autoHeightSync={autoHeightSync} defaultRoute={defaultRoute}>
+          {children}
+        </Navigator>
       </NavigationProvider>
     )
   }
