@@ -7,17 +7,14 @@
   "types": "./index.d.ts",
   "scripts": {
     "clean": "rm -rf dist components hooks auth bridge navigation api request services session-storage utils constants.d.ts constants.js index.d.ts index.js",
-    "clean:tests:ssr": "cd tests/ssr/; rm -rf lib; cd ..; cd ..",
-    "copy-files": "copyfiles -u 1 src/components/spinner.css src/bridge/contexts/fixBadIframe.css ./",
-    "copy-files-cjs": "copyfiles -u 1 src/components/spinner.css src/bridge/contexts/fixBadIframe.css ./dist/cjs/",
-    "copy-files-tests-ssr": "copyfiles -u 1 src/components/spinner.css src/bridge/contexts/fixBadIframe.css ./tests/ssr/lib/",
-    "build": "npm run clean; tsc -p tsconfig.prod.json; npm run copy-files; npm run copy-files-cjs; npm run build:cjs",
+    "clean:tests": "cd tests/; rm -rf lib; cd ..",
+    "build": "npm run clean; tsc -p tsconfig.prod.json; npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "prepack": "npm install; npm run build",
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
-    "build:for:tests": "npm run clean:tests:ssr; tsc -p tsconfig.tests.ssr.json; npm run copy-files-tests-ssr"
+    "build:for:tests": "npm run clean:tests; tsc -p tsconfig.tests.json"
   },
   "keywords": [
     "near social",

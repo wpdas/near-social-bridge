@@ -10,6 +10,7 @@ const TEST_STACK_KEY = 'socialApi'
 const SocialAPIStack: StackComponent = ({ title, onComplete }) => {
   const [testStatus, setTestStatus] = useState<TestStatusType>('pending')
   const { registerNewStack, updateStackFeatures, getStackFeatures } = useTestStack()
+  const [done, setDone] = useState(false)
 
   useEffect(() => {
     registerNewStack(TEST_STACK_KEY)
@@ -59,15 +60,16 @@ const SocialAPIStack: StackComponent = ({ title, onComplete }) => {
 
         setTestStatus(_get && _getr && _set && _index && _keys ? 'success' : 'error')
         onComplete()
+        setDone(true)
       } catch {
         setTestStatus('error')
       }
     }
 
-    if (auth.ready) {
+    if (auth.ready && !done) {
       go()
     }
-  }, [auth])
+  }, [auth, done])
 
   return (
     <Stack mt={4}>

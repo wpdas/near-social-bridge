@@ -10,16 +10,16 @@ const TEST_STACK_KEY = 'use-session-storage'
 const UseSessionStorageStack: StackComponent = ({ title, description, onComplete }) => {
   const [testStatus, setTestStatus] = useState<TestStatusType>('pending')
   const { registerNewStack, updateStackFeatures, getStackFeatures } = useTestStack()
+  const storage = useSessionStorage()
 
   useEffect(() => {
     registerNewStack(TEST_STACK_KEY)
   }, [])
 
-  const storage = useSessionStorage()
-
   useEffect(() => {
     setTestStatus('running')
     updateStackFeatures(TEST_STACK_KEY, { name: 'useSessionStorage', status: 'running' })
+
     sessionStorage.setItem('address', 'fake address, 45, avenue')
   }, [])
 

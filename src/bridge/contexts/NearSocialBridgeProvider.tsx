@@ -18,9 +18,6 @@ const defaultValue: NearSocialBridgeProps = {
   onGetMessage: () => {
     throw new Error('onGetMessage must be defined!')
   },
-  simulateIFrameMessage: () => {
-    throw new Error('simulateIFrameMessage must be defined!')
-  },
 }
 
 export const NearSocialBridgeContext = createContext(defaultValue)
@@ -62,14 +59,6 @@ const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback, waitFor
    */
   const onGetMessage = useCallback((cb: any | null) => {
     set_onGetMessage({ cb })
-  }, [])
-
-  /**
-   * Simulate the iframe's message prop to send a message to the external app
-   */
-  const simulateIFrameMessage = useCallback((message: any) => {
-    // NOTE: experimental, should be tested
-    window.top?.postMessage(message)
   }, [])
 
   useEffect(() => {
@@ -132,7 +121,7 @@ const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback, waitFor
   }
 
   return (
-    <NearSocialBridgeContext.Provider value={{ postMessage, onGetMessage, simulateIFrameMessage }}>
+    <NearSocialBridgeContext.Provider value={{ postMessage, onGetMessage }}>
       <AuthProvider>{children}</AuthProvider>
     </NearSocialBridgeContext.Provider>
   )

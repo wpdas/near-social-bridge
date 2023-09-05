@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./tests/ssr/lib"
+    "outDir": "./tests/lib"
   }
 }

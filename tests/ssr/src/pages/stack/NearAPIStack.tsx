@@ -11,6 +11,7 @@ const CONTRACT_ID = 'nearsocialexamples.near'
 const NearAPIStack: StackComponent = ({ title, description, onComplete }) => {
   const [testStatus, setTestStatus] = useState<TestStatusType>('pending')
   const { registerNewStack, updateStackFeatures, getStackFeatures } = useTestStack()
+  const [done, setDone] = useState(false)
   const auth = useAuth()
 
   useEffect(() => {
@@ -30,15 +31,16 @@ const NearAPIStack: StackComponent = ({ title, description, onComplete }) => {
 
         setTestStatus('success')
         onComplete()
+        setDone(true)
       } catch {
         setTestStatus('error')
       }
     }
 
-    if (auth.ready) {
+    if (auth.ready && !done) {
       go()
     }
-  }, [auth])
+  }, [auth, done])
 
   const testNearCall = async () => {
     if (auth.user) {

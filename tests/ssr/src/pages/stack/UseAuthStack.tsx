@@ -10,6 +10,7 @@ const TEST_STACK_KEY = 'auth'
 const UseAuthStack: StackComponent = ({ title, onComplete }) => {
   const [testStatus, setTestStatus] = useState<TestStatusType>('pending')
   const { registerNewStack, updateStackFeatures, getStackFeatures } = useTestStack()
+  const [done, setDone] = useState(false)
 
   useEffect(() => {
     registerNewStack(TEST_STACK_KEY)
@@ -18,15 +19,18 @@ const UseAuthStack: StackComponent = ({ title, onComplete }) => {
   const auth = useAuth()
 
   useEffect(() => {
-    setTestStatus('running')
-    if (!auth.ready) {
-      updateStackFeatures(TEST_STACK_KEY, { name: 'useAuth', status: 'running', jsonBody: auth })
-    } else {
-      updateStackFeatures(TEST_STACK_KEY, { name: 'useAuth', status: 'success', jsonBody: auth })
-      setTestStatus('success')
-      onComplete()
+    if (!done) {
+      setTestStatus('running')
+      if (!auth.ready) {
+        updateStackFeatures(TEST_STACK_KEY, { name: 'useAuth', status: 'running', jsonBody: auth })
+      } else {
+        updateStackFeatures(TEST_STACK_KEY, { name: 'useAuth', status: 'success', jsonBody: auth })
+        setTestStatus('success')
+        onComplete()
+        setDone(true)
+      }
     }
-  }, [auth])
+  }, [auth, done])
 
   return (
     <Stack mt={4}>
