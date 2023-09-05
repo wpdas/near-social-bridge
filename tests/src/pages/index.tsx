@@ -26,7 +26,7 @@ import UseSyncContentHeightStack from './stack/UseSyncContentHeightStack'
 import setTestState from '@app/services/setTestState'
 
 const initialStackState = {
-  nearAPI: { run: true, passing: false },
+  nearAPI: { run: false, passing: false },
   socialAPI: { run: false, passing: false },
   storageAPI: { run: false, passing: false },
   request: { run: false, passing: false },
@@ -64,7 +64,7 @@ const STACK_KEYS = {
 const Home = () => {
   const { timestamp } = useTestStack()
   const { syncAgain } = useSyncContentHeight()
-  const [finished, setFinished] = useState(false)
+  const [finished, setFinished] = useState(true)
 
   useEffect(() => {
     syncAgain()
