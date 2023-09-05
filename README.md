@@ -9,6 +9,12 @@ This library allows you to create a common application using ReactJS and use it 
 
 Library intended only for applications that will run within [BOS](https://near.org/)
 
+## Lib Tests
+
+As this is a library that works integrated with Blockchain OS, the tests were built to be executed in real-time.
+
+[**Run the tests here**](#)
+
 ## Install
 
 Install it using npm or yarn:
