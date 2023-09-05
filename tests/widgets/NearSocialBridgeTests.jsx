@@ -1,4 +1,4 @@
-const externalAppUrl = 'http://localhost:3000'
+const externalAppUrl = 'https://near-social-bridge-tests-git-test-test-api-wpdas.vercel.app'
 const initialViewHeight = 700
 const initialPayload = {
   myNiceProp: 'fake value',
