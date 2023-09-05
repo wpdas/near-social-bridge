@@ -1,4 +1,4 @@
-import { Feature, Features } from '@app/pages/stack/types'
+import { Feature, Features } from '@app/types'
 import { createContext, useContext, useState } from 'react'
 
 type FeaturesProps = {

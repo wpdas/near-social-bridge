@@ -1,5 +1,5 @@
 import { Divider, Stack } from '@chakra-ui/react'
-import { StackTest } from './types'
+import { StackTest } from '../../types'
 import TestStatus from '../components/TestStatus'
 
 const TestStack: StackTest = ({ title, TestStackComponent, run, onComplete, description }) => {

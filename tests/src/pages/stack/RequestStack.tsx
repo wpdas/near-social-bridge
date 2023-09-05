@@ -2,7 +2,7 @@ import { Stack, Divider } from '@chakra-ui/react'
 import TestStatus, { TestStatusType } from '../components/TestStatus'
 import { useEffect, useState } from 'react'
 import { request } from '@lib'
-import { StackComponent } from './types'
+import { StackComponent } from '../../types'
 import { useTestStack } from '@app/contexts/TestStackProvider'
 
 const TEST_STACK_KEY = 'request'

@@ -2,7 +2,7 @@ import { Stack, Divider } from '@chakra-ui/react'
 import TestStatus, { TestStatusType } from '../components/TestStatus'
 import { useEffect, useState } from 'react'
 import { Social, useAuth } from '@lib'
-import { Feature, StackComponent } from './types'
+import { Feature, StackComponent } from '../../types'
 import { useTestStack } from '@app/contexts/TestStackProvider'
 
 const TEST_STACK_KEY = 'socialApi'

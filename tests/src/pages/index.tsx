@@ -3,7 +3,7 @@ import { Divider, Heading, Stack, Text } from '@chakra-ui/react'
 import { useSyncContentHeight } from '@lib'
 
 import Container from './components/Container'
-import nsv_package from '../../../../package.json'
+import nsv_package from '../../../package.json'
 import TestStatus from './components/TestStatus'
 import { useTestStack } from '@app/contexts/TestStackProvider'
 

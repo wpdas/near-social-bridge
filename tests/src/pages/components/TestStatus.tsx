@@ -1,5 +1,5 @@
 import { Highlight, Spinner, Stack, Text, Heading, Code } from '@chakra-ui/react'
-import { Features } from '../stack/types'
+import { Features } from '../../types'
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons'
 import { JsonViewer } from '@textea/json-viewer'
 

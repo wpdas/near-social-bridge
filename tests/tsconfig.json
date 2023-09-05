@@ -21,7 +21,7 @@
     "paths": {
       "@app/*": ["./src/*"],
       "@lib": ["./lib/"],
-      "@lib-styles": ["../../near-social-bridge.css"]
+      "@lib-styles": ["../near-social-bridge.css"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

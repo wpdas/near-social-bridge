@@ -1,7 +1,7 @@
 import { Stack, Divider, Text } from '@chakra-ui/react'
 import TestStatus, { TestStatusType } from '../components/TestStatus'
 import { useEffect, useState } from 'react'
-import { StackComponent } from './types'
+import { StackComponent } from '../../types'
 import { useTestStack } from '@app/contexts/TestStackProvider'
 import { IFrameStackScreenProps, createStackNavigator, useNavigation } from '@lib'
 
@@ -37,27 +37,47 @@ const NavigationApp = () => {
   )
 }
 
+let _HomeBlock = false
+
 const Home: React.FC<PreHomeScreenProps> = () => {
   const { updateStackFeatures } = useTestStack()
   const navigation = useNavigation()
 
   useEffect(() => {
-    setTimeout(() => {
-      navigation.push('Profile', { userName: `Wendz-${Math.round(Math.random() * 100)}` })
-    }, 1000)
+    if (!_HomeBlock) {
+      _HomeBlock = true
+      updateStackFeatures(TEST_STACK_KEY, { name: 'push', status: 'running' })
 
-    setTimeout(() => {
-      navigation.push('Dummy1')
-    }, 2000)
+      setTimeout(() => {
+        navigation.push('Profile', { userName: `Wendz-${Math.round(Math.random() * 100)}` })
+      }, 1000)
 
-    setTimeout(() => {
-      navigation.goBack()
-      updateStackFeatures(TEST_STACK_KEY, { name: 'goBack', status: 'success' })
-    }, 3000)
+      setTimeout(() => {
+        updateStackFeatures(TEST_STACK_KEY, { name: 'goBack', status: 'running' })
+        navigation.push('Dummy1')
+      }, 2000)
 
-    setTimeout(() => {
-      navigation.replace('Dummy2')
-    }, 4000)
+      setTimeout(() => {
+        navigation.goBack()
+        updateStackFeatures(TEST_STACK_KEY, { name: 'goBack', status: 'success' })
+      }, 3000)
+
+      setTimeout(() => {
+        updateStackFeatures(TEST_STACK_KEY, { name: 'replace', status: 'running' })
+        updateStackFeatures(TEST_STACK_KEY, {
+          name: 'location',
+          status: 'running',
+          jsonBody: navigation.location,
+        })
+        updateStackFeatures(TEST_STACK_KEY, {
+          name: 'history',
+          status: 'running',
+          jsonBody: navigation.history,
+        })
+
+        navigation.replace('Dummy2')
+      }, 4000)
+    }
   }, [])
 
   return (
