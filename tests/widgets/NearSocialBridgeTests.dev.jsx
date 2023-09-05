@@ -1,4 +1,4 @@
-const externalAppUrl = 'https://near-social-bridge-tests.vercel.app'
+const externalAppUrl = 'http://localhost:3000'
 const initialViewHeight = 700
 const initialPayload = {
   myNiceProp: 'fake value',
@@ -28,12 +28,10 @@ const defaultRequestHandler = (request, response) => {
 
 return (
   <Widget
-    src="wendersonpires.near/widget/NearSocialBridgeCore"
+    src="wendersonpires.near/widget/NSLVWidget"
     props={{
-      externalAppUrl,
-      initialViewHeight,
-      initialPayload,
-      requestHandler,
+      src: 'wendersonpires.near/widget/NearSocialBridgeCore',
+      srcProps: { externalAppUrl, initialViewHeight, initialPayload, requestHandler },
     }}
   />
 )

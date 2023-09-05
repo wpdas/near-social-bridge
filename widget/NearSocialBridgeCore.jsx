@@ -217,6 +217,11 @@ const handlerCoreRequests = (message) => {
     case 'nsb:storage:private-set':
       storagePrivateSet(message.type, message.payload)
       break
+
+    // API Fetch
+    case 'nsb:fetch:async-fetch':
+      fetchAsyncFetch(message.type, message.payload)
+      break
   }
 }
 
@@ -455,6 +460,16 @@ const storagePrivateSet = (requestType, payload) => {
   // Send an immediate answer back to say it was done.
   const response = buildAnswer(requestType, { ok: true })
   Utils.sendMessage(response)
+}
+
+// Fetch.asyncFetch
+const fetchAsyncFetch = (requestType, payload) => {
+  const { url, options } = payload
+
+  asyncFetch(url, options).then((res) => {
+    const response = buildAnswer(requestType, res)
+    Utils.sendMessage(response)
+  })
 }
 
 return (

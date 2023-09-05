@@ -1,7 +1,22 @@
 import fs from 'fs'
 import { NextApiRequest, NextApiResponse } from 'next'
+import NextCors from 'nextjs-cors'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await NextCors(req, res, {
+    // Options
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    origin: [
+      'http://localhost:3001',
+      'https://near.org',
+      'https://alpha.near.org',
+      'https://test.near.org',
+      'https://test.near.social',
+      'https://near.social/',
+    ],
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  })
+
   if (req.method !== 'GET') {
     return res.status(404).send('')
   }
