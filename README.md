@@ -4,6 +4,7 @@
 [![Build Size](https://img.shields.io/bundlephobia/minzip/near-social-bridge/1.0.1?label=bundle%20size&style=for-the-badge&colorB=000000)](https://bundlephobia.com/package/near-social-bridge)
 [![Version](https://img.shields.io/npm/v/near-social-bridge?style=for-the-badge&colorB=000000)](https://www.npmjs.com/package/near-social-bridge)
 [![Downloads](https://img.shields.io/npm/dt/near-social-bridge.svg?style=for-the-badge&colorB=000000)](https://www.npmjs.com/package/near-social-bridge)
+![Tests](https://near-social-bridge-tests.vercel.app/api/tests-passing)
 
 This library allows you to create a common application using ReactJS and use it inside a BOS Component. Therefore, the BOS Component talks to the React application and vice versa, making it possible to consume Discovery API resources within the React application.
 

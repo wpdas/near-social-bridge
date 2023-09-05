@@ -100,7 +100,7 @@ const NavigationStack: StackComponent = ({ title, onComplete }) => {
 
     setTimeout(() => {
       setTestStatus('success')
-      onComplete()
+      onComplete(true)
     }, 5000)
   }, [])
 

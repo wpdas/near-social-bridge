@@ -48,7 +48,7 @@ const SessionStorageStack: StackComponent = ({ title, onComplete }) => {
     }
 
     setTestStatus('success')
-    onComplete()
+    onComplete(true)
   }, [])
 
   return (

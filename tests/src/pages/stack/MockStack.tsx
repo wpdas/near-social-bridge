@@ -34,12 +34,12 @@ const MockStack: StackComponent = ({ title, onComplete, description }) => {
         const res = await request('get-rooms-list', { limit: 2 })
         updateStackFeatures(TEST_STACK_KEY, { name: 'createMock', status: 'success', jsonBody: res })
         setTestStatus('success')
+        onComplete(true)
       } catch {
         updateStackFeatures(TEST_STACK_KEY, { name: 'createMock', status: 'error' })
         setTestStatus('error')
+        onComplete(false)
       }
-
-      onComplete()
     }
     fetch()
   }, [])
