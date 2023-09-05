@@ -3,7 +3,7 @@ const setTestState = async (state: boolean) => {
     // await api().get(`save-test-state?passing=${state === true ? 'true' : 'false'}`)
     await fetch(`/api/save-test-state?passing=${state === true ? 'true' : 'false'}`, {
       // credentials: 'omit',
-      mode: 'no-cors',
+      mode: 'same-origin',
     })
   } catch (err) {
     console.error(err)
