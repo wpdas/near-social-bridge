@@ -16,7 +16,7 @@
     "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
     "build:for:tests": "npm run clean:tests; tsc -p tsconfig.tests.json",
     "test": "cd tests; npm run dev",
-    "build:test": "cd tests; npm run build"
+    "build:test": "npm run build:for:tests; cd tests; npm run build"
   },
   "keywords": [
     "near social",
