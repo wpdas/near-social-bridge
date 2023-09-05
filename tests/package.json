@@ -1,0 +1,35 @@
+{
+  "name": "ssr",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "(next dev) & yarn vm:start",
+    "vm:start": "npx init-viewer widgets --testnet",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.1.0",
+    "@chakra-ui/next-js": "^2.1.5",
+    "@chakra-ui/react": "^2.8.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.7",
+    "@textea/json-viewer": "^3.1.1",
+    "@types/node": "20.5.7",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "add": "^2.0.6",
+    "eslint": "8.48.0",
+    "eslint-config-next": "13.4.19",
+    "framer-motion": "^10.16.2",
+    "next": "13.4.19",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "near-social-local-viewer": "^2.1.3"
+  }
+}

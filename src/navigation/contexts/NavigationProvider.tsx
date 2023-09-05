@@ -3,6 +3,9 @@
 import getPathParams from '../../utils/getPathParams'
 import React, { createContext, useCallback, useEffect, useState } from 'react'
 import { HistoryProps, NavigationProps, ParamListBase } from '../types'
+import { Storage } from '../../api'
+
+const NAVIGATION_PROPS_KEY = 'NAVIGATION_PROPS'
 
 const defaultValue: NavigationProps<ParamListBase> = {
   push: () => {
@@ -11,8 +14,12 @@ const defaultValue: NavigationProps<ParamListBase> = {
   goBack: () => {
     throw new Error('goBack must be defined!')
   },
+  replace: () => {
+    throw new Error('replace must be defined!')
+  },
   location: [],
   history: [],
+  ready: false,
 }
 
 export const NavigationContext = createContext(defaultValue)
@@ -63,6 +70,15 @@ const NavigationProvider: React.FC<NavigationProviderProps> = ({ children }) => 
 
   // navigation handler
   const [history, setHistory] = useState<HistoryProps[]>([])
+  const [ready, setReady] = useState(false)
+
+  // Load stored history
+  useEffect(() => {
+    Storage.get<string>(NAVIGATION_PROPS_KEY).then((storedHistory) => {
+      setHistory(storedHistory ? JSON.parse(storedHistory) : [])
+      setReady(true)
+    })
+  }, [])
 
   // Handle window location hash changes
   useEffect(() => {
@@ -86,19 +102,30 @@ const NavigationProvider: React.FC<NavigationProviderProps> = ({ children }) => 
 
   const push = useCallback(
     (screen: keyof ParamListBase, params?: {}) => {
-      const updatedHistory = [...history]
-      updatedHistory.push([screen, params])
-      setHistory(updatedHistory)
-      updateBrowserUrl(screen)
+      // Prevent to the same screen in line & history is ready
+      if (history.at(-1)?.[0] !== screen && ready) {
+        const updatedHistory = [...history]
+        updatedHistory.push([screen, params])
+        setHistory(updatedHistory)
+        updateBrowserUrl(screen)
+        Storage.set(NAVIGATION_PROPS_KEY, JSON.stringify(updatedHistory))
+      }
     },
-    [history]
+    [history, ready]
   )
+
+  const replace = useCallback((screen: keyof ParamListBase, params?: {}) => {
+    setHistory([[screen, params]])
+    updateBrowserUrl(screen)
+    Storage.set(NAVIGATION_PROPS_KEY, JSON.stringify([[screen, params]]))
+  }, [])
 
   const goBack = useCallback(() => {
     const updatedHistory = [...history.slice(0, history.length - 1)]
 
     if (updatedHistory && updatedHistory.length > 0) {
       setHistory(updatedHistory)
+      Storage.set(NAVIGATION_PROPS_KEY, JSON.stringify(updatedHistory))
       const screen = updatedHistory.at(-1)?.[0]
       if (screen) {
         updateBrowserUrl(screen)
@@ -107,7 +134,9 @@ const NavigationProvider: React.FC<NavigationProviderProps> = ({ children }) => 
   }, [history])
 
   return (
-    <NavigationContext.Provider value={{ push, goBack, location: history.at(-1) as HistoryProps, history }}>
+    <NavigationContext.Provider
+      value={{ push, goBack, replace, location: history.at(-1) as HistoryProps, history, ready }}
+    >
       {children}
     </NavigationContext.Provider>
   )

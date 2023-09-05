@@ -7,7 +7,13 @@
 
 This library allows you to create a common application using ReactJS and use it inside a BOS Component. Therefore, the BOS Component talks to the React application and vice versa, making it possible to consume Discovery API resources within the React application.
 
-Library intended only for applications that will run within [Near Social](https://alpha.near.org/)
+Library intended only for applications that will run within [BOS](https://near.org/)
+
+## Lib Tests
+
+As this is a library that works integrated with Blockchain OS, the tests were built to be executed in real-time.
+
+[**Run the tests here**](#)
 
 ## Install
 
@@ -187,23 +193,23 @@ Social.getr('wendersonpires.testnet/profile').then((response) => console.log(res
 // {name: 'Wenderson Pires'}
 ```
 
-**Social.index**
-
-```ts
-Social.index('widget-chatv2-dev', 'room', {
-  limit: 1000,
-  order: 'desc',
-}).then((response) => console.log(response))
-// [{accountId: 'xyz', blockHeight: 99, value: 'xyz'}, {...}, {...}, {...}]
-```
-
 **Social.set**
 
 ```ts
-const data = { experimental: { test: 'test' } }
+const data = { index: { experimental: JSON.stringify({ key: 'current_time', value: Date.now() }) } }
 Social.set(data).then((response) => console.log(response))
-// If Success: {wendersonpires.testnet: {experimental: {...}}}
+// If Success: {wendersonpires.testnet: {index: {experimental: "..."}}}
 // If Canceled: {error: 'the action was canceled'}
+```
+
+**Social.index**
+
+```ts
+const _index = await Social.index('experimental', 'current_time', {
+  limit: 1000,
+  order: 'desc',
+}).then((response) => console.log(response))
+// [{accountId: 'xyz', blockHeight: 99, value: '1693805434405'}, {...}, {...}, {...}]
 ```
 
 **Social.keys**
@@ -478,11 +484,13 @@ const { Navigator, Screen } = createStackNavigator<NavigationProps>(<Spinner />)
 
 When using `Navigator` with `autoHeightSync` set as `true`, the height of the iframe is automatically adjusted to the initial screen content. If more content is inserted inside the screen after the first render, you can use [`useSyncContentHeight`](#usesynccontentheight) hook to sync the height again.
 
+If you use `Navigator` with `defaultRoute`, this route is going to be set every time the app reloads. If not used, the last route seen is going to be shown.
+
 The `Screen` component allows you to pass some useful properties, one of them is the `iframeHeight` which will set the initial iframe's height needed to show this screen within the Widget even before the first render. If `Navigator` was called with `autoHeightSync`, the height is going to be adjusted automatically when the screen content is rendered.
 
 ```tsx
 return (
-  <Navigator autoHeightSync>
+  <Navigator autoHeightSync defaultRoute="Home">
     <Screen name="Home" component={Home} iframeHeight={420} />
     <Screen name="Profile" component={Profile} />
   </Navigator>
@@ -585,7 +593,7 @@ const MyComponent = () => {
 
 ### useNavigation
 
-Expose features like `push` new route, `goBack` to the previous route, `location` with the current route location and props, `history` with the history of all routes visited and their props:
+Expose features like `push` new route, `goBack` to the previous route, `location` with the current route location and props, `history` with the history of all routes visited and their props, `replace` performs a replaceState with arguments:
 
 ```ts
 import { useNavigation } from 'near-social-bridge'
@@ -594,6 +602,11 @@ const MyComponent = () => {
   const navigation = useNavigation()
   // ...
   navigation.push('ProfileScreen')
+
+  // navigation.goBack()
+  // navigation.replace('Home', {myprops: "..."})
+  // console.log(navigation.history)
+  // console.log(navigation.location)
   // ...
 }
 ```

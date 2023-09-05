@@ -11,7 +11,7 @@ import { request } from '../request'
  * @returns
  */
 export const get = <R extends {}>(key: string, widgetSrc?: string) =>
-  request<R>(API_KEYS.API_STORAGE_GET, { key, widgetSrc })
+  request<R>(API_KEYS.API_STORAGE_GET, { key, widgetSrc }, { forceTryAgain: true })
 
 /**
  * `Storage.set(key, value)` - sets the public value for a given key under the current widget.
@@ -22,7 +22,8 @@ export const get = <R extends {}>(key: string, widgetSrc?: string) =>
  * @param value a user-defined value
  * @returns
  */
-export const set = <R extends {}>(key: string, value: any) => request<R>(API_KEYS.API_STORAGE_SET, { key, value })
+export const set = <R extends {}>(key: string, value: any) =>
+  request<R>(API_KEYS.API_STORAGE_SET, { key, value }, { forceTryAgain: true })
 
 /**
  * `Storage.privateGet(key)` - returns the private value for a given key under the current component.
@@ -31,7 +32,8 @@ export const set = <R extends {}>(key: string, value: any) => request<R>(API_KEY
  * @param key a user-defined key under the current component
  * @returns
  */
-export const privateGet = <R extends {}>(key: string) => request<R>(API_KEYS.API_STORAGE_PRIVATE_GET, { key })
+export const privateGet = <R extends {}>(key: string) =>
+  request<R>(API_KEYS.API_STORAGE_PRIVATE_GET, { key }, { forceTryAgain: true })
 
 /**
  * `Storage.privateSet(key, value)` - sets the private value for a given key under the current component.
@@ -43,4 +45,4 @@ export const privateGet = <R extends {}>(key: string) => request<R>(API_KEYS.API
  * @returns
  */
 export const privateSet = <R extends {}>(key: string, value: any) =>
-  request<R>(API_KEYS.API_STORAGE_PRIVATE_SET, { key, value })
+  request<R>(API_KEYS.API_STORAGE_PRIVATE_SET, { key, value }, { forceTryAgain: true })

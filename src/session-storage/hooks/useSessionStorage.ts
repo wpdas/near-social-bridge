@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import sessionStorage, { sessionStorageUpdateObservable } from '../sessionStorage'
 
 /**
@@ -17,23 +17,26 @@ import sessionStorage, { sessionStorageUpdateObservable } from '../sessionStorag
 const useSessionStorage = () => {
   const [storage, setStorage] = useState<any>()
 
-  useEffect(() => {
-    const handle = () => {
-      const updatedStorage: any = {}
-      sessionStorage.keys().forEach((storageKey) => {
-        updatedStorage[storageKey] = sessionStorage.getItem(storageKey)
-      })
+  const fetchStorageItems = useCallback(() => {
+    const updatedStorage: any = {}
+    sessionStorage.keys().forEach((storageKey) => {
+      updatedStorage[storageKey] = sessionStorage.getItem(storageKey)
+    })
 
-      setStorage(updatedStorage)
-    }
+    setStorage(updatedStorage)
+  }, [])
+
+  useEffect(() => {
+    // Fetch initial data
+    fetchStorageItems()
 
     // Update the storage every time it's updated
-    sessionStorageUpdateObservable.subscribe(handle)
+    sessionStorageUpdateObservable.subscribe(fetchStorageItems)
 
     return () => {
-      sessionStorageUpdateObservable.unsubscribe(handle)
+      sessionStorageUpdateObservable.unsubscribe(fetchStorageItems)
     }
-  }, [])
+  }, [fetchStorageItems])
 
   return storage
 }
