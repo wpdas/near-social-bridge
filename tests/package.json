@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "(next dev) & yarn vm:start",
     "vm:start": "npx init-viewer widgets --testnet",
-    "build": "next build",
+    "next:build": "next build",
+    "build": "cd ..; npm run build:test",
     "start": "next start",
     "lint": "next lint"
   },
