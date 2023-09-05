@@ -26,7 +26,7 @@ const UseAuthStack: StackComponent = ({ title, onComplete }) => {
       } else {
         updateStackFeatures(TEST_STACK_KEY, { name: 'useAuth', status: 'success', jsonBody: auth })
         setTestStatus('success')
-        onComplete()
+        onComplete(true)
         setDone(true)
       }
     }

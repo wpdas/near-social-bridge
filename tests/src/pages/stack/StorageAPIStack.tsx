@@ -45,9 +45,10 @@ const StorageAPIStack: StackComponent = ({ title, onComplete }) => {
         updateFeatures({ name: 'Storage.privateGet', status: privateGet ? 'success' : 'error', jsonBody: privateGet })
 
         setTestStatus(set && get && privateSet && privateGet ? 'success' : 'error')
-        onComplete()
+        onComplete(set && get && privateSet && privateGet ? true : false)
       } catch {
         setTestStatus('error')
+        onComplete(false)
       }
     }
 

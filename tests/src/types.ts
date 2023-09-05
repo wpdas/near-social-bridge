@@ -3,7 +3,7 @@ type StackProps = {
   description?: string
   TestStackComponent: React.ElementType
   run: boolean
-  onComplete: () => void
+  onComplete: (passing: boolean) => void
 }
 
 export type StackTest = React.FC<StackProps>

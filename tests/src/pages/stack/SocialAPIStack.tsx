@@ -59,10 +59,11 @@ const SocialAPIStack: StackComponent = ({ title, onComplete }) => {
         updateFeatures({ name: 'Social.keys', status: _keys ? 'success' : 'error', jsonBody: _keys })
 
         setTestStatus(_get && _getr && _set && _index && _keys ? 'success' : 'error')
-        onComplete()
+        onComplete(_get && _getr && _set && _index && _keys ? true : false)
         setDone(true)
       } catch {
         setTestStatus('error')
+        onComplete(false)
       }
     }
 

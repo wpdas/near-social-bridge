@@ -30,10 +30,12 @@ const NearAPIStack: StackComponent = ({ title, description, onComplete }) => {
         updateFeatures({ name: 'Near.view', status: view ? 'success' : 'error', jsonBody: view })
 
         setTestStatus('success')
-        onComplete()
+        onComplete(true)
         setDone(true)
       } catch {
         setTestStatus('error')
+        onComplete(false)
+        setDone(true)
       }
     }
 

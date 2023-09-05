@@ -43,7 +43,7 @@ const UseNearSocialBridgeStack: StackComponent = ({ title, onComplete }) => {
   useEffect(() => {
     updateStackFeatures(TEST_STACK_KEY, { name: 'onGetMessage', status: 'success' })
     setTestStatus('success')
-    onComplete()
+    onComplete(true)
   }, [done])
 
   return (

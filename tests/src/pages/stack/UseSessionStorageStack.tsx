@@ -28,7 +28,7 @@ const UseSessionStorageStack: StackComponent = ({ title, description, onComplete
       updateStackFeatures(TEST_STACK_KEY, { name: 'useSessionStorage', status: 'success', jsonBody: storage })
 
       setTestStatus('success')
-      onComplete()
+      onComplete(true)
     }
   }, [storage])
 

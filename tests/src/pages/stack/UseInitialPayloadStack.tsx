@@ -20,7 +20,7 @@ const UseInitialPayloadStack: StackComponent = ({ title, description, onComplete
   useEffect(() => {
     setTestStatus('success')
     updateStackFeatures(TEST_STACK_KEY, { name: 'useInitialPayload', status: 'success', jsonBody: initialPayload })
-    onComplete()
+    onComplete(true)
   }, [initialPayload])
 
   return (

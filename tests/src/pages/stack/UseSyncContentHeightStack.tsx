@@ -28,7 +28,7 @@ const UseSyncContentHeightStack: StackComponent = ({ title, description, onCompl
         updateStackFeatures(TEST_STACK_KEY, { name: 'done', status: 'success' }) // Running internally
 
         setTestStatus('success')
-        onComplete()
+        onComplete(true)
         setFinished(true)
       }
     }

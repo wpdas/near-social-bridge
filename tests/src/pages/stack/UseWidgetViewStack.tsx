@@ -26,7 +26,7 @@ const UseWidgetViewStack: StackComponent = ({ title, description, onComplete }) 
     updateStackFeatures(TEST_STACK_KEY, { name: 'setHeight', status: 'success' })
 
     setTestStatus('success')
-    onComplete()
+    onComplete(true)
   }, [])
 
   return (

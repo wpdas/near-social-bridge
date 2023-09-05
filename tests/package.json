@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "(next dev) & yarn vm:start",
-    "vm:start": "npx init-viewer widgets --testnet",
+    "vm:start": "npx init-viewer widgets",
     "next:build": "next build",
     "build": "cd ..; npm run build:test",
     "start": "next start",
@@ -22,10 +22,12 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "add": "^2.0.6",
+    "axios": "^1.5.0",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "framer-motion": "^10.16.2",
     "next": "13.4.19",
+    "nextjs-cors": "^2.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.2.2"

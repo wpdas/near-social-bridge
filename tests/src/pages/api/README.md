@@ -11,5 +11,3 @@ http://localhost:3000/api/save-test-state?passing=<true / false>
 ```
 http://localhost:3000/api/tests-passing
 ```
-
-![Tests](https://near-social-bridge-tests.vercel.app/api/tests-passing)

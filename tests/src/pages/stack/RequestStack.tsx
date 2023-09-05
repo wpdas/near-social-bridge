@@ -24,12 +24,12 @@ const RequestStack: StackComponent = ({ title, onComplete }) => {
         const res = await request('request-01', { timestamp: Date.now() }, { forceTryAgain: true })
         updateStackFeatures(TEST_STACK_KEY, { name: 'request', status: 'success', jsonBody: res })
         setTestStatus('success')
+        onComplete(true)
       } catch {
         updateStackFeatures(TEST_STACK_KEY, { name: 'request', status: 'error' })
         setTestStatus('error')
+        onComplete(false)
       }
-
-      onComplete()
     }
     fetch()
   }, [])
