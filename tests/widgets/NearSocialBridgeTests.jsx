@@ -1,5 +1,4 @@
 const externalAppUrl = 'http://localhost:3000'
-const path = props.path
 const initialViewHeight = 700
 const initialPayload = {
   myNiceProp: 'fake value',
@@ -32,7 +31,6 @@ return (
     src="wendersonpires.near/widget/NearSocialBridgeCore"
     props={{
       externalAppUrl,
-      path,
       initialViewHeight,
       initialPayload,
       requestHandler,

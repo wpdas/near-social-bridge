@@ -13,7 +13,7 @@ Library intended only for applications that will run within [BOS](https://near.o
 
 As this is a library that works integrated with Blockchain OS, the tests were built to be executed in real-time.
 
-[**Run the tests here**](#)
+[**Run the tests here**](https://near.org/wendersonpires.near/widget/NearSocialBridgeTests)
 
 ## Install
 
