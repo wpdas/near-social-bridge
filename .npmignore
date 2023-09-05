@@ -1,5 +1,6 @@
 src
 temp
+tests
 .github
 md
 bridge.js
