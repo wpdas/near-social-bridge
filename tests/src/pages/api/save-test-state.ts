@@ -1,6 +1,7 @@
-import fs from 'fs'
 import { NextApiRequest, NextApiResponse } from 'next'
 import NextCors from 'nextjs-cors'
+import { doc, updateDoc } from 'firebase/firestore'
+import { db } from '@app/firebase'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {
@@ -33,14 +34,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).send('not set')
   }
 
-  const data = payload.passing === 'true' ? 'passing' : 'not-passing'
-  fs.writeFile('state.txt', data, (err) => {
-    if (err) {
-      return res.status(500)
-    }
+  if (env === 'production') {
+    const statusRef = doc(db, 'lib-test', 'production')
+    await updateDoc(statusRef, { passing: payload.passing === 'true' })
+  }
 
-    res.status(200).send('ok')
-  })
+  res.status(200).send('ok')
 }
 
 export default handler
