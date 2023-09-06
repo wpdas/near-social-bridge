@@ -16,4 +16,4 @@ type Options = {
  * @returns
  */
 export const fetch = <R extends {}>(url: string, options?: Options) =>
-  request<R>(API_KEYS.API_FETCH_ASYNC_FETCH, { url, options })
+  request<R>(API_KEYS.API_FETCH_ASYNC_FETCH, { url, options }, { forceTryAgain: true })

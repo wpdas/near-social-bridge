@@ -8,7 +8,7 @@ const setTestState = async (state: boolean) => {
       await fetch(`/api/save-test-state?passing=${state === true ? 'true' : 'false'}`)
     } else {
       // Lib Fetch
-      await libFetch(`/api/save-test-state?passing=${state === true ? 'true' : 'false'}`)
+      await libFetch(`${window.location.origin}/api/save-test-state?passing=${state === true ? 'true' : 'false'}`)
     }
   } catch (err) {
     console.error(err)
