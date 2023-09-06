@@ -234,7 +234,7 @@ const Home = () => {
 
         <TestStack
           title="useInitialPayload"
-          description="Check the SSRTest.jsx file to see the payload"
+          description="Check the NearSocialBridgeTests.dev.jsx file to see the payload"
           TestStackComponent={UseInitialPayloadStack}
           run={stacks.useInitialPayload.run}
           onComplete={(passing: boolean) => runNow(STACK_KEYS.useInitialPayload, passing, STACK_KEYS.useNavigation)}
