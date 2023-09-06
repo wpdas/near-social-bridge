@@ -26,6 +26,7 @@ import UseSessionStorageStack from '@app/stack/UseSessionStorageStack'
 import UseWidgetViewStack from '@app/stack/UseWidgetViewStack'
 import UseSyncContentHeightStack from '@app/stack/UseSyncContentHeightStack'
 import FetchAPIStack from '@app/stack/FetchAPIStack'
+import setLibVersion from '@app/services/setLibVersion'
 
 const initialStackState = {
   nearAPI: { run: false, passing: false },
@@ -77,6 +78,11 @@ const Home = () => {
     syncAgain()
   }, [timestamp])
 
+  useEffect(() => {
+    // Sends lib version to BOS Component
+    setLibVersion(`- v${nsv_package.version}`)
+  }, [])
+
   // Go to next test stack
   const runNow = useCallback(
     (currentStackKey: string, currentStackPassing: boolean, nextStackKey: string) => {
@@ -125,14 +131,6 @@ const Home = () => {
     return (
       <Container>
         <Stack>
-          <Heading size="md">Near Social Bridge - v{nsv_package.version}</Heading>
-          <Text>
-            Live test stack for{' '}
-            <Link style={{ color: '#19b850' }} href="https://github.com/wpdas/near-social-bridge" target="_blank">
-              near-social-bridge
-            </Link>{' '}
-            lib
-          </Text>
           <Button width="fit-content" bg="green.200" onClick={runTests}>
             Run Tests
           </Button>
@@ -144,9 +142,6 @@ const Home = () => {
   return (
     <Container>
       <Stack>
-        <Heading size="md">Near Social Bridge - v{nsv_package.version}</Heading>
-        <Text>Live test stack</Text>
-
         {/* If this renders, Near Social Provider is working fine */}
         <Divider />
         <TestStatus
