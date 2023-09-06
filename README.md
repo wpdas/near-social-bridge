@@ -46,6 +46,7 @@ Here's a quick guide to you get to know how to use Near Social Bridge with basic
   - [Near API](#near-api)
   - [Social API](#social-api)
   - [Storage API](#storage-api)
+  - [Fetch API](#fetch-api)
 - [Requests](#requests)
   - [Simple Request](#simple-request)
   - [Handling the requests inside the Widget](#handling-the-requests-inside-the-widget)
@@ -66,6 +67,7 @@ Here's a complete guide where you can go over all features provided by Near Soci
   - [Near API](#near-api)
   - [Social API](#social-api)
   - [Storage API](#storage-api)
+  - [Fetch API](#fetch-api)
 - [Requests](#requests)
   - [Simple Request](#simple-request)
   - [Create Requests Mocks](#create-requests-mocks)
@@ -262,6 +264,21 @@ Storage.privateSet('my-private-key', JSON.stringify({ age: 18, name: 'Wendz Priv
 ```ts
 Storage.privateGet('my-private-key').then((response) => console.log(response))
 // {"age":18,"name":"Wendz Private"}
+```
+
+### Fetch API
+
+Fetch data from the URL. It's a wrapper around the fetch function from the browser behind the BOS.
+
+Regular / Vanilla Fetch API won't work while your React App is running within BOS. You need to use this feature in order to make API calls from inside the BOS.
+
+**fetch**
+
+```ts
+import { fetch } from 'near-social-bridge/api'
+
+fetch<any>('https://rpc.mainnet.near.org/status').then((response) => console.log(response))
+//{ "ok":true, "status":200, "contentType":"application/json", "body":{...}}
 ```
 
 ## Requests
