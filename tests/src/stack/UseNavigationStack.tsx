@@ -1,7 +1,7 @@
 import { Stack, Divider, Text } from '@chakra-ui/react'
 import TestStatus, { TestStatusType } from '../components/TestStatus'
 import { useEffect, useState } from 'react'
-import { StackComponent } from '../../types'
+import { StackComponent } from '@app/types'
 import { useTestStack } from '@app/contexts/TestStackProvider'
 import { IFrameStackScreenProps, createStackNavigator, useNavigation } from '@lib'
 

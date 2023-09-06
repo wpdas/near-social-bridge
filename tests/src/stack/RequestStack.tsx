@@ -1,54 +1,45 @@
 import { Stack, Divider } from '@chakra-ui/react'
 import TestStatus, { TestStatusType } from '../components/TestStatus'
 import { useEffect, useState } from 'react'
-import { fetch } from '@lib'
-import { Feature, StackComponent } from '../../types'
+import { request } from '@lib'
+import { StackComponent } from '@app/types'
 import { useTestStack } from '@app/contexts/TestStackProvider'
 
-const TEST_STACK_KEY = 'fetchApi'
+const TEST_STACK_KEY = 'request'
 
-const FetchAPIStack: StackComponent = ({ title, description, onComplete }) => {
+const RequestStack: StackComponent = ({ title, onComplete }) => {
   const [testStatus, setTestStatus] = useState<TestStatusType>('pending')
   const { registerNewStack, updateStackFeatures, getStackFeatures } = useTestStack()
-  const [done, setDone] = useState(false)
 
   useEffect(() => {
     registerNewStack(TEST_STACK_KEY)
   }, [])
 
-  const updateFeatures = (feature: Feature) => updateStackFeatures(TEST_STACK_KEY, feature)
-
   useEffect(() => {
-    const go = async () => {
+    const fetch = async () => {
+      setTestStatus('running')
+
       try {
-        setTestStatus('running')
-
-        updateFeatures({ name: 'fetch', status: 'running' })
-        const response = await fetch<any>('https://rpc.mainnet.near.org/status')
-        updateFeatures({ name: 'fetch', status: 'success', jsonBody: response })
-
+        updateStackFeatures(TEST_STACK_KEY, { name: 'request', status: 'running' })
+        const res = await request('request-01', { timestamp: Date.now() }, { forceTryAgain: true })
+        updateStackFeatures(TEST_STACK_KEY, { name: 'request', status: 'success', jsonBody: res })
         setTestStatus('success')
         onComplete(true)
-        setDone(true)
       } catch {
+        updateStackFeatures(TEST_STACK_KEY, { name: 'request', status: 'error' })
         setTestStatus('error')
         onComplete(false)
-        setDone(true)
       }
     }
-
-    if (!done) {
-      go()
-    }
-  }, [done])
+    fetch()
+  }, [])
 
   return (
     <Stack mt={4}>
       <Divider />
       <TestStatus
-        test_id="test_fetch_api"
+        test_id="test_request"
         title={title}
-        description={description}
         status={testStatus}
         features={getStackFeatures(TEST_STACK_KEY)}
       />
@@ -56,4 +47,4 @@ const FetchAPIStack: StackComponent = ({ title, description, onComplete }) => {
   )
 }
 
-export default FetchAPIStack
+export default RequestStack

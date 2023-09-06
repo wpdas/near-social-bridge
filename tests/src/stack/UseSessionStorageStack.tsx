@@ -1,8 +1,8 @@
 import { Stack, Divider } from '@chakra-ui/react'
 import TestStatus, { TestStatusType } from '../components/TestStatus'
 import { useEffect, useState } from 'react'
-import { sessionStorage, useInitialPayload, useSessionStorage } from '@lib'
-import { StackComponent } from '../../types'
+import { sessionStorage, useSessionStorage } from '@lib'
+import { StackComponent } from '@app/types'
 import { useTestStack } from '@app/contexts/TestStackProvider'
 
 const TEST_STACK_KEY = 'use-session-storage'
