@@ -25,4 +25,6 @@ export const API_KEYS = {
   API_STORAGE_SET: 'nsb:storage:set',
   API_STORAGE_PRIVATE_GET: 'nsb:storage:private-get',
   API_STORAGE_PRIVATE_SET: 'nsb:storage:private-set',
+
+  API_FETCH_ASYNC_FETCH: 'nsb:fetch:async-fetch',
 }

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Divider, Heading, Stack, Text } from '@chakra-ui/react'
-import { useSyncContentHeight } from '@lib'
+import { Button, Divider, Heading, Stack, Text } from '@chakra-ui/react'
+import { useSyncContentHeight, fetch } from '@lib'
 
 import Container from './components/Container'
 import nsv_package from '../../../package.json'
@@ -24,11 +24,13 @@ import UseSessionStorageStack from './stack/UseSessionStorageStack'
 import UseWidgetViewStack from './stack/UseWidgetViewStack'
 import UseSyncContentHeightStack from './stack/UseSyncContentHeightStack'
 import setTestState from '@app/services/setTestState'
+import FetchAPIStack from './stack/FetchAPIStack'
 
 const initialStackState = {
-  nearAPI: { run: true, passing: false },
+  nearAPI: { run: false, passing: false },
   socialAPI: { run: false, passing: false },
   storageAPI: { run: false, passing: false },
+  fetchAPI: { run: false, passing: false },
   request: { run: false, passing: false },
   mock: { run: false, passing: false },
   navigation: { run: false, passing: false },
@@ -47,6 +49,7 @@ const STACK_KEYS = {
   nearAPI: 'nearAPI',
   socialAPI: 'socialAPI',
   storageAPI: 'storageAPI',
+  fetchAPI: 'fetchAPI',
   request: 'request',
   mock: 'mock',
   navigation: 'navigation',
@@ -64,14 +67,14 @@ const STACK_KEYS = {
 const Home = () => {
   const { timestamp } = useTestStack()
   const { syncAgain } = useSyncContentHeight()
+  const [running, setRunning] = useState(false)
   const [finished, setFinished] = useState(false)
+  // Stacks
+  const [stacks, updateStacks] = useState(initialStackState)
 
   useEffect(() => {
     syncAgain()
   }, [timestamp])
-
-  // Stacks
-  const [stacks, updateStacks] = useState(initialStackState)
 
   // Go to next test stack
   const runNow = useCallback(
@@ -112,6 +115,25 @@ const Home = () => {
     }
   }, [finished])
 
+  const runTests = useCallback(() => {
+    setRunning(true)
+    updateStacks({ ...stacks, nearAPI: { run: true, passing: false } })
+  }, [])
+
+  if (!running) {
+    return (
+      <Container>
+        <Stack>
+          <Heading size="md">Near Social Bridge - v{nsv_package.version}</Heading>
+          <Text>Live test stack</Text>
+          <Button width="fit-content" bg="green.200" onClick={runTests}>
+            Run Tests
+          </Button>
+        </Stack>
+      </Container>
+    )
+  }
+
   return (
     <Container>
       <Stack>
@@ -148,6 +170,13 @@ const Home = () => {
           title="Storage API"
           TestStackComponent={StorageAPIStack}
           run={stacks.storageAPI.run}
+          onComplete={(passing) => runNow(STACK_KEYS.storageAPI, passing, STACK_KEYS.fetchAPI)}
+        />
+
+        <TestStack
+          title="Fetch API"
+          TestStackComponent={FetchAPIStack}
+          run={stacks.fetchAPI.run}
           onComplete={(passing) => runNow(STACK_KEYS.storageAPI, passing, STACK_KEYS.request)}
         />
 
