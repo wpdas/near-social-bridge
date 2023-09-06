@@ -9,9 +9,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const env = process.env.NODE_ENV
   const origin =
-    env === 'development'
-      ? '*'
-      : [
+    env === 'production'
+      ? [
           'http://localhost:3001',
           'https://near.org',
           'https://alpha.near.org',
@@ -19,6 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           'https://test.near.social',
           'https://near.social/',
         ]
+      : '*'
 
   await NextCors(req, res, {
     // Options
