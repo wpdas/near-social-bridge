@@ -1,30 +1,31 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Button, Divider, Heading, Stack, Text } from '@chakra-ui/react'
-import { useSyncContentHeight, fetch } from '@lib'
+import Link from 'next/link'
+import { useSyncContentHeight } from '@lib'
 
-import Container from './components/Container'
+import Container from '../components/Container'
 import nsv_package from '../../../package.json'
-import TestStatus from './components/TestStatus'
+import TestStatus from '../components/TestStatus'
 import { useTestStack } from '@app/contexts/TestStackProvider'
-
-import TestStack from './stack/TestStack'
-import NearAPIStack from './stack/NearAPIStack'
-import SocialAPIStack from './stack/SocialAPIStack'
-import StorageAPIStack from './stack/StorageAPIStack'
-import RequestStack from './stack/RequestStack'
-import MockStack from './stack/MockStack'
-import UseAuthStack from './stack/UseAuthStack'
-import NavigationStack from './stack/NavigationStack'
-import SessionStorageStack from './stack/SessionStorageStack'
-import PersistStorageStack from './stack/PersistStorageStack'
-import UseNearSocialBridgeStack from './stack/UseNearSocialBridgeStack'
-import UseInitialPayloadStack from './stack/UseInitialPayloadStack'
-import UseNavigationStack from './stack/UseNavigationStack'
-import UseSessionStorageStack from './stack/UseSessionStorageStack'
-import UseWidgetViewStack from './stack/UseWidgetViewStack'
-import UseSyncContentHeightStack from './stack/UseSyncContentHeightStack'
 import setTestState from '@app/services/setTestState'
-import FetchAPIStack from './stack/FetchAPIStack'
+
+import TestStack from '@app/stack/TestStack'
+import NearAPIStack from '@app/stack/NearAPIStack'
+import SocialAPIStack from '@app/stack/SocialAPIStack'
+import StorageAPIStack from '@app/stack/StorageAPIStack'
+import RequestStack from '@app/stack/RequestStack'
+import MockStack from '@app/stack/MockStack'
+import UseAuthStack from '@app/stack/UseAuthStack'
+import NavigationStack from '@app/stack/NavigationStack'
+import SessionStorageStack from '@app/stack/SessionStorageStack'
+import PersistStorageStack from '@app/stack/PersistStorageStack'
+import UseNearSocialBridgeStack from '@app/stack/UseNearSocialBridgeStack'
+import UseInitialPayloadStack from '@app/stack/UseInitialPayloadStack'
+import UseNavigationStack from '@app/stack/UseNavigationStack'
+import UseSessionStorageStack from '@app/stack/UseSessionStorageStack'
+import UseWidgetViewStack from '@app/stack/UseWidgetViewStack'
+import UseSyncContentHeightStack from '@app/stack/UseSyncContentHeightStack'
+import FetchAPIStack from '@app/stack/FetchAPIStack'
 
 const initialStackState = {
   nearAPI: { run: false, passing: false },
@@ -125,7 +126,13 @@ const Home = () => {
       <Container>
         <Stack>
           <Heading size="md">Near Social Bridge - v{nsv_package.version}</Heading>
-          <Text>Live test stack</Text>
+          <Text>
+            Live test stack for{' '}
+            <Link style={{ color: '#19b850' }} href="https://github.com/wpdas/near-social-bridge" target="_blank">
+              near-social-bridge
+            </Link>{' '}
+            lib
+          </Text>
           <Button width="fit-content" bg="green.200" onClick={runTests}>
             Run Tests
           </Button>
@@ -156,35 +163,35 @@ const Home = () => {
           description={'This is using contract "nearsocialexamples.near"'}
           TestStackComponent={NearAPIStack}
           run={stacks.nearAPI.run}
-          onComplete={(passing) => runNow(STACK_KEYS.nearAPI, passing, STACK_KEYS.socialAPI)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.nearAPI, passing, STACK_KEYS.socialAPI)}
         />
 
         <TestStack
           title="Social API"
           TestStackComponent={SocialAPIStack}
           run={stacks.socialAPI.run}
-          onComplete={(passing) => runNow(STACK_KEYS.socialAPI, passing, STACK_KEYS.storageAPI)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.socialAPI, passing, STACK_KEYS.storageAPI)}
         />
 
         <TestStack
           title="Storage API"
           TestStackComponent={StorageAPIStack}
           run={stacks.storageAPI.run}
-          onComplete={(passing) => runNow(STACK_KEYS.storageAPI, passing, STACK_KEYS.fetchAPI)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.storageAPI, passing, STACK_KEYS.fetchAPI)}
         />
 
         <TestStack
           title="Fetch API"
           TestStackComponent={FetchAPIStack}
           run={stacks.fetchAPI.run}
-          onComplete={(passing) => runNow(STACK_KEYS.storageAPI, passing, STACK_KEYS.request)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.storageAPI, passing, STACK_KEYS.request)}
         />
 
         <TestStack
           title="Request"
           TestStackComponent={RequestStack}
           run={stacks.request.run}
-          onComplete={(passing) => runNow(STACK_KEYS.request, passing, STACK_KEYS.mock)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.request, passing, STACK_KEYS.mock)}
         />
 
         <TestStack
@@ -192,35 +199,37 @@ const Home = () => {
           description="This is a mocked request"
           TestStackComponent={MockStack}
           run={stacks.mock.run}
-          onComplete={(passing) => runNow(STACK_KEYS.mock, passing, STACK_KEYS.navigation)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.mock, passing, STACK_KEYS.navigation)}
         />
 
         <TestStack
           title="Navigation"
           TestStackComponent={NavigationStack}
           run={stacks.navigation.run}
-          onComplete={(passing) => runNow(STACK_KEYS.navigation, passing, STACK_KEYS.sessionStorage)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.navigation, passing, STACK_KEYS.sessionStorage)}
         />
 
         <TestStack
           title="Session Storage"
           TestStackComponent={SessionStorageStack}
           run={stacks.sessionStorage.run}
-          onComplete={(passing) => runNow(STACK_KEYS.sessionStorage, passing, STACK_KEYS.persistStorage)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.sessionStorage, passing, STACK_KEYS.persistStorage)}
         />
 
         <TestStack
           title="Persist Storage"
           TestStackComponent={PersistStorageStack}
           run={stacks.persistStorage.run}
-          onComplete={(passing) => runNow(STACK_KEYS.persistStorage, passing, STACK_KEYS.useNearSocialBridge)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.persistStorage, passing, STACK_KEYS.useNearSocialBridge)}
         />
 
         <TestStack
           title="useNearSocialBridge"
           TestStackComponent={UseNearSocialBridgeStack}
           run={stacks.useNearSocialBridge.run}
-          onComplete={(passing) => runNow(STACK_KEYS.useNearSocialBridge, passing, STACK_KEYS.useInitialPayload)}
+          onComplete={(passing: boolean) =>
+            runNow(STACK_KEYS.useNearSocialBridge, passing, STACK_KEYS.useInitialPayload)
+          }
         />
 
         <TestStack
@@ -228,42 +237,42 @@ const Home = () => {
           description="Check the SSRTest.jsx file to see the payload"
           TestStackComponent={UseInitialPayloadStack}
           run={stacks.useInitialPayload.run}
-          onComplete={(passing) => runNow(STACK_KEYS.useInitialPayload, passing, STACK_KEYS.useNavigation)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.useInitialPayload, passing, STACK_KEYS.useNavigation)}
         />
 
         <TestStack
           title="useNavigation"
           TestStackComponent={UseNavigationStack}
           run={stacks.useNavigation.run}
-          onComplete={(passing) => runNow(STACK_KEYS.useNavigation, passing, STACK_KEYS.useSessionStorage)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.useNavigation, passing, STACK_KEYS.useSessionStorage)}
         />
 
         <TestStack
           title="useSessionStorage"
           TestStackComponent={UseSessionStorageStack}
           run={stacks.useSessionStorage.run}
-          onComplete={(passing) => runNow(STACK_KEYS.useSessionStorage, passing, STACK_KEYS.useAuth)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.useSessionStorage, passing, STACK_KEYS.useAuth)}
         />
 
         <TestStack
           title="useAuth"
           TestStackComponent={UseAuthStack}
           run={stacks.useAuth.run}
-          onComplete={(passing) => runNow(STACK_KEYS.useAuth, passing, STACK_KEYS.useWidgetView)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.useAuth, passing, STACK_KEYS.useWidgetView)}
         />
 
         <TestStack
           title="useWidgetView"
           TestStackComponent={UseWidgetViewStack}
           run={stacks.useWidgetView.run}
-          onComplete={(passing) => runNow(STACK_KEYS.useWidgetView, passing, STACK_KEYS.useSyncContentHeight)}
+          onComplete={(passing: boolean) => runNow(STACK_KEYS.useWidgetView, passing, STACK_KEYS.useSyncContentHeight)}
         />
 
         <TestStack
           title="useSyncContentHeight"
           TestStackComponent={UseSyncContentHeightStack}
           run={stacks.useSyncContentHeight.run}
-          onComplete={(passing) => testFinished(STACK_KEYS.useSyncContentHeight, passing)}
+          onComplete={(passing: boolean) => testFinished(STACK_KEYS.useSyncContentHeight, passing)}
         />
       </Stack>
     </Container>

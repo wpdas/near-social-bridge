@@ -2,7 +2,7 @@ import { Stack, Divider, Button } from '@chakra-ui/react'
 import TestStatus, { TestStatusType } from '../components/TestStatus'
 import { useEffect, useState } from 'react'
 import { Near, useAuth } from '@lib'
-import { Feature, StackComponent } from '../../types'
+import { Feature, StackComponent } from '@app/types'
 import { useTestStack } from '@app/contexts/TestStackProvider'
 
 const TEST_STACK_KEY = 'nearApi'
