@@ -901,3 +901,7 @@ npx init-viewer path/to/widgets/
 4 - Once your BOS Component is ready, you can deploy it to Near Social: <br/>
 4.1 - You can deploy it by copying and pasting; <br/>
 4.2 - Or using [near-social CLI](https://github.com/FroVolod/near-social).
+
+## Contributing
+
+Please read [CONTRIBUTING.md](./CONTRIBUTING.md).
