@@ -34,6 +34,7 @@ Check out some examples:
 
 - [Greeting App](https://github.com/wpdas/near-social-bridge/tree/main/examples/greeting-app)
 - [Todo App](https://github.com/wpdas/near-social-bridge/tree/main/examples/todo-app)
+- [dApp Tutorial](https://github.com/wpdas/near-social-bridge/tree/main/examples/dapp-bos-tutorial)
 - [Chat App](https://github.com/wpdas/chatv2-near-widget-app)
 - [SSR NextJS Test App](https://github.com/wpdas/nextjs-near-widget-app)
 
@@ -55,6 +56,8 @@ Here's a quick guide to you get to know how to use Near Social Bridge with basic
 - [Hooks](#hooks)
   - [useAuth](#useauth)
   - [useSyncContentHeight](#usesynccontentheight)
+- [Deploying to IPFS (CSR)](#deploying-to-ipfs-csr)
+- [Deploying to Vercel (SSR)](#deploying-to-vercel-ssr)
 - [Preparing a new BOS Component](#preparing-a-new-bos-component)
 - [Testing the Application Inside the Widget](#testing-the-application-inside-the-widget)
 
@@ -94,6 +97,8 @@ Here's a complete guide where you can go over all features provided by Near Soci
 - [Utils](#utils)
   - [initRefreshService](#initrefreshservice)
   - [overrideLocalStorage](#overridelocalstorage)
+- [Deploying to IPFS (CSR)](#deploying-to-ipfs-csr)
+- [Deploying to Vercel (SSR)](#deploying-to-vercel-ssr)
 - [Preparing a new BOS Component](#preparing-a-new-bos-component)
 - [Good to know](#good-to-know)
   - [Server-Side Rendering](#server-side-rendering)
@@ -797,6 +802,49 @@ const MyComponent2 = () => {
   console.log(sessionStorage.getItem('name')) // "Wenderson"
 }
 ```
+
+## Deploying to IPFS (CSR)
+
+This method works only with **Client Side Rendering**
+
+As this is intended to be a decentralized app, it's recommended that we deploy it using a decentralized source. To accomplish that, you can use IPFS. When the files are stored within IPFS, they can be deleted if not pinned. To pin the files, we need to use our own node or third service to do it for us. We recommend [**Thirdweb**](https://thirdweb.com/dashboard) and this is the service this session is going to use in order to teach how to deploy the app.
+
+Don't worry about the Thirdweb pricing. You'll have till 50GB of storage pinning using the STARTER (free) plan, what is pretty enough.
+
+1 - First of all, build your app. We're considering your app's build files are inside the **build** folder.
+
+2 - Create a **MetaMask** wallet if you don't have one yet and create an account (e.g. Ethereum).
+
+3 - If you have an Thirdweb API Key in place at this point, you can skip it. If not: <br>
+3.1 - Go to https://thirdweb.com/dashboard, then click on **Connect Wallet**. Select **MetaMask**, it'll open up the MetaMask extension. All you need to do is proceed with the required transactions. <br>
+3.2 - Now, go to **Settings** tab, then, on the left side, **API Keys**, then, **+ Create API Key**. <br>
+3.3 - Follow the steps to create your API Key, when you reach out the **Set Access Restrictions** step, mark the **Unrestricted access** checkbox or type the domains you want to allow: `localhost:3000, localhost:3001, near.org, alpha.near.org, test.near.org`. At the end of the process, you will receive a client ID and secret key, store them.
+
+4 - In your terminal (from the the root), type:
+
+```sh
+npx thirdweb@latest upload build
+```
+
+This command is used to upload a folder and its files to IPFS and pin them. If this is your first time in your machine using thirdweb, it's going to open up a tab in your browser asking to authorize your machine.
+
+In case your machine is authorized already, it'll just upload the files.
+
+You'll be provided with the IPFS URI and also a link to access your files using the thirdapp gateway, this is the one you're going to use inside the BOS. Copy and paste it somewhere, you'll use it to feed the `externalAppUrl` later while [**preparing a new BOS Component**](#preparing-a-new-bos-component).
+
+<p align="left">
+  <img src="./examples/dapp-bos-tutorial/thirdweb.png" />
+</p>
+
+This provided link is going to open the index.html because this is the pattern, but you can navigate through every file like so: https://bafybeifoa44fxhb7k66bzd2txhzgju7xy2llvw7mnvial2wln7votokewe.ipfs.cf-ipfs.com/logo192.png
+
+Every time you upload a file or folder, they are going to have a unique CID as well as unique link.
+
+## Deploying to Vercel (SSR)
+
+This method works only with **Server Side Rendering** and it's a **centralized** source.
+
+If you're using **Next.js** to build your app, you can use [**Vercel**](https://vercel.com/) to deploy your app and then, use the provided app URL to feed the `externalAppUrl` while [**preparing a new BOS Component**](#preparing-a-new-bos-component)
 
 ## Preparing a new BOS Component
 
