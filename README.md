@@ -6,9 +6,7 @@
 [![Downloads](https://img.shields.io/npm/dt/near-social-bridge.svg?style=for-the-badge&colorB=000000)](https://www.npmjs.com/package/near-social-bridge)
 ![Tests](https://near-social-bridge-tests.vercel.app/api/tests-passing)
 
-This library allows you to create a common application using ReactJS and use it inside a BOS Component. Therefore, the BOS Component talks to the React application and vice versa, making it possible to consume Discovery API resources within the React application.
-
-Library intended only for applications that will run within [BOS](https://near.org/)
+This library allows you to create a common application using ReactJS and use it inside a BOS Component. Therefore, the BOS Component talks to the React application and vice versa, making it possible to consume the [Blockchain Operating System](https://docs.near.org/bos/overview#) resources within the React application.
 
 ## Lib Tests
 
@@ -54,6 +52,7 @@ Here's a quick guide to you get to know how to use Near Social Bridge with basic
   - [Using request handler Utils - Widget side](#using-request-handler-utils-widget-side)
 - [Persist Storage](#persist-storage)
 - [Hooks](#hooks)
+  - [useInitialPayload](#useinitialpayload)
   - [useAuth](#useauth)
   - [useSyncContentHeight](#usesynccontentheight)
 - [Deploying to IPFS (CSR)](#deploying-to-ipfs-csr)
@@ -809,7 +808,7 @@ This method works only with **Client Side Rendering**
 
 As this is intended to be a decentralized app, it's recommended that we deploy it using a decentralized source. To accomplish that, you can use IPFS. When the files are stored within IPFS, they can be deleted if not pinned. To pin the files, we need to use our own node or third service to do it for us. We recommend [**Thirdweb**](https://thirdweb.com/dashboard) and this is the service this session is going to use in order to teach how to deploy the app.
 
-Don't worry about the Thirdweb pricing. You'll have till 50GB of storage pinning using the STARTER (free) plan, what is pretty enough.
+Don't worry about the Thirdweb pricing. You'll have up to 50GB of storage pinning using the STARTER (free) plan, which is pretty enough.
 
 1 - First of all, build your app. We're considering your app's build files are inside the **build** folder.
 
