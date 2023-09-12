@@ -1,4 +1,6 @@
-# dApp with Near BOS, Near Social Bridge & Thirdweb
+<p align="center">
+  <img src="tutorial-cover.jpg" />
+</p>
 
 In this tutorial, I'm going to teach you how to create a dApp using regular ReactJS app plus [Near Social Bridge](https://github.com/wpdas/near-social-bridge), which is a library that connects your app with [BOS](https://near.org/). You are expected to have some experience with the Blockchain Operating System (BOS) and React.
 
@@ -363,7 +365,7 @@ At this point, you should have the generated final files inside the build folder
 3.2 - Now, go to the **Settings** tab, then, on the left side, **API Keys**, then, **+ Create API Key**. <br>
 3.3 - Follow the modal steps to create your API Key. When you reach the **Set Access Restrictions** step, mark the **Unrestricted access** checkbox or type the domains you want to allow: `localhost:3000, localhost:3001, near.org, alpha.near.org, test.near.org`. At the end of the process, you will receive a client ID and secret key. Copy and paste this data somewhere else, you may need them for other projects.
 
-4 - In your terminal (from the the root), type:
+4 - In your terminal (from the root), type:
 
 ```sh
 npx thirdweb@latest upload build
