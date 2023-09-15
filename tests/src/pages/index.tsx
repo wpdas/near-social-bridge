@@ -27,6 +27,7 @@ import UseWidgetViewStack from '@app/stack/UseWidgetViewStack'
 import UseSyncContentHeightStack from '@app/stack/UseSyncContentHeightStack'
 import FetchAPIStack from '@app/stack/FetchAPIStack'
 import setLibVersion from '@app/services/setLibVersion'
+import UseConnectionStatusStack from '@app/stack/UseConnectionStatusStack'
 
 const initialStackState = {
   nearAPI: { run: false, passing: false },
@@ -39,6 +40,7 @@ const initialStackState = {
   sessionStorage: { run: false, passing: false },
   persistStorage: { run: false, passing: false },
   useNearSocialBridge: { run: false, passing: false },
+  useConnectionStatus: { run: false, passing: false },
   useInitialPayload: { run: false, passing: false },
   useNavigation: { run: false, passing: false },
   useSessionStorage: { run: false, passing: false },
@@ -58,6 +60,7 @@ const STACK_KEYS = {
   sessionStorage: 'sessionStorage',
   persistStorage: 'persistStorage',
   useNearSocialBridge: 'useNearSocialBridge',
+  useConnectionStatus: 'useConnectionStatus',
   useInitialPayload: 'useInitialPayload',
   useNavigation: 'useNavigation',
   useSessionStorage: 'useSessionStorage',
@@ -223,7 +226,16 @@ const Home = () => {
           TestStackComponent={UseNearSocialBridgeStack}
           run={stacks.useNearSocialBridge.run}
           onComplete={(passing: boolean) =>
-            runNow(STACK_KEYS.useNearSocialBridge, passing, STACK_KEYS.useInitialPayload)
+            runNow(STACK_KEYS.useNearSocialBridge, passing, STACK_KEYS.useConnectionStatus)
+          }
+        />
+
+        <TestStack
+          title="useConnectionStatus"
+          TestStackComponent={UseConnectionStatusStack}
+          run={stacks.useConnectionStatus.run}
+          onComplete={(passing: boolean) =>
+            runNow(STACK_KEYS.useConnectionStatus, passing, STACK_KEYS.useInitialPayload)
           }
         />
 

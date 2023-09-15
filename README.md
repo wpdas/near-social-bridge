@@ -87,6 +87,7 @@ Here's a complete guide where you can go over all features provided by Near Soci
 - [Persist Storage](#persist-storage)
 - [Hooks](#hooks)
   - [useNearSocialBridge](#usenearsocialbridge)
+  - [useConnectionStatus]()
   - [useInitialPayload](#useinitialpayload)
   - [useNavigation](#usenavigation)
   - [useSessionStorage](#usesessionstorage)
@@ -596,6 +597,21 @@ const MyComponent = () => {
   }
 
   // ...
+}
+```
+
+### useConnectionStatus
+
+Connection status. There're three possible values: `"pending"`, `"waiting-for-viewer-signal"`, `"connected"`.
+This feature can be used outside the `NearSocialBridgeProvider` component.
+
+```tsx
+import { useConnectionStatus } from 'near-social-bridge'
+
+const App = () => {
+  const status = useConnectionStatus() // "pending" | "waiting-for-viewer-signal" | "connected"
+
+  return <NearSocialBridgeProvider>{/* ... */}</NearSocialBridgeProvider>
 }
 ```
 
