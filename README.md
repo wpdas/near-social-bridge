@@ -628,7 +628,7 @@ const MyComponent = () => {
 
 ### useConnectionStatus
 
-Connection status. There're three possible values: `"pending"`, `"waiting-for-viewer-signal"`, `"connected"`.
+Connection status. There are three possible values: `"pending"`, `"waiting-for-viewer-signal"`, `"connected"`.
 This feature can be used outside the `NearSocialBridgeProvider` component.
 
 ```tsx
