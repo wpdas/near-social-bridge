@@ -48,10 +48,6 @@ export declare type Route<RouteName> = Readonly<{
    */
   key?: string
   /**
-   * Height to sync with the Near Social Viewer Iframe
-   */
-  iframeHeight?: number
-  /**
    * User-provided name for the route.
    */
   name: RouteName
@@ -145,8 +141,6 @@ export declare type IFrameStackScreenProps<
 
 export declare type NavigatorProps<RouteName> = {
   children: React.ReactNode
-  /** Auto synchronize the iframe height? */
-  autoHeightSync?: boolean
   /** Default route. If provided, this route is going to be set every time the app reloads. If not used, the last route seen is going to be shown. */
   defaultRoute?: RouteName
 }
