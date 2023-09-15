@@ -478,7 +478,7 @@ import Spinner from 'near-social-bridge/Spinner'
 This component is beneficial as it'll automatically sync the VM iframe's height according to its content height.
 
 ```tsx
-import Container from 'near-social-bridge/Spinner'
+import Container from 'near-social-bridge/Container'
 
 const MyPage = () => {
   return (

@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Button, Divider, Heading, Stack, Text } from '@chakra-ui/react'
-import Link from 'next/link'
+import { Button, Divider, Stack } from '@chakra-ui/react'
 import { useSyncContentHeight } from '@lib'
 
 import Container from '../components/Container'
