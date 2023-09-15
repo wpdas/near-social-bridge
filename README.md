@@ -50,6 +50,7 @@ Here's a quick guide to you get to know how to use Near Social Bridge with basic
   - [Simple Request](#simple-request)
   - [Handling the requests inside the Widget](#handling-the-requests-inside-the-widget)
   - [Using request handler Utils - Widget side](#using-request-handler-utils-widget-side)
+- [Components](#components)
 - [Persist Storage](#persist-storage)
 - [Hooks](#hooks)
   - [useInitialPayload](#useinitialpayload)
@@ -81,12 +82,14 @@ Here's a complete guide where you can go over all features provided by Near Soci
   - [Mock Authenticated User](#mock-authenticated-user)
   - [Mock Initial Payload](#mock-initial-payload)
   - [Create Requests Mocks - revisit](#create-requests-mocks-revisit)
+- [Components](#components)
 - [Use Navigation](#use-navigation)
   - [Implementing routes](#implementing-routes)
 - [Session Storage](#session-storage)
 - [Persist Storage](#persist-storage)
 - [Hooks](#hooks)
   - [useNearSocialBridge](#usenearsocialbridge)
+  - [useConnectionStatus](#useconnectionstatus)
   - [useInitialPayload](#useinitialpayload)
   - [useNavigation](#usenavigation)
   - [useSessionStorage](#usesessionstorage)
@@ -99,8 +102,6 @@ Here's a complete guide where you can go over all features provided by Near Soci
 - [Deploying to IPFS (CSR)](#deploying-to-ipfs-csr)
 - [Deploying to Vercel (SSR)](#deploying-to-vercel-ssr)
 - [Preparing a new BOS Component](#preparing-a-new-bos-component)
-- [Good to know](#good-to-know)
-  - [Server-Side Rendering](#server-side-rendering)
 - [Testing the Application Inside the Widget](#testing-the-application-inside-the-widget)
 
 ## Setup
@@ -460,11 +461,39 @@ const MyComponent = () => {
 
 You can revisit this session [here](#create-requests-mocks).
 
+## Components
+
+This library provides some simple components.
+
+### Spinner
+
+It's a spinner to show the "loading" status.
+
+```tsx
+import Spinner from 'near-social-bridge/Spinner'
+```
+
+### Container
+
+This component is beneficial as it'll automatically sync the VM iframe's height according to its content height.
+
+```tsx
+import Container from 'near-social-bridge/Spinner'
+
+const MyPage = () => {
+  return (
+    <Container>
+      <p>My nice content</p>
+    </Container>
+  )
+}
+```
+
 ## Use Navigation
 
-This feature was created to facilitate data passing between routes as the main domain will always be https://near.social or another fixed domain. It'll also maintain the same route after a page refresh during the development process. Please note that you will still be able to use any other routing solution.
+This feature was created to facilitate data passing between routes as the main domain will always be https://near.org or another fixed domain. It'll also maintain the same route after a page refresh during the development process. Please note that you will still be able to use any other routing solution.
 
-To force the app to start in a specific route, you should set a `path` parameter like so `https://near.social/#/wendersonpires.near/widget/MyWidget?path=/profile` where the `?path=` is the param with the route value. E.g: `?path=/timeline`.
+To force the app to start in a specific route, you should set a `path` parameter like so `https://near.org/wendersonpires.near/widget/MyWidget?path=/profile` where the `?path=` is the param with the route value. E.g: `?path=/timeline`.
 
 ### Implementing routes
 
@@ -504,16 +533,14 @@ import { NavigationProps } from './NavigationProps'
 const { Navigator, Screen } = createStackNavigator<NavigationProps>(<Spinner />)
 ```
 
-When using `Navigator` with `autoHeightSync` set as `true`, the height of the iframe is automatically adjusted to the initial screen content. If more content is inserted inside the screen after the first render, you can use [`useSyncContentHeight`](#usesynccontentheight) hook to sync the height again.
+When using `Navigator` the height of the iframe is automatically adjusted to the initial screen content's height. If more content is inserted inside the screen after the first render, you can use [`useSyncContentHeight`](#usesynccontentheight) hook to sync the height again.
 
 If you use `Navigator` with `defaultRoute`, this route is going to be set every time the app reloads. If not used, the last route seen is going to be shown.
-
-The `Screen` component allows you to pass some useful properties, one of them is the `iframeHeight` which will set the initial iframe's height needed to show this screen within the Widget even before the first render. If `Navigator` was called with `autoHeightSync`, the height is going to be adjusted automatically when the screen content is rendered.
 
 ```tsx
 return (
   <Navigator autoHeightSync defaultRoute="Home">
-    <Screen name="Home" component={Home} iframeHeight={420} />
+    <Screen name="Home" component={Home} />
     <Screen name="Profile" component={Profile} />
   </Navigator>
 )
@@ -596,6 +623,21 @@ const MyComponent = () => {
   }
 
   // ...
+}
+```
+
+### useConnectionStatus
+
+Connection status. There're three possible values: `"pending"`, `"waiting-for-viewer-signal"`, `"connected"`.
+This feature can be used outside the `NearSocialBridgeProvider` component.
+
+```tsx
+import { useConnectionStatus } from 'near-social-bridge'
+
+const App = () => {
+  const status = useConnectionStatus() // "pending" | "waiting-for-viewer-signal" | "connected"
+
+  return <NearSocialBridgeProvider>{/* ... */}</NearSocialBridgeProvider>
 }
 ```
 
@@ -905,13 +947,7 @@ return (
 
 **testnet:** Use `wendersonpires.testnet/widget/NearSocialBridgeCore` while creating your application using the testnet environment.
 
-And that's basically it. Again, remember that once your application is running inside the BOS Component, if it is making requests, you must handle each one of them inside the BOS Component, otherwise the unhandled requests will fail.
-
-## Good to know
-
-### Server-Side Rendering
-
-SSR is supported starting with version 1.3.0!
+Remember that once your application is running inside the BOS Component, if it is making requests, you must handle each one of them inside the BOS Component, otherwise the unhandled requests will fail.
 
 ## Testing the Application Inside a Local Viewer
 

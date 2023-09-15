@@ -27,11 +27,9 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
   /**
    * Navigator Component (Routes controler)
    *
-   * - use `autoHeightSync` to make it sync the iframe's height with the content's height.
-   *
    * @returns
    */
-  const Navigator: React.FC<NavigatorProps<keyof T>> = ({ children, autoHeightSync, defaultRoute }) => {
+  const Navigator: React.FC<NavigatorProps<keyof T>> = ({ children, defaultRoute }) => {
     const auth = useAuth()
     const [isReady, setIsReady] = useState(false)
     const navigation = useNavigation()
@@ -143,26 +141,14 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
     }, [findScreenAndPopulateProps])
 
     /**
-     * Send the content height to the iframe, so that it can fit the content properly
-     */
-    useEffect(() => {
-      if (currentScreen?.props?.iframeHeight) {
-        const screenElementContentHeight = currentScreen.props.iframeHeight
-
-        // Sync Height
-        syncContentHeight(screenElementContentHeight)
-      }
-    }, [currentScreen])
-
-    /**
      * Get the content height and set it automatically to the iframe's height
      */
     useEffect(() => {
-      if (currentScreen && isReady && autoHeightSync) {
+      if (currentScreen && isReady) {
         // Send the content height to the core.js
         syncContentHeight()
       }
-    }, [currentScreen, isReady, autoHeightSync])
+    }, [currentScreen, isReady])
 
     // Handle the current screen
     useEffect(() => {
@@ -214,14 +200,11 @@ const createStackNavigator = function <T extends ParamListBase>(fallback?: React
   /**
    * Navigator
    *
-   * - use `autoHeightSync` to make it sync the iframe's height with the content's height.
    */
-  const WrappedNavigator: React.FC<NavigatorProps<keyof T>> = ({ children, autoHeightSync, defaultRoute }) => {
+  const WrappedNavigator: React.FC<NavigatorProps<keyof T>> = ({ children, defaultRoute }) => {
     return (
       <NavigationProvider>
-        <Navigator autoHeightSync={autoHeightSync} defaultRoute={defaultRoute}>
-          {children}
-        </Navigator>
+        <Navigator defaultRoute={defaultRoute}>{children}</Navigator>
       </NavigationProvider>
     )
   }

@@ -24,34 +24,8 @@ const defaultValue: NavigationProps<ParamListBase> = {
 
 export const NavigationContext = createContext(defaultValue)
 
-const updateBrowserUrl = (screenName: string) => {
-  const windowHistory = window.history
-  windowHistory.pushState({}, '', `#/${screenName.toLowerCase()}`)
-}
-
 type NavigationProviderProps = {
   children: React.ReactNode
-  /**
-   * Should load the page according to the provided path?
-   * You must wrap this Provider with the NearSocialBridgeProvider!
-   * This is going to use the `urlParams` prop provided during the connection between the Viewer and this App
-   *
-   * Make sure you are passing thrhoug `urlParams` with the welcomePayload, e.g:
-   *
-   * SETUP: [Navigation] Get URL params
-   * const urlParams = props.r;
-   *
-   * const welcomePayload = {
-   *  type: "connect",
-   *  payload: {
-   *    urlParams
-   * }
-   *
-   * SETUP: Set initial state
-   * State.init({ currentMessage: welcomePayload });
-   *
-   */
-  useCurrentPath?: boolean
 }
 
 /**
@@ -107,7 +81,6 @@ const NavigationProvider: React.FC<NavigationProviderProps> = ({ children }) => 
         const updatedHistory = [...history]
         updatedHistory.push([screen, params])
         setHistory(updatedHistory)
-        updateBrowserUrl(screen)
         Storage.set(NAVIGATION_PROPS_KEY, JSON.stringify(updatedHistory))
       }
     },
@@ -116,7 +89,6 @@ const NavigationProvider: React.FC<NavigationProviderProps> = ({ children }) => 
 
   const replace = useCallback((screen: keyof ParamListBase, params?: {}) => {
     setHistory([[screen, params]])
-    updateBrowserUrl(screen)
     Storage.set(NAVIGATION_PROPS_KEY, JSON.stringify([[screen, params]]))
   }, [])
 
@@ -126,10 +98,6 @@ const NavigationProvider: React.FC<NavigationProviderProps> = ({ children }) => 
     if (updatedHistory && updatedHistory.length > 0) {
       setHistory(updatedHistory)
       Storage.set(NAVIGATION_PROPS_KEY, JSON.stringify(updatedHistory))
-      const screen = updatedHistory.at(-1)?.[0]
-      if (screen) {
-        updateBrowserUrl(screen)
-      }
     }
   }, [history])
 
