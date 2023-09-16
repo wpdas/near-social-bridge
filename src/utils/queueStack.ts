@@ -10,7 +10,6 @@ let queue: Caller[] = []
 let running = false
 
 const processItem = async (itemIndex: number) => {
-  console.log('PROCESSING ITEM', itemIndex)
   // Process call
   try {
     const result = await queue[itemIndex].caller()
@@ -26,7 +25,6 @@ const processItem = async (itemIndex: number) => {
     // Go and run next item
     processItem(itemIndex + 1)
   } else {
-    console.log('QUEUE CLEARED')
     // End queue
     running = false
     queue = []
