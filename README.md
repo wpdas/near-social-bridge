@@ -306,7 +306,7 @@ class GreetingTable {
 ```
 
 ```ts
-import { connect } from 'chain-db-ts'
+import { connect } from 'near-social-bridge/database'
 import { GreetingTable } from './tables'
 
 const main async () {
