@@ -8,13 +8,18 @@ if (!props.externalAppUrl) {
   return (
     <div>
       <p style={{ fontWeight: 600, color: '#AB2E28', fontFamily: 'Courier new' }}>
-        This Component is part of the <a href="https://github.com/wpdas/near-social-bridge">"near-social-bridge"</a>{' '}
+        This Component is part of the{' '}
+        <a href="https://github.com/wpdas/near-social-bridge" target="_blank">
+          "near-social-bridge"
+        </a>{' '}
         library that makes it possible to develop common ReactJS applications and inject them into the BOS having access
         to all Discovery API resources.
       </p>
       <p style={{ fontWeight: 600, color: '#AB2E28', fontFamily: 'Courier new' }}>
         Learn more here:{' '}
-        <a href="https://github.com/wpdas/near-social-bridge">https://github.com/wpdas/near-social-bridge</a>
+        <a href="https://github.com/wpdas/near-social-bridge" target="_blank">
+          https://github.com/wpdas/near-social-bridge
+        </a>
       </p>
     </div>
   )
