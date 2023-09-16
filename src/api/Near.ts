@@ -1,5 +1,6 @@
 import request from '../request/request'
 import { API_KEYS } from '../constants'
+import * as queueStack from '../utils/queueStack'
 const ONE_DAY_MS = 86400000
 
 /**
@@ -11,7 +12,7 @@ const ONE_DAY_MS = 86400000
  * @returns
  */
 export const view = <R extends {}>(contractName: string, methodName: string, args?: {}, blockId?: string) =>
-  request<R>(API_KEYS.API_NEAR_VIEW, { contractName, methodName, args, blockId })
+  queueStack.createCaller(() => request<R>(API_KEYS.API_NEAR_VIEW, { contractName, methodName, args, blockId }))
 
 /**
  * Call
@@ -28,4 +29,7 @@ export const call = <R extends {}>(
   gas?: string | number,
   deposit?: string | number
   // Use ONE_DAY_MS to call this method only once. The dev should get the updated data after accepting the transaction
-) => request<R>(API_KEYS.API_NEAR_CALL, { contractName, methodName, args, gas, deposit }, { timeout: ONE_DAY_MS })
+) =>
+  queueStack.createCaller(() =>
+    request<R>(API_KEYS.API_NEAR_CALL, { contractName, methodName, args, gas, deposit }, { timeout: ONE_DAY_MS })
+  )

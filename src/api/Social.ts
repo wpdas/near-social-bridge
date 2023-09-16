@@ -1,5 +1,6 @@
 import { API_KEYS } from '../constants'
 import { request } from '../request'
+import * as queueStack from '../utils/queueStack'
 
 /**
  * `Social.get` fetches the data from the SocialDB contract by calling get and returns the data.
@@ -11,7 +12,7 @@ import { request } from '../request'
  * @returns
  */
 export const get = <R extends {}>(patterns: string | string[], finality?: 'final' | number) =>
-  request<R>(API_KEYS.API_SOCIAL_GET, { patterns, finality }, { forceTryAgain: true })
+  queueStack.createCaller(() => request<R>(API_KEYS.API_SOCIAL_GET, { patterns, finality }, { forceTryAgain: true }))
 
 /**
  * `Social.getr` is just a wrapper helper for Social.get, it appends ** to each of the path pattern.
@@ -22,7 +23,7 @@ export const get = <R extends {}>(patterns: string | string[], finality?: 'final
  * @returns
  */
 export const getr = <R extends {}>(patterns: string | string[], finality?: 'final' | number) =>
-  request<R>(API_KEYS.API_SOCIAL_GETR, { patterns, finality }, { forceTryAgain: true })
+  queueStack.createCaller(() => request<R>(API_KEYS.API_SOCIAL_GETR, { patterns, finality }, { forceTryAgain: true }))
 
 /**
  * It calls the SocialDB's `keys` API and returns the data. While the data is fetching the returned value equals to `null`.
@@ -43,7 +44,10 @@ export const keys = <R extends {}>(
     /** Whether to return only values (don't include objects). Default is `false`. */
     values_only?: boolean
   }
-) => request<R>(API_KEYS.API_SOCIAL_KEYS, { patterns, finality, options }, { forceTryAgain: true })
+) =>
+  queueStack.createCaller(() =>
+    request<R>(API_KEYS.API_SOCIAL_KEYS, { patterns, finality, options }, { forceTryAgain: true })
+  )
 
 /**
  * Returns the array of matched indexed values. Ordered by `blockHeight`.
@@ -67,7 +71,7 @@ export const index = <R extends {}>(
     /** Defaults to `0` or `Max` depending on order. */
     from?: 0 | 'Max'
   }
-) => request<R>(API_KEYS.API_SOCIAL_INDEX, { action, key, options }, { forceTryAgain: true })
+) => queueStack.createCaller(() => request<R>(API_KEYS.API_SOCIAL_INDEX, { action, key, options }))
 
 /**
  * Takes a `data` object and commits it to SocialDB. It works similarly to the `CommitButton` by spawning the modal window prompt
@@ -79,4 +83,5 @@ export const index = <R extends {}>(
  * @param data the data object to be committed. Similar to `CommitButton`, it shouldn't start with an account ID.
  * @returns
  */
-export const set = <R extends {}>(data: {}) => request<R>(API_KEYS.API_SOCIAL_SET, { data })
+export const set = async <R extends {}>(data: {}) =>
+  queueStack.createCaller(() => request<R>(API_KEYS.API_SOCIAL_SET, { data }))

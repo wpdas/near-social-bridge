@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Button, Divider, Stack } from '@chakra-ui/react'
-import { useSyncContentHeight } from '@lib'
+import { connect, useSyncContentHeight } from '@lib'
 
 import Container from '../components/Container'
 import nsv_package from '../../../package.json'
@@ -27,6 +27,10 @@ import UseSyncContentHeightStack from '@app/stack/UseSyncContentHeightStack'
 import FetchAPIStack from '@app/stack/FetchAPIStack'
 import setLibVersion from '@app/services/setLibVersion'
 import UseConnectionStatusStack from '@app/stack/UseConnectionStatusStack'
+
+class GreetingTable {
+  public greeting = 'Hi'
+}
 
 const initialStackState = {
   nearAPI: { run: false, passing: false },
@@ -128,6 +132,30 @@ const Home = () => {
     setRunning(true)
     updateStacks({ ...stacks, nearAPI: { run: true, passing: false } })
   }, [])
+
+  // NEW
+  useEffect(() => {
+    ;(async () => {
+      const db = connect('test-db', 'root', '1234')
+
+      // Initialize the "greeting" table using the "GreetingTable"
+      // class as a template. If there is already any data saved in
+      // the chain, this data will be populated in the table instance.
+      const greetingTable = await db.get_table('Greeting', new GreetingTable())
+      console.log(greetingTable.table) // { greeting: 'Hi' }
+
+      // Mutating data
+      greetingTable.table.greeting = 'Coé meu  mano.'
+      await greetingTable.persist() // Data is persisted on the blockchain
+
+      // Get the last 100 changes
+      const greetingHistory = await greetingTable.getHistory(100)
+      console.log(greetingHistory)
+    })()
+  }, [])
+
+  return <p>oi</p>
+  // NEW
 
   if (!running) {
     return (

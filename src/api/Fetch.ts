@@ -1,5 +1,6 @@
 import request from '../request/request'
 import { API_KEYS } from '../constants'
+import * as queueStack from '../utils/queueStack'
 
 type Options = {
   method?: string
@@ -16,4 +17,4 @@ type Options = {
  * @returns
  */
 export const fetch = <R extends {}>(url: string, options?: Options) =>
-  request<R>(API_KEYS.API_FETCH_ASYNC_FETCH, { url, options }, { forceTryAgain: true })
+  queueStack.createCaller(() => request<R>(API_KEYS.API_FETCH_ASYNC_FETCH, { url, options }, { forceTryAgain: true }))
