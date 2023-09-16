@@ -25,7 +25,7 @@ export const NearSocialBridgeContext = createContext(defaultValue)
 interface Props {
   children: React.ReactNode
   /**
-   * Fallback component that's going to be shown until the connection with the Widget is established or the Widget response timeout is reached.
+   * Fallback component that's going to be shown until the connection with the BOS Component is established or the BOS Component response timeout is reached.
    */
   fallback?: React.ReactNode
   /**
@@ -37,7 +37,7 @@ interface Props {
 /**
  * Provides the Near Social Bridge features.
  *
- * Fallback component is displayed (if provided) until the connection is established with the Widget
+ * Fallback component is displayed (if provided) until the connection is established with the BOS Component
  * @returns
  */
 const NearSocialBridgeProvider: React.FC<Props> = ({ children, fallback, waitForStorage }) => {

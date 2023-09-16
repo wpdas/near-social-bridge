@@ -26,7 +26,7 @@ mockUser(fakeUser)
 
 ### Mock Initial Payload
 
-Use `mockInitialPayload` to mock the initial payload (sent by the Widget).
+Use `mockInitialPayload` to mock the initial payload (sent by the BOS Component).
 
 ```ts
 // Mock
@@ -46,7 +46,7 @@ const MyComponent = () => {
 
 ### Create Requests Mocks
 
-This resource is extremely useful, as it allows you to simulate the contract of your application's requests, making it fully work locally. Therefore, you can create the handlers inside the Widget only when you start running the app inside the Widget.
+This resource is extremely useful, as it allows you to simulate the contract of your application's requests, making it fully work locally. Therefore, you can create the handlers inside the BOS Component only when you start running the app inside it.
 
 Mock the _"get-rooms-list"_ request:
 

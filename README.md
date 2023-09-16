@@ -57,7 +57,7 @@ Here's a complete guide where you can go over all features provided by Near Soci
   - [useWidgetView](./md/hooks.md#usewidgetview)
   - [useSyncContentHeight](./md/hooks.md#usesynccontentheight)
 - [Preparing a new BOS Component](./md/preparing-new-bos-component.md)
-- [Testing the Application Inside the Widget](./md/testing-app-with-local-viewer.md)
+- [Testing the Application with Local Viewer](./md/testing-app-with-local-viewer.md)
 
 ### Extra Features
 

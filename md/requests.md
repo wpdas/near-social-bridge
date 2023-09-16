@@ -51,7 +51,7 @@ return (
 
 ### Using request Utils inside the BOS Component
 
-In the Widget side, the handler is going to provide 3 props: `request` with its type and payload, `response` that is the way the app send a answer back to the React App and `utils` that provides some useful features like the `promisify`.
+In the BOS Component side, the handler is going to provide 3 props: `request` with its type and payload, `response` that is the way the app send a answer back to the React App and `utils` that provides some useful features like the `promisify`.
 
 The `promisify` needs 4 parameters: `caller` which is going to request something, `resolve`, a method that is going to be called as soon as the _caller_ find an answer, `reject`, method that will be called when the service times out and `timeout`, a optional parameter where you can set the timeout for this promise. The default timeout is 10 seconds.
 
@@ -61,7 +61,7 @@ So, promisify implementation is
 promisify(caller: () => any, resolve: () => void, reject: () => void, timeout: number)
 ```
 
-Example of using the promisify feature inside the Widget:
+Example of using the promisify feature inside the BOS Component:
 
 ```js
 const requestHandler = (request, response, Utils) => {

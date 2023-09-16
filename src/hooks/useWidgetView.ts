@@ -1,7 +1,7 @@
 import { syncContentHeight } from '../navigation/syncContentHeight'
 
 /**
- * Provides access to methods and props which can affect the Widget View
+ * Provides access to methods and props which can affect the BOS Component View
  */
 const useWidgetView = () => {
   return {

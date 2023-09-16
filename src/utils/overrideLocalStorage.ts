@@ -2,7 +2,7 @@ import sessionStorage from '../session-storage/sessionStorage'
 import isBrowser from './isBrowser'
 
 /**
- * Overrides the `window.localStorage` with the bridge's `sessionStorage` (Widget's Storage)
+ * Overrides the `window.localStorage` with the bridge's `sessionStorage` (BOS Component's Storage)
  */
 export const overrideLocalStorage = () => {
   class BridgeLocalStorage {

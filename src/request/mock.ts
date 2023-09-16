@@ -75,7 +75,7 @@ export const getMockedResponse = async <Data extends {}>(requestType: string, pa
 
 /**
  * Create and register a new mock for requests. This helps you create the contracts for
- * each request before implementing them inside the Widget.
+ * each request before implementing them inside the BOS Component.
  * @param requestType Request type
  * @param handler Mocked request handler (mocks server-side)
  */
