@@ -11,6 +11,7 @@ export * from './session-storage'
 export * from './auth'
 export * from './hooks'
 export * from './components'
+export * from './database'
 
 // Utils
 export * from './utils'

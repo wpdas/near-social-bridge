@@ -46,6 +46,7 @@ Here's a quick guide to you get to know how to use Near Social Bridge with basic
   - [Social API](#social-api)
   - [Storage API](#storage-api)
   - [Fetch API](#fetch-api)
+- [Database](#database)
 - [Requests](#requests)
   - [Simple Request](#simple-request)
   - [Handling the requests inside the Widget](#handling-the-requests-inside-the-widget)
@@ -71,6 +72,7 @@ Here's a complete guide where you can go over all features provided by Near Soci
   - [Social API](#social-api)
   - [Storage API](#storage-api)
   - [Fetch API](#fetch-api)
+- [Database](#database)
 - [Requests](#requests)
   - [Simple Request](#simple-request)
   - [Create Requests Mocks](#create-requests-mocks)
@@ -284,6 +286,58 @@ import { fetch } from 'near-social-bridge/api'
 
 fetch<any>('https://rpc.mainnet.near.org/status').then((response) => console.log(response))
 //{ "ok":true, "status":200, "contentType":"application/json", "body":{...}}
+```
+
+## Database
+
+This feature allows tables to be created for each database key. The Social API is used under the hood.
+
+### Table
+
+Tables must be simple class with default values, empty or not. This class will be used as a reference to create the table's fields.
+
+When it's time to persist the table's data on the chain, just call the `persit` database function.
+
+```ts
+// Greeting Table
+class GreetingTable {
+  public greeting = 'Hi'
+}
+```
+
+```ts
+import { connect } from 'chain-db-ts'
+import { GreetingTable } from './tables'
+
+const main async () {
+  // db-name | user | password
+  const db = connect('test-db', 'root', '1234')
+
+  // Initialize the "greeting" table using the "GreetingTable"
+  // class as a template. If there is already any data saved in
+  // the chain, this data will be populated in the table instance.
+  const greetingTable = await db.get_table('Greeting', new GreetingTable())
+  console.log(greetingTable.table) // { greeting: 'Hi' }
+
+  // Mutating data
+  greetingTable.table.greeting = "Hello my dear!"
+  await greetingTable.persist() // Data is persisted on the blockchain
+
+  // See the most updated values of the table
+  console.log(greetingTable.table) // { greeting: 'Hello my dear!' }
+
+  // Get the last 100 changes
+  const greetingHistory = await greetingTable.getHistory(100)
+  console.log(greetingHistory)
+  // [
+  //   { greeting: 'Hello my dear!' },
+  //   { greeting: 'Hi' },
+  //   { greeting: 'Ei, sou eu :D' },
+  //   { greeting: 'Heyo' },
+  //   ...
+  // ]
+}
+main()
 ```
 
 ## Requests

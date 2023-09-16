@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Button, Divider, Stack } from '@chakra-ui/react'
-import { useSyncContentHeight } from '@lib'
+import { connect, useSyncContentHeight } from '@lib'
 
 import Container from '../components/Container'
 import nsv_package from '../../../package.json'

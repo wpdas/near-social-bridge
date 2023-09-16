@@ -1,5 +1,6 @@
 import { API_KEYS } from '../constants'
 import { request } from '../request'
+import * as queueStack from '../utils/queueStack'
 
 /**
  * `Storage.get(key, widgetSrc?)` - returns the public value for a given key under the
@@ -11,7 +12,7 @@ import { request } from '../request'
  * @returns
  */
 export const get = <R extends {}>(key: string, widgetSrc?: string) =>
-  request<R>(API_KEYS.API_STORAGE_GET, { key, widgetSrc }, { forceTryAgain: true })
+  queueStack.createCaller(() => request<R>(API_KEYS.API_STORAGE_GET, { key, widgetSrc }, { forceTryAgain: true }))
 
 /**
  * `Storage.set(key, value)` - sets the public value for a given key under the current widget.
@@ -23,7 +24,7 @@ export const get = <R extends {}>(key: string, widgetSrc?: string) =>
  * @returns
  */
 export const set = <R extends {}>(key: string, value: any) =>
-  request<R>(API_KEYS.API_STORAGE_SET, { key, value }, { forceTryAgain: true })
+  queueStack.createCaller(() => request<R>(API_KEYS.API_STORAGE_SET, { key, value }, { forceTryAgain: true }))
 
 /**
  * `Storage.privateGet(key)` - returns the private value for a given key under the current component.
@@ -33,7 +34,7 @@ export const set = <R extends {}>(key: string, value: any) =>
  * @returns
  */
 export const privateGet = <R extends {}>(key: string) =>
-  request<R>(API_KEYS.API_STORAGE_PRIVATE_GET, { key }, { forceTryAgain: true })
+  queueStack.createCaller(() => request<R>(API_KEYS.API_STORAGE_PRIVATE_GET, { key }, { forceTryAgain: true }))
 
 /**
  * `Storage.privateSet(key, value)` - sets the private value for a given key under the current component.
@@ -45,4 +46,4 @@ export const privateGet = <R extends {}>(key: string) =>
  * @returns
  */
 export const privateSet = <R extends {}>(key: string, value: any) =>
-  request<R>(API_KEYS.API_STORAGE_PRIVATE_SET, { key, value }, { forceTryAgain: true })
+  queueStack.createCaller(() => request<R>(API_KEYS.API_STORAGE_PRIVATE_SET, { key, value }, { forceTryAgain: true }))
