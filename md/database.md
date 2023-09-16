@@ -2,6 +2,8 @@
 
 This feature allows tables to be created for each database key. The Social API is used under the hood.
 
+You can see an example of use here: [**services.ts**](https://github.com/wpdas/bos-todo-dapp/blob/main/src/services.ts)
+
 ### Table
 
 Tables must be simple class with default values, empty or not. This class will be used as a reference to create the table's fields.
