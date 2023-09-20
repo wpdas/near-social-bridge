@@ -28,7 +28,7 @@ In case your machine is authorized already, it'll just upload the files.
 You'll be provided with the IPFS URI and also a link to access your files using the thirdapp gateway, this is the one you're going to use inside the BOS. Copy and paste it somewhere else, you'll use it to feed the `externalAppUrl` later while [**preparing a new BOS Component**](#preparing-a-new-bos-component).
 
 <p align="left">
-  <img src="./examples/dapp-bos-tutorial/thirdweb.png" />
+  <img src="../examples/dapp-bos-tutorial/thirdweb.png" />
 </p>
 
 This provided link is going to open the index.html because this is the pattern, but you can navigate through every file like so: https://bafybeifoa44fxhb7k66bzd2txhzgju7xy2llvw7mnvial2wln7votokewe.ipfs.cf-ipfs.com/logo192.png
