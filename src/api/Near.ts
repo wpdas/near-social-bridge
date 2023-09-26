@@ -9,10 +9,22 @@ const ONE_DAY_MS = 86400000
  * @param methodName Name of the method to call
  * @param args Arguments to pass to the method
  * @param blockId Block ID or finality of the transaction
+ * @param cacheOptions the `cacheOptions` object.
  * @returns
  */
-export const view = <R extends {}>(contractName: string, methodName: string, args?: {}, blockId?: string) =>
-  queueStack.createCaller(() => request<R>(API_KEYS.API_NEAR_VIEW, { contractName, methodName, args, blockId }))
+export const view = <R extends {}>(
+  contractName: string,
+  methodName: string,
+  args?: {},
+  blockId?: string,
+  cacheOptions?: {
+    /** if true, the method will ignore the cached value in the local DB and fetch the data from the API server. This will only happen once per session. Default is false. */
+    ignoreCache: boolean
+  }
+) =>
+  queueStack.createCaller(() =>
+    request<R>(API_KEYS.API_NEAR_VIEW, { contractName, methodName, args, blockId, cacheOptions })
+  )
 
 /**
  * Call

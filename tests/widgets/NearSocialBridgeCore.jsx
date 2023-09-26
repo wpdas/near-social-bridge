@@ -297,10 +297,10 @@ const getUserInfo = (requestType) => {
 
 // NEAR.view
 const nearView = (requestType, payload) => {
-  const { contractName, methodName, args, blockId } = payload
+  const { contractName, methodName, args, blockId, cacheOptions } = payload
 
   Utils.promisify(
-    () => Near.view(contractName, methodName, args, blockId),
+    () => Near.view(contractName, methodName, args, blockId, undefined, cacheOptions),
     (data) => {
       const response = buildAnswer(requestType, data)
       Utils.sendMessage(response)
@@ -328,10 +328,10 @@ const nearCall = (requestType, payload) => {
 
 // Social.get
 const socialGet = (requestType, payload) => {
-  const { patterns, finality } = payload
+  const { patterns, finality, cacheOptions } = payload
 
   Utils.promisify(
-    () => Social.get(patterns, finality),
+    () => Social.get(patterns, finality, undefined, cacheOptions),
     (data) => {
       const response = buildAnswer(requestType, data)
       Utils.sendMessage(response)
@@ -345,10 +345,10 @@ const socialGet = (requestType, payload) => {
 
 // Social.getr
 const socialGetr = (requestType, payload) => {
-  const { patterns, finality } = payload
+  const { patterns, finality, cacheOptions } = payload
 
   Utils.promisify(
-    () => Social.getr(patterns, finality),
+    () => Social.getr(patterns, finality, undefined, cacheOptions),
     (data) => {
       const response = buildAnswer(requestType, data)
       Utils.sendMessage(response)
@@ -362,10 +362,10 @@ const socialGetr = (requestType, payload) => {
 
 // Social.keys
 const socialKeys = (requestType, payload) => {
-  const { patterns, finality, options } = payload
+  const { patterns, finality, options, cacheOptions } = payload
 
   Utils.promisify(
-    () => Social.keys(patterns, finality, options),
+    () => Social.keys(patterns, finality, options, cacheOptions),
     (data) => {
       const response = buildAnswer(requestType, data)
       Utils.sendMessage(response)
@@ -379,10 +379,10 @@ const socialKeys = (requestType, payload) => {
 
 // Social.index
 const socialIndex = (requestType, payload) => {
-  const { action, key, options } = payload
+  const { action, key, options, cacheOptions } = payload
 
   Utils.promisify(
-    () => Social.index(action, key, options),
+    () => Social.index(action, key, options, cacheOptions),
     (data) => {
       const response = buildAnswer(requestType, data)
       Utils.sendMessage(response)
