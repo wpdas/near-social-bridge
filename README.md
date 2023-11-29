@@ -8,9 +8,6 @@
 
 This library allows you to create a common application using ReactJS and use it inside a BOS Component. Therefore, the BOS Component talks to the React application and vice versa, making it possible to consume the [Blockchain Operating System](https://docs.near.org/bos/overview#) resources within the React application.
 
-As this is a library that works integrated with Blockchain OS, the tests were built to be executed in real-time.
-[**Run tests here**](https://near.org/wendersonpires.near/widget/NearSocialBridgeTests)
-
 Check out some apps using Near Social Bridge:
 
 - [NEAR Query API](https://github.com/near/queryapi/tree/main/frontend)
