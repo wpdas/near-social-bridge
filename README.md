@@ -11,13 +11,16 @@ This library allows you to create a common application using ReactJS and use it 
 As this is a library that works integrated with Blockchain OS, the tests were built to be executed in real-time.
 [**Run tests here**](https://near.org/wendersonpires.near/widget/NearSocialBridgeTests)
 
-Check out some app examples:
+Check out some apps using Near Social Bridge:
 
-- [Decentralized App - Tutorial](./examples/dapp-bos-tutorial/TUTORIAL.md)
+- [NEAR Query API](https://github.com/near/queryapi/tree/main/frontend)
+- [Chat App](https://github.com/wpdas/chatv2-near-widget-app)
+
+Tutorials:
 - [Greeting App](https://github.com/wpdas/near-social-bridge/tree/main/examples/greeting-app)
 - [Todo App](https://github.com/wpdas/near-social-bridge/tree/main/examples/todo-app)
-- [Chat App](https://github.com/wpdas/chatv2-near-widget-app)
 - [SSR NextJS Test App](https://github.com/wpdas/nextjs-near-widget-app)
+- [Decentralized App - Tutorial](./examples/dapp-bos-tutorial/TUTORIAL.md)
 
 ## Install
 
