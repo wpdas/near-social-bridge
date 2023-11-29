@@ -1,6 +1,6 @@
 ## Preparing a new BOS Component
 
-Create a new BOS Component, copy [the content of file **widget-setup.js**](./widget-setup.js) and paste it inside your new BOS Component. Then set its initial props as you wish:
+Create a new BOS Component, copy [the content of file **widget-setup.js**](https://github.com/wpdas/near-social-bridge/blob/main/widget-setup.js) and paste it inside your new BOS Component. Then set its initial props as you wish:
 
 ```js
 /**
