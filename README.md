@@ -1,4 +1,4 @@
-# <img src='./md/near-social-bridge-logo.png' height='24' alt='NEAR Social Bridge Logo' /> NEAR Social Bridge
+# <div style="display: flex; align-items: center; gap: 8px;"><img src='./md/near-social-bridge-logo.png' height='27' alt='NEAR Social Bridge Logo' /> NEAR Social Bridge</div>
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/wpdas/near-social-bridge/publish.yml?style=for-the-badge&colorB=000000)](https://github.com/wpdas/near-social-bridge/actions?query=workflow%3Apublish)
 [![Build Size](https://img.shields.io/bundlephobia/minzip/near-social-bridge/1.0.1?label=bundle%20size&style=for-the-badge&colorB=000000)](https://bundlephobia.com/package/near-social-bridge)
