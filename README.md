@@ -10,9 +10,8 @@ This library allows you to create a common application using ReactJS and use it 
 
 Please consider making a donation if you liked this project.
 
-<a style="display: flex; align-items: center; gab: 4px; width: 85px; justify-content: space-around; padding: 6px; border-radius: 4px; border: none; margin-bottom: 44px; font-weight: 00; font-size: 14px; background-color: #E0E0E0; color: #000000; text-decoration: none; cursor: pointer;" href="https://bos.potlock.org/?tab=project&projectId=near-social-bridge.near" target="_blank">
-  <img src='./md/assets/near-protocol-near-logo.svg' height='18' alt='Near Logo' />
-  Donate
+<a href="https://bos.potlock.org/?tab=project&projectId=near-social-bridge.near" target="_blank">
+  <img src='./md/assets/donate.png' alt='Near Logo' />
 </a>
 
 ## Live Apps & Tutorials
