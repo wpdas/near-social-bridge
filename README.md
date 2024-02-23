@@ -8,12 +8,22 @@
 
 This library allows you to create a common application using ReactJS and use it inside a BOS Component. Therefore, the BOS Component talks to the React application and vice versa, making it possible to consume the [Blockchain Operating System](https://docs.near.org/bos/overview#) resources within the React application.
 
+Please consider making a donation if you liked this project.
+
+<a style="display: flex; align-items: center; gab: 4px; width: 85px; justify-content: space-around; padding: 6px; border-radius: 4px; border: none; margin-bottom: 44px; font-weight: 00; font-size: 14px; background-color: #E0E0E0; color: #000000; text-decoration: none; cursor: pointer;" href="https://bos.potlock.org/?tab=project&projectId=near-social-bridge.near" target="_blank">
+  <img src='./md/assets/near-protocol-near-logo.svg' height='18' alt='Near Logo' />
+  Donate
+</a>
+
+## Live Apps & Tutorials
+
 Check out some apps using Near Social Bridge:
 
 - [NEAR Query API](https://github.com/near/queryapi/tree/main/frontend)
 - [Chat App](https://github.com/wpdas/chatv2-near-widget-app)
 
 Tutorials:
+
 - [Greeting App](https://github.com/wpdas/near-social-bridge/tree/main/examples/greeting-app)
 - [Todo App](https://github.com/wpdas/near-social-bridge/tree/main/examples/todo-app)
 - [SSR NextJS Test App](https://github.com/wpdas/nextjs-near-widget-app)
